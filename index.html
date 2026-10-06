@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Poza Szumem — spokojna biblioteka wartościowych tekstów do czytania bez scrollowania." />
+  <title>Poza Szumem</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">POZA SZUMEM</a>
+      <nav><a href="#artykuly">Artykuły</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Spokojne miejsce do czytania</p>
+      <h1>Teksty warte Twoich 10 minut.</h1>
+      <p class="lead">Bez feedu, bez pośpiechu, bez przypadkowych treści. Tylko materiały, do których warto wracać.</p>
+    </section>
+
+    <section id="artykuly" class="wrap">
+      <div class="section-heading">
+        <h2>Najnowsze artykuły</h2>
+        <span>1 tekst</span>
+      </div>
+
+      <div class="filters">
+        <button class="filter active" data-filter="all">Wszystkie</button>
+        <button class="filter" data-filter="rozwoj">Rozwój i psychologia</button>
+        <button class="filter" data-filter="ai">AI i technologia</button>
+        <button class="filter" data-filter="sport">Sport i zdrowie</button>
+        <button class="filter" data-filter="finanse">Finanse i biznes</button>
+        <button class="filter" data-filter="swiat">Świat i nauka</button>
+        <button class="filter" data-filter="kultura">Kultura i reportaż</button>
+      </div>
+
+      <div class="articles">
+        <article class="card" data-category="rozwoj">
+          <div class="meta">21.09.2026 · Rozwój i psychologia · 8 min</div>
+          <h3><a href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html">Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</a></h3>
+          <p>Mamy tendencję do przeceniania tego, jak wiele uwagi poświęcają nam inni. Problem zaczyna się wtedy, gdy ta obawa steruje naszymi decyzjami.</p>
+          <a class="read-more" href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html">Czytaj dalej →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">Poza Szumem · biblioteka wartościowych tekstów</footer>
+  <script src="script.js"></script>
+</body>
+</html>
