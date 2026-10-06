@@ -23,10 +23,10 @@
       </a>
 
       <div class="header-actions">
-        <button class="quiet-button search-toggle" type="button" aria-expanded="false" aria-controls="search-panel" aria-label="Szukaj">
+        <button class="icon-button search-toggle" type="button" aria-expanded="false" aria-controls="search-panel" aria-label="Szukaj">
           <span aria-hidden="true">⌕</span>
         </button>
-        <button class="theme-toggle" type="button" aria-label="Przełącz tryb jasny i ciemny" title="Przełącz motyw">
+        <button class="icon-button theme-toggle" type="button" aria-label="Przełącz tryb jasny i ciemny" title="Przełącz motyw">
           <span aria-hidden="true">◐</span>
         </button>
       </div>
@@ -34,16 +34,28 @@
   </header>
 
   <main>
-    <section class="minimal-hero wrap">
-      <h1>Mniej szumu.</h1>
-      <p>Teksty warte uwagi.</p>
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <span class="hero-kicker">Czytelnia</span>
+        <h1>Mniej szumu.<br><span>Więcej sensu.</span></h1>
+        <p>Eseje, reportaże i teksty, do których warto wracać.</p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-card">
+          <span>02</span>
+          <small>teksty</small>
+        </div>
+      </div>
     </section>
 
-    <section id="artykuly" class="wrap library">
-      <div class="library-head">
-        <h2>Artykuły</h2>
+    <section class="wrap library" id="artykuly">
+      <div class="library-bar">
+        <div class="library-title">
+          <span class="eyebrow">Biblioteka</span>
+          <h2>Najnowsze</h2>
+        </div>
 
-        <div class="library-controls">
+        <div class="library-actions">
           <details class="category-menu">
             <summary>Kategorie</summary>
             <div class="category-popover">
@@ -60,43 +72,52 @@
       </div>
 
       <div id="search-panel" class="search-panel" hidden>
-        <label class="search-box" aria-label="Szukaj artykułów">
-          <input id="article-search" type="search" placeholder="Szukaj…" autocomplete="off" />
-        </label>
+        <input id="article-search" type="search" placeholder="Szukaj po tytule lub temacie…" autocomplete="off" aria-label="Szukaj artykułów" />
       </div>
 
-      <div class="article-list">
-        <article class="article-row" data-category="rozwoj" data-search="człowiek który zawsze czekał na lepszy moment odkładanie życia przyszłość żal pillemer perkins die with zero">
-          <a class="row-link" href="artykuly/czlowiek-ktory-zawsze-czekal-na-lepszy-moment.html" aria-label="Czytaj: Człowiek, który zawsze czekał na lepszy moment"></a>
-          <div class="row-main">
-            <h3>Człowiek, który zawsze czekał na lepszy moment</h3>
+      <div class="article-grid">
+        <article class="article-card primary" data-category="rozwoj" data-search="człowiek który zawsze czekał na lepszy moment odkładanie życia przyszłość żal pillemer perkins die with zero">
+          <a class="card-link" href="artykuly/czlowiek-ktory-zawsze-czekal-na-lepszy-moment.html" aria-label="Czytaj: Człowiek, który zawsze czekał na lepszy moment"></a>
+          <div class="card-topline">
+            <span class="pill">Rozwój i psychologia</span>
             <time datetime="2026-09-22">22.09.2026</time>
           </div>
-          <div class="row-detail">
-            <span>Rozwój i psychologia · 9 min</span>
-            <span>Odkładanie życia na później i koszt niewykorzystanych możliwości.</span>
+          <div class="card-copy">
+            <h3>Człowiek, który zawsze czekał na lepszy moment</h3>
+            <p>O odkładaniu życia na później, kosztach niewykorzystanych możliwości i o tym, że niektóre doświadczenia mają swój najlepszy moment.</p>
+          </div>
+          <div class="card-footer">
+            <span>9 min czytania</span>
+            <span class="arrow" aria-hidden="true">↗</span>
           </div>
         </article>
 
-        <article class="article-row" data-category="rozwoj" data-search="dlaczego tak bardzo przejmujemy się tym co pomyślą inni efekt reflektora psychologia pewność siebie">
-          <a class="row-link" href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html" aria-label="Czytaj: Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?"></a>
-          <div class="row-main">
-            <h3>Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</h3>
+        <article class="article-card" data-category="rozwoj" data-search="dlaczego tak bardzo przejmujemy się tym co pomyślą inni efekt reflektora psychologia pewność siebie">
+          <a class="card-link" href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html" aria-label="Czytaj: Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?"></a>
+          <div class="card-topline">
+            <span class="pill">Rozwój i psychologia</span>
             <time datetime="2026-09-21">21.09.2026</time>
           </div>
-          <div class="row-detail">
-            <span>Rozwój i psychologia · 8 min</span>
-            <span>O efekcie reflektora, niezręczności i działaniu mimo niepewności.</span>
+          <div class="card-copy">
+            <h3>Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</h3>
+            <p>O efekcie reflektora, niezręczności i działaniu mimo niepewności.</p>
+          </div>
+          <div class="card-footer">
+            <span>8 min czytania</span>
+            <span class="arrow" aria-hidden="true">↗</span>
           </div>
         </article>
       </div>
 
-      <div id="empty-state" class="empty-state" hidden>Brak tekstów.</div>
+      <div id="empty-state" class="empty-state" hidden>
+        Brak tekstów dla tego filtra.
+      </div>
     </section>
   </main>
 
-  <footer class="wrap minimal-footer">
+  <footer class="wrap footer">
     <span>Poza Szumem</span>
+    <span>© 2026</span>
   </footer>
 
   <script src="script.js"></script>
