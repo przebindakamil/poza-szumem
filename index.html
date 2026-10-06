@@ -10,46 +10,87 @@
 <body>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="index.html">POZA SZUMEM</a>
-      <nav><a href="#artykuly">Artykuły</a></nav>
+      <a class="brand" href="index.html" aria-label="Poza Szumem — strona główna">POZA SZUMEM</a>
+      <nav class="top-nav">
+        <a href="#artykuly">Artykuły</a>
+        <a href="#o-stronie">O stronie</a>
+      </nav>
     </div>
   </header>
 
   <main>
     <section class="hero wrap">
-      <p class="eyebrow">Spokojne miejsce do czytania</p>
-      <h1>Teksty warte Twoich 10 minut.</h1>
-      <p class="lead">Bez feedu, bez pośpiechu, bez przypadkowych treści. Tylko materiały, do których warto wracać.</p>
+      <div class="hero-copy">
+        <p class="eyebrow">Spokojne miejsce do czytania</p>
+        <h1>Mniej szumu.<br>Więcej treści.</h1>
+        <p class="lead">Wybrane teksty o psychologii, technologii, sporcie, pieniądzach i świecie. Do przeczytania w kilka spokojnych minut — bez feedu i bez rozpraszaczy.</p>
+        <a class="hero-cta" href="#artykuly">Przejdź do artykułów ↓</a>
+      </div>
+      <div class="hero-note">
+        <span class="note-kicker">Idea</span>
+        <p>Nie wszystko trzeba przeczytać. Warto czytać rzeczy, które zostają z nami trochę dłużej.</p>
+      </div>
     </section>
 
-    <section id="artykuly" class="wrap">
+    <section id="artykuly" class="wrap content-section">
       <div class="section-heading">
-        <h2>Najnowsze artykuły</h2>
-        <span>1 tekst</span>
+        <div>
+          <p class="section-kicker">Biblioteka</p>
+          <h2>Najnowsze artykuły</h2>
+        </div>
+        <span id="results-count">1 tekst</span>
       </div>
 
-      <div class="filters">
-        <button class="filter active" data-filter="all">Wszystkie</button>
-        <button class="filter" data-filter="rozwoj">Rozwój i psychologia</button>
-        <button class="filter" data-filter="ai">AI i technologia</button>
-        <button class="filter" data-filter="sport">Sport i zdrowie</button>
-        <button class="filter" data-filter="finanse">Finanse i biznes</button>
-        <button class="filter" data-filter="swiat">Świat i nauka</button>
-        <button class="filter" data-filter="kultura">Kultura i reportaż</button>
+      <div class="toolbar">
+        <label class="search-box" aria-label="Szukaj artykułów">
+          <span aria-hidden="true">⌕</span>
+          <input id="article-search" type="search" placeholder="Szukaj po tytule lub opisie…" autocomplete="off" />
+        </label>
+
+        <div class="filters" aria-label="Filtruj artykuły według kategorii">
+          <button class="filter active" data-filter="all">Wszystkie</button>
+          <button class="filter" data-filter="rozwoj">Rozwój i psychologia</button>
+          <button class="filter" data-filter="ai">AI i technologia</button>
+          <button class="filter" data-filter="sport">Sport i zdrowie</button>
+          <button class="filter" data-filter="finanse">Finanse i biznes</button>
+          <button class="filter" data-filter="swiat">Świat i nauka</button>
+          <button class="filter" data-filter="kultura">Kultura i reportaż</button>
+        </div>
       </div>
 
       <div class="articles">
-        <article class="card" data-category="rozwoj">
-          <div class="meta">21.09.2026 · Rozwój i psychologia · 8 min</div>
-          <h3><a href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html">Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</a></h3>
+        <article class="card featured" data-category="rozwoj" data-search="dlaczego tak bardzo przejmujemy się tym co pomyślą inni efekt reflektora psychologia pewność siebie">
+          <a class="card-link" href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html" aria-label="Czytaj: Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?"></a>
+          <div class="card-top">
+            <span class="badge">Rozwój i psychologia</span>
+            <span class="meta">21.09.2026 · 8 min</span>
+          </div>
+          <h3>Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</h3>
           <p>Mamy tendencję do przeceniania tego, jak wiele uwagi poświęcają nam inni. Problem zaczyna się wtedy, gdy ta obawa steruje naszymi decyzjami.</p>
-          <a class="read-more" href="artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html">Czytaj dalej →</a>
+          <span class="read-more">Czytaj artykuł <span aria-hidden="true">↗</span></span>
         </article>
+      </div>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <strong>Nic tu jeszcze nie ma.</strong>
+        <span>Spróbuj innej kategorii albo wyczyść wyszukiwanie.</span>
+      </div>
+    </section>
+
+    <section id="o-stronie" class="wrap about-section">
+      <p class="section-kicker">Poza Szumem</p>
+      <div class="about-grid">
+        <h2>Internet jest pełen treści. Ta strona ma pomóc wybrać te warte czasu.</h2>
+        <p>To prywatna biblioteka tekstów do spokojnego czytania — uporządkowana chronologicznie i tematycznie. Bez reklam, bez nieskończonego scrollowania i bez mechanizmów, które mają zatrzymać Cię na stronie jak najdłużej.</p>
       </div>
     </section>
   </main>
 
-  <footer class="wrap footer">Poza Szumem · biblioteka wartościowych tekstów</footer>
+  <footer class="wrap footer">
+    <span>Poza Szumem</span>
+    <span>Biblioteka wartościowych tekstów</span>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
