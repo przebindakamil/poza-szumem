@@ -1,0 +1,2 @@
+const buttons=[...document.querySelectorAll('.filter')];const cards=[...document.querySelectorAll('.card')];
+buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;cards.forEach(card=>card.hidden=!(f==='all'||card.dataset.category===f));}));
