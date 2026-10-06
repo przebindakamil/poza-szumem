@@ -10,16 +10,22 @@
 <body>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="index.html" aria-label="Poza Szumem — strona główna">POZA SZUMEM</a>
-      <nav class="top-nav">
-        <a href="#artykuly">Artykuły</a>
-        <a href="#o-stronie">O stronie</a>
-      </nav>
+      <a class="brand" href="index.html" aria-label="Poza Szumem — strona główna">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>POZA SZUMEM</span>
+      </a>
+      <div class="header-actions">
+        <nav class="top-nav">
+          <a href="#artykuly">Artykuły</a>
+          <a href="#o-stronie">O stronie</a>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Przełącz tryb jasny i ciemny" title="Przełącz motyw"><span aria-hidden="true">◐</span></button>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap">
+    <section class="hero wrap reveal">
       <div class="hero-copy">
         <p class="eyebrow">Spokojne miejsce do czytania</p>
         <h1>Mniej szumu.<br>Więcej treści.</h1>
@@ -32,7 +38,7 @@
       </div>
     </section>
 
-    <section id="artykuly" class="wrap content-section">
+    <section id="artykuly" class="wrap content-section reveal">
       <div class="section-heading">
         <div>
           <p class="section-kicker">Biblioteka</p>
@@ -77,7 +83,7 @@
       </div>
     </section>
 
-    <section id="o-stronie" class="wrap about-section">
+    <section id="o-stronie" class="wrap about-section reveal">
       <p class="section-kicker">Poza Szumem</p>
       <div class="about-grid">
         <h2>Internet jest pełen treści. Ta strona ma pomóc wybrać te warte czasu.</h2>
