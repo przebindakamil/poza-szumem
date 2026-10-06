@@ -1,14 +1,23 @@
-const buttons=[...document.querySelectorAll('.filter')];
-const cards=[...document.querySelectorAll('.card')];
+const cards=[...document.querySelectorAll('.article-row')];
+const filters=[...document.querySelectorAll('.filter')];
 const search=document.querySelector('#article-search');
-const count=document.querySelector('#results-count');
+const searchToggle=document.querySelector('.search-toggle');
+const searchPanel=document.querySelector('#search-panel');
 const empty=document.querySelector('#empty-state');
 let activeFilter='all';
+
+function hideEmptyCategories(){
+  const used=new Set(cards.map(card=>card.dataset.category).filter(Boolean));
+  filters.forEach(btn=>{
+    if(btn.dataset.filter!=='all'&&!used.has(btn.dataset.filter)){
+      btn.hidden=true;
+    }
+  });
+}
 
 function updateArticles(){
   const query=(search?.value||'').trim().toLowerCase();
   let visible=0;
-
   cards.forEach(card=>{
     const categoryMatch=activeFilter==='all'||card.dataset.category===activeFilter;
     const haystack=(card.dataset.search||card.textContent).toLowerCase();
@@ -17,19 +26,30 @@ function updateArticles(){
     card.hidden=!show;
     if(show) visible++;
   });
-
-  if(count) count.textContent=visible===1?'1 tekst':`${visible} tekstów`;
   if(empty) empty.hidden=visible!==0;
 }
 
-buttons.forEach(btn=>btn.addEventListener('click',()=>{
-  buttons.forEach(b=>b.classList.remove('active'));
+filters.forEach(btn=>btn.addEventListener('click',()=>{
+  filters.forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   activeFilter=btn.dataset.filter;
   updateArticles();
+  const details=btn.closest('details');
+  if(details) details.open=false;
 }));
 
 search?.addEventListener('input',updateArticles);
+
+searchToggle?.addEventListener('click',()=>{
+  const willOpen=searchPanel?.hidden;
+  if(searchPanel) searchPanel.hidden=!willOpen;
+  searchToggle.setAttribute('aria-expanded',String(Boolean(willOpen)));
+  if(willOpen) setTimeout(()=>search?.focus(),0);
+  else if(search){search.value='';updateArticles();}
+});
+
+hideEmptyCategories();
+updateArticles();
 
 const progress=document.querySelector('.read-progress');
 if(progress){
@@ -46,8 +66,7 @@ const themeButton=document.querySelector('.theme-toggle');
 const root=document.documentElement;
 const savedTheme=localStorage.getItem('poza-szumem-theme');
 const systemDark=window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-const initialTheme=savedTheme||(systemDark?'dark':'light');
-root.dataset.theme=initialTheme;
+root.dataset.theme=savedTheme||(systemDark?'dark':'light');
 
 themeButton?.addEventListener('click',()=>{
   const next=root.dataset.theme==='dark'?'light':'dark';
@@ -55,17 +74,7 @@ themeButton?.addEventListener('click',()=>{
   localStorage.setItem('poza-szumem-theme',next);
 });
 
-const revealItems=document.querySelectorAll('.reveal');
-if('IntersectionObserver' in window){
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:.12});
-  revealItems.forEach(el=>observer.observe(el));
-}else{
-  revealItems.forEach(el=>el.classList.add('is-visible'));
-}
+const header=document.querySelector('.site-header');
+const markHeader=()=>header?.classList.toggle('scrolled',window.scrollY>8);
+window.addEventListener('scroll',markHeader,{passive:true});
+markHeader();
