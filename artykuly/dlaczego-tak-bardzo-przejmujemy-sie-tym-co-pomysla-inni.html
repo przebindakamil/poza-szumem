@@ -8,17 +8,27 @@
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
+  <div class="read-progress" aria-hidden="true"></div>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="../index.html">POZA SZUMEM</a>
-      <nav><a href="../index.html#artykuly">Artykuły</a></nav>
+      <nav class="top-nav"><a href="../index.html#artykuly">Artykuły</a></nav>
     </div>
   </header>
+
   <main class="article-shell">
-    <a class="article-back" href="../index.html">← Wszystkie artykuły</a>
-    <div class="article-meta">21.09.2026 · Rozwój i psychologia · 8 min</div>
-    <h1 class="article-title">Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</h1>
-    <div class="article-body">
+    <a class="article-back" href="../index.html#artykuly">← Wróć do biblioteki</a>
+
+    <header class="article-heading">
+      <span class="article-category">Rozwój i psychologia</span>
+      <div class="article-meta">21.09.2026 · 8 min czytania</div>
+      <h1 class="article-title">Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?</h1>
+      <p class="article-deck">O efekcie reflektora, społecznej niezręczności i o tym, dlaczego działanie często daje nam więcej niż kolejne godziny przygotowań.</p>
+    </header>
+
+    <div class="article-divider"></div>
+
+    <article class="article-body">
       <p>Wchodzisz do kawiarni, zamawiasz coś po angielsku i w połowie zdania orientujesz się, że użyłeś złego słowa. Kelner przez moment nie rozumie, o co ci chodzi. Poprawiasz się, dostajesz kawę i siadasz przy stoliku. Niby nic się nie stało, ale jeszcze przez kilka minut odtwarzasz tę sytuację w głowie. Zastanawiasz się, czy zabrzmiałeś głupio.</p>
       <p>Dla kelnera ta historia prawdopodobnie skończyła się w chwili, w której podał ci kawę.</p>
       <p>To dość banalny przykład zjawiska, które psychologowie nazywają efektem reflektora. Mamy tendencję do przeceniania tego, jak wiele uwagi poświęcają nam inni ludzie. Jest w tym pewna logika. Własne zachowanie obserwujemy bez przerwy, słyszymy każde wypowiedziane przez siebie zdanie i znamy wszystkie myśli, które mu towarzyszyły. Nie mamy natomiast dostępu do głowy człowieka siedzącego dwa stoliki dalej. Łatwo więc odnieść wrażenie, że skoro dla nas jakaś sytuacja była znacząca, dla innych również musiała taka być.</p>
@@ -43,7 +53,13 @@
       <p>Nie oznacza to oczywiście, że należy ignorować ryzyko. Są decyzje, przy których ostrożność jest rozsądna: inwestowanie dużych pieniędzy, zmiana pracy, zdrowie czy bezpieczeństwo. Warto jednak odróżnić prawdziwe ryzyko od ryzyka czysto społecznego. Czasem rzecz, przed którą długo się powstrzymujemy, w najgorszym możliwym scenariuszu kosztuje nas jedynie kilkadziesiąt sekund niezręczności.</p>
       <p>I właśnie wtedy warto zadać sobie proste pytanie: co właściwie się stanie, jeśli spróbuję i nie wyjdzie?</p>
       <p class="emphasis">Bardzo często odpowiedź okazuje się zaskakująco mała.</p>
+    </article>
+
+    <div class="article-end">
+      <span>Koniec tekstu</span>
+      <a href="../index.html#artykuly">Wróć do biblioteki →</a>
     </div>
   </main>
+  <script src="../script.js"></script>
 </body>
 </html>
