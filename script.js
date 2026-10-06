@@ -41,3 +41,31 @@ if(progress){
   window.addEventListener('scroll',updateProgress,{passive:true});
   updateProgress();
 }
+
+const themeButton=document.querySelector('.theme-toggle');
+const root=document.documentElement;
+const savedTheme=localStorage.getItem('poza-szumem-theme');
+const systemDark=window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+const initialTheme=savedTheme||(systemDark?'dark':'light');
+root.dataset.theme=initialTheme;
+
+themeButton?.addEventListener('click',()=>{
+  const next=root.dataset.theme==='dark'?'light':'dark';
+  root.dataset.theme=next;
+  localStorage.setItem('poza-szumem-theme',next);
+});
+
+const revealItems=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12});
+  revealItems.forEach(el=>observer.observe(el));
+}else{
+  revealItems.forEach(el=>el.classList.add('is-visible'));
+}
