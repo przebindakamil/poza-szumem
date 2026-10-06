@@ -1,4 +1,4 @@
-const cards=[...document.querySelectorAll('.article-row')];
+const cards=[...document.querySelectorAll('.article-card')];
 const filters=[...document.querySelectorAll('.filter')];
 const search=document.querySelector('#article-search');
 const searchToggle=document.querySelector('.search-toggle');
@@ -9,9 +9,7 @@ let activeFilter='all';
 function hideEmptyCategories(){
   const used=new Set(cards.map(card=>card.dataset.category).filter(Boolean));
   filters.forEach(btn=>{
-    if(btn.dataset.filter!=='all'&&!used.has(btn.dataset.filter)){
-      btn.hidden=true;
-    }
+    if(btn.dataset.filter!=='all'&&!used.has(btn.dataset.filter)) btn.hidden=true;
   });
 }
 
@@ -41,10 +39,10 @@ filters.forEach(btn=>btn.addEventListener('click',()=>{
 search?.addEventListener('input',updateArticles);
 
 searchToggle?.addEventListener('click',()=>{
-  const willOpen=searchPanel?.hidden;
-  if(searchPanel) searchPanel.hidden=!willOpen;
-  searchToggle.setAttribute('aria-expanded',String(Boolean(willOpen)));
-  if(willOpen) setTimeout(()=>search?.focus(),0);
+  const open=searchPanel?.hidden;
+  if(searchPanel) searchPanel.hidden=!open;
+  searchToggle.setAttribute('aria-expanded',String(Boolean(open)));
+  if(open) setTimeout(()=>search?.focus(),0);
   else if(search){search.value='';updateArticles();}
 });
 
