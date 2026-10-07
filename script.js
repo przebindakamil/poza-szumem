@@ -647,3 +647,44 @@ async function renderRelatedArticles() {
 }
 
 renderRelatedArticles();
+
+
+// PWA: offline reading and optional installation on supported browsers.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    const swUrl = window.location.pathname.includes('/artykuly/') ? '../sw.js' : './sw.js';
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+  });
+}
+
+let deferredInstallPrompt = null;
+const footer = document.querySelector('.footer');
+let installButton = null;
+if (footer) {
+  installButton = document.createElement('button');
+  installButton.type = 'button';
+  installButton.className = 'pwa-install';
+  installButton.id = 'poza-szumem-install';
+  installButton.textContent = 'Dodaj do ekranu';
+  installButton.hidden = true;
+  footer.insertBefore(installButton, footer.lastElementChild);
+
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installButton.hidden = false;
+  });
+
+  installButton.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installButton.hidden = true;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    installButton.hidden = true;
+  });
+}
