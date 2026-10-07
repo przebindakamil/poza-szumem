@@ -297,6 +297,208 @@ if (articleShell && readingBody) {
   applyReaderSize();
 }
 
+// Saved fragments: lightweight Readwise-style highlights stored in this browser.
+const HIGHLIGHTS_KEY = 'poza-szumem-highlights-v1';
+function loadHighlights() {
+  try {
+    const value = JSON.parse(localStorage.getItem(HIGHLIGHTS_KEY) || '[]');
+    return Array.isArray(value) ? value : [];
+  } catch (_) { return []; }
+}
+let savedHighlights = loadHighlights();
+function persistHighlights() {
+  try { localStorage.setItem(HIGHLIGHTS_KEY, JSON.stringify(savedHighlights)); } catch (_) {}
+  refreshHighlightsUI();
+}
+function highlightId(item) {
+  return normalizeSearch((item.articleId || '') + '|' + (item.text || ''));
+}
+function refreshHighlightsUI() {
+  const badge = document.querySelector('.highlights-count');
+  if (badge) {
+    badge.textContent = String(savedHighlights.length);
+    badge.hidden = savedHighlights.length === 0;
+  }
+  renderHighlightsPanel();
+}
+
+const headerActions = document.querySelector('.header-actions');
+let highlightsPanel = null;
+let highlightsBackdrop = null;
+if (headerActions) {
+  const openHighlights = document.createElement('button');
+  openHighlights.type = 'button';
+  openHighlights.className = 'icon-button highlights-button';
+  openHighlights.setAttribute('aria-label', 'Moje fragmenty');
+  openHighlights.setAttribute('aria-expanded', 'false');
+  openHighlights.innerHTML = '<span aria-hidden="true">✦</span><span class="highlights-count" hidden>0</span>';
+  const themeToggle = headerActions.querySelector('.theme-toggle');
+  headerActions.insertBefore(openHighlights, themeToggle || null);
+
+  highlightsBackdrop = document.createElement('div');
+  highlightsBackdrop.className = 'highlights-backdrop';
+  highlightsBackdrop.hidden = true;
+
+  highlightsPanel = document.createElement('aside');
+  highlightsPanel.className = 'highlights-panel';
+  highlightsPanel.hidden = true;
+  highlightsPanel.setAttribute('aria-label', 'Zapisane fragmenty');
+  highlightsPanel.innerHTML =
+    '<div class="highlights-panel-head"><div><span class="eyebrow">Kolekcja</span><h2>Moje fragmenty</h2></div>' +
+    '<button class="highlights-close" type="button" aria-label="Zamknij">×</button></div>' +
+    '<div class="highlights-list"></div>';
+
+  document.body.append(highlightsBackdrop, highlightsPanel);
+
+  const setPanel = open => {
+    highlightsPanel.hidden = !open;
+    highlightsBackdrop.hidden = !open;
+    document.body.classList.toggle('highlights-open', open);
+    openHighlights.setAttribute('aria-expanded', String(open));
+    if (open) highlightsPanel.querySelector('.highlights-close')?.focus();
+  };
+  openHighlights.addEventListener('click', () => setPanel(true));
+  highlightsPanel.querySelector('.highlights-close')?.addEventListener('click', () => setPanel(false));
+  highlightsBackdrop.addEventListener('click', () => setPanel(false));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !highlightsPanel.hidden) setPanel(false);
+  });
+}
+
+function renderHighlightsPanel() {
+  if (!highlightsPanel) return;
+  const list = highlightsPanel.querySelector('.highlights-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (!savedHighlights.length) {
+    const emptyState = document.createElement('div');
+    emptyState.className = 'highlights-empty';
+    emptyState.innerHTML = '<strong>Jeszcze nic tu nie ma.</strong><span>Zaznacz fragment tekstu podczas czytania i wybierz „Zapisz”.</span>';
+    list.appendChild(emptyState);
+    return;
+  }
+
+  savedHighlights.slice().reverse().forEach(item => {
+    const card = document.createElement('article');
+    card.className = 'highlight-card';
+
+    const quote = document.createElement('blockquote');
+    quote.textContent = item.text;
+
+    const meta = document.createElement('div');
+    meta.className = 'highlight-meta';
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.textContent = item.title || 'Artykuł';
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'highlight-remove';
+    remove.textContent = 'Usuń';
+    remove.addEventListener('click', () => {
+      const id = highlightId(item);
+      savedHighlights = savedHighlights.filter(saved => highlightId(saved) !== id);
+      persistHighlights();
+    });
+    meta.append(link, remove);
+    card.append(quote, meta);
+    list.appendChild(card);
+  });
+}
+
+if (readingBody && currentArticleId) {
+  const selectionMenu = document.createElement('div');
+  selectionMenu.className = 'selection-menu';
+  selectionMenu.hidden = true;
+  selectionMenu.innerHTML = '<button type="button" data-action="save">Zapisz</button><button type="button" data-action="copy">Kopiuj</button>';
+  document.body.appendChild(selectionMenu);
+  let selectedText = '';
+
+  function hideSelectionMenu() {
+    selectionMenu.hidden = true;
+    selectedText = '';
+  }
+
+  function showSelectionMenu() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+      hideSelectionMenu();
+      return;
+    }
+    const range = selection.getRangeAt(0);
+    const common = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE
+      ? range.commonAncestorContainer
+      : range.commonAncestorContainer.parentElement;
+    if (!common || !readingBody.contains(common)) {
+      hideSelectionMenu();
+      return;
+    }
+    const text = selection.toString().replace(/\s+/g, ' ').trim();
+    if (text.length < 3) {
+      hideSelectionMenu();
+      return;
+    }
+    selectedText = text.slice(0, 1500);
+    const rect = range.getBoundingClientRect();
+    selectionMenu.style.left = Math.min(window.innerWidth - 150, Math.max(12, rect.left + rect.width / 2 - 66)) + 'px';
+    selectionMenu.style.top = Math.max(10, window.scrollY + rect.top - 48) + 'px';
+    selectionMenu.hidden = false;
+  }
+
+  readingBody.addEventListener('mouseup', () => setTimeout(showSelectionMenu, 0));
+  readingBody.addEventListener('touchend', () => setTimeout(showSelectionMenu, 20));
+  document.addEventListener('mousedown', event => {
+    if (!selectionMenu.hidden && !selectionMenu.contains(event.target)) {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) hideSelectionMenu();
+    }
+  });
+
+  selectionMenu.addEventListener('click', async event => {
+    const button = event.target.closest('button');
+    if (!button || !selectedText) return;
+    const action = button.dataset.action;
+
+    if (action === 'save') {
+      const item = {
+        articleId: currentArticleId,
+        title: document.querySelector('.article-title')?.textContent?.trim() || document.title,
+        text: selectedText,
+        url: window.location.href.split('#')[0],
+        savedAt: new Date().toISOString()
+      };
+      const id = highlightId(item);
+      if (!savedHighlights.some(saved => highlightId(saved) === id)) {
+        savedHighlights.push(item);
+        persistHighlights();
+      }
+      button.textContent = 'Zapisano ✓';
+      setTimeout(() => { button.textContent = 'Zapisz'; hideSelectionMenu(); }, 850);
+    }
+
+    if (action === 'copy') {
+      try {
+        await navigator.clipboard.writeText(selectedText);
+      } catch (_) {
+        const area = document.createElement('textarea');
+        area.value = selectedText;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = 'Skopiowano ✓';
+      setTimeout(() => { button.textContent = 'Kopiuj'; hideSelectionMenu(); }, 850);
+    }
+  });
+}
+
+window.addEventListener('storage', event => {
+  if (event.key !== HIGHLIGHTS_KEY) return;
+  savedHighlights = loadHighlights();
+  refreshHighlightsUI();
+});
+refreshHighlightsUI();
+
 // Keep states in sync if the reader uses multiple tabs of the same site.
 window.addEventListener('storage', event => {
   if (event.key !== READ_STORAGE_KEY) return;
