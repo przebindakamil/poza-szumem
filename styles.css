@@ -181,3 +181,10 @@ button{color:inherit}
 .read-status-button:hover{color:var(--text);border-color:var(--accent)}
 .read-status-button.is-read{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
 @media(max-width:640px){.library-actions{gap:2px}.unread-filter{font-size:.8rem;padding:7px}.card-footer{gap:10px;flex-wrap:wrap}.read-indicator{width:100%}}
+
+/* Discovery: one quiet action for serendipitous reading. */
+.discover-random{display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;border-radius:999px;padding:9px 12px;background:transparent;color:var(--muted);font-size:.9rem;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease}
+.discover-random span{font-size:1.05rem;color:var(--accent)}
+.discover-random:hover{color:var(--text);background:var(--surface);border-color:var(--line);transform:translateY(-1px)}
+.discover-random:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:640px){.discover-random{font-size:.8rem;padding:7px}.discover-random span{display:none}}
