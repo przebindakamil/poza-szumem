@@ -8,6 +8,26 @@ const categoryMenu = document.querySelector('.category-menu');
 const categorySummary = categoryMenu?.querySelector('summary');
 let activeFilter = 'all';
 
+function polishArticleLabel(count) {
+  if (count === 1) return 'artykuł';
+  const lastTwo = count % 100;
+  const last = count % 10;
+  if (last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14)) return 'artykuły';
+  return 'artykułów';
+}
+
+function updateArticleCounter() {
+  const counter = document.querySelector('.orbit-card span');
+  const label = document.querySelector('.orbit-card small');
+  if (!counter || !label) return;
+  const count = cards.length;
+  counter.textContent = String(count);
+  label.textContent = polishArticleLabel(count);
+}
+
+updateArticleCounter();
+
+
 // Ignore accents, casing, and excess whitespace in Polish search terms.
 function normalizeSearch(value = '') {
   return value.toLocaleLowerCase('pl-PL')
