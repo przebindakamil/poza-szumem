@@ -331,7 +331,7 @@ if (headerActions) {
   openHighlights.className = 'icon-button highlights-button';
   openHighlights.setAttribute('aria-label', 'Moje fragmenty');
   openHighlights.setAttribute('aria-expanded', 'false');
-  openHighlights.innerHTML = '<span aria-hidden="true">✦</span><span class="highlights-count" hidden>0</span>';
+  openHighlights.innerHTML = '<span class="saved-icon" aria-hidden="true">🔖</span><span class="highlights-count" hidden>0</span>';
   const themeToggle = headerActions.querySelector('.theme-toggle');
   headerActions.insertBefore(openHighlights, themeToggle || null);
 
