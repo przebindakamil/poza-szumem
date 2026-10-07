@@ -36,6 +36,68 @@ const searchIndex = new Map(cards.map(card => [
   ].join(' '))
 ]));
 
+// Reading status is local to this browser; no account or server required.
+const READ_STORAGE_KEY = 'poza-szumem-read-v1';
+function articleIdFromUrl(href, base = document.baseURI) {
+  try {
+    const url = new URL(href, base);
+    const filename = url.pathname.split('/').pop() || '';
+    return filename.endsWith('.html') ? filename.slice(0, -5) : filename;
+  } catch (_) { return ''; }
+}
+function loadReadArticles() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(READ_STORAGE_KEY) || '[]');
+    return new Set(Array.isArray(stored) ? stored.filter(x => typeof x === 'string') : []);
+  } catch (_) { return new Set(); }
+}
+let readArticles = loadReadArticles();
+let unreadOnly = false;
+function isRead(id) { return Boolean(id) && readArticles.has(id); }
+function persistReadArticles() {
+  try { localStorage.setItem(READ_STORAGE_KEY, JSON.stringify([...readArticles])); }
+  catch (_) { /* Private browsing may not allow persistent storage. */ }
+}
+function setRead(id, value) {
+  if (!id) return;
+  if (value) readArticles.add(id);
+  else readArticles.delete(id);
+  persistReadArticles();
+  refreshReadingStatus();
+}
+function refreshReadingStatus() {
+  cards.forEach(card => {
+    const id = articleIdFromUrl(card.querySelector('.card-link')?.getAttribute('href') || '');
+    const read = isRead(id);
+    card.classList.toggle('is-read', read);
+    let status = card.querySelector('.read-indicator');
+    if (!status) {
+      status = document.createElement('span');
+      status.className = 'read-indicator';
+      status.setAttribute('aria-label', 'Przeczytany');
+      status.textContent = '✓ Przeczytany';
+      card.querySelector('.card-footer')?.prepend(status);
+    }
+    status.hidden = !read;
+  });
+  updateArticles();
+  updateArticleReadButton();
+}
+const unreadFilter = document.querySelector('.library-actions') ? document.createElement('button') : null;
+if (unreadFilter) {
+  unreadFilter.type = 'button';
+  unreadFilter.className = 'unread-filter';
+  unreadFilter.textContent = 'Nieprzeczytane';
+  unreadFilter.setAttribute('aria-pressed', 'false');
+  document.querySelector('.library-actions').prepend(unreadFilter);
+  unreadFilter.addEventListener('click', () => {
+    unreadOnly = !unreadOnly;
+    unreadFilter.classList.toggle('active', unreadOnly);
+    unreadFilter.setAttribute('aria-pressed', String(unreadOnly));
+    updateArticles();
+  });
+}
+
 function updateArticles() {
   const terms = normalizeSearch(search?.value || '').split(' ').filter(Boolean);
   let visible = 0;
@@ -45,7 +107,8 @@ function updateArticles() {
     const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
     const haystack = searchIndex.get(card) || '';
     const searchMatch = terms.every(term => haystack.includes(term));
-    const show = categoryMatch && searchMatch;
+    const id = articleIdFromUrl(card.querySelector('.card-link')?.getAttribute('href') || '');
+    const show = categoryMatch && searchMatch && (!unreadOnly || !isRead(id));
 
     // Both the hidden attribute and inline display are used deliberately:
     // an article card has display:flex and must never override filtering.
@@ -91,8 +154,57 @@ searchToggle?.addEventListener('click', () => {
   }
 });
 
+// A reader can mark an article manually, including reverting an automatic mark.
+// Automatic marking happens only when the reader reaches the final paragraph.
+const readingBody = document.querySelector('.article-shell .article-body');
+const currentArticleId = articleIdFromUrl(window.location.pathname);
+let readButton = null;
+let manualReadChoice = false;
+function updateArticleReadButton() {
+  if (!readButton) return;
+  const read = isRead(currentArticleId);
+  readButton.textContent = read ? '✓ Przeczytany · oznacz jako nieprzeczytany' : '○ Oznacz jako przeczytany';
+  readButton.setAttribute('aria-pressed', String(read));
+  readButton.classList.toggle('is-read', read);
+}
+if (readingBody && currentArticleId) {
+  const control = document.createElement('div');
+  control.className = 'read-control';
+  readButton = document.createElement('button');
+  readButton.className = 'read-status-button';
+  readButton.type = 'button';
+  control.appendChild(readButton);
+  readingBody.insertAdjacentElement('afterend', control);
+  readButton.addEventListener('click', () => {
+    manualReadChoice = true; // Don't immediately re-mark it if still at the end.
+    setRead(currentArticleId, !isRead(currentArticleId));
+  });
+  updateArticleReadButton();
+
+  const finalParagraph = readingBody.querySelector('p:last-of-type');
+  let hasScrolled = false;
+  const markOnFinish = () => {
+    if (manualReadChoice || !hasScrolled || isRead(currentArticleId) || !finalParagraph) return;
+    const end = finalParagraph.getBoundingClientRect();
+    if (end.top < window.innerHeight * 0.82 && end.bottom < window.innerHeight) {
+      setRead(currentArticleId, true);
+    }
+  };
+  window.addEventListener('scroll', () => {
+    hasScrolled = true;
+    markOnFinish();
+  }, { passive: true });
+}
+
+// Keep states in sync if the reader uses multiple tabs of the same site.
+window.addEventListener('storage', event => {
+  if (event.key !== READ_STORAGE_KEY) return;
+  readArticles = loadReadArticles();
+  refreshReadingStatus();
+});
+
 hideEmptyCategories();
-updateArticles();
+refreshReadingStatus();
 
 const progress=document.querySelector('.read-progress');
 if(progress){
