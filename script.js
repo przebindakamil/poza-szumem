@@ -331,7 +331,7 @@ if (headerActions) {
   openHighlights.className = 'icon-button highlights-button';
   openHighlights.setAttribute('aria-label', 'Moje fragmenty');
   openHighlights.setAttribute('aria-expanded', 'false');
-  openHighlights.innerHTML = '<span class="saved-icon" aria-hidden="true">🔖</span><span class="highlights-count" hidden>0</span>';
+  openHighlights.innerHTML = '<span class="saved-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.75 4.75c0-.97.78-1.75 1.75-1.75h7c.97 0 1.75.78 1.75 1.75v15.1a.65.65 0 0 1-1.02.54L12 17.48l-4.23 2.91a.65.65 0 0 1-1.02-.54V4.75Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><span class="highlights-count" hidden>0</span>';
   const themeToggle = headerActions.querySelector('.theme-toggle');
   headerActions.insertBefore(openHighlights, themeToggle || null);
 
