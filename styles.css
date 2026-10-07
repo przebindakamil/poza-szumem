@@ -70,6 +70,7 @@ button{color:inherit}
 
 .article-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px}
 .article-card{position:relative;min-height:390px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.article-card[hidden]{display:none!important}
 .article-card.primary{min-height:470px}
 .article-card::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-120px;bottom:-130px;background:var(--accent-soft);opacity:.48;filter:blur(2px);transition:transform .35s ease}
 .article-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:var(--shadow)}
