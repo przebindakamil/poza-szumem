@@ -83,7 +83,8 @@ function refreshReadingStatus() {
   updateArticles();
   updateArticleReadButton();
 }
-const discoverButton = document.querySelector('.library-actions') ? document.createElement('button') : null;
+const discoverHost = document.querySelector('.hero-discovery');
+const discoverButton = discoverHost ? document.createElement('button') : null;
 if (discoverButton) {
   discoverButton.type = 'button';
   discoverButton.className = 'discover-random';
@@ -102,7 +103,7 @@ if (discoverButton) {
     const picked = pool[Math.floor(Math.random() * pool.length)];
     window.location.href = picked.link;
   });
-  document.querySelector('.library-actions').prepend(discoverButton);
+  discoverHost.appendChild(discoverButton);
 }
 
 const unreadFilter = document.querySelector('.library-actions') ? document.createElement('button') : null;
