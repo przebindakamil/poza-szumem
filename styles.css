@@ -108,6 +108,20 @@ button{color:inherit}
 .article-end{margin-top:56px;padding-top:26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:var(--muted)}
 .article-end a{text-decoration:none;font-weight:750;color:var(--accent)}
 
+/* Recommendations: understated editorial links below the completed text. */
+.related-articles{margin-top:76px;padding-top:35px;border-top:1px solid var(--line)}
+.related-articles h2{margin:0 0 20px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,4vw,2.5rem);font-weight:500;line-height:1.15;letter-spacing:-.025em}
+.related-list{display:grid;gap:0}
+.related-link{position:relative;display:block;padding:23px 42px 24px 0;border-top:1px solid var(--line);text-decoration:none;transition:color .18s ease}
+.related-link:last-child{border-bottom:1px solid var(--line)}
+.related-meta{display:block;margin-bottom:7px;color:var(--muted);font-size:.77rem;letter-spacing:.015em}
+.related-title{display:block;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.35rem,3vw,1.85rem);line-height:1.25;letter-spacing:-.018em}
+.related-arrow{position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:1.25rem;color:var(--accent);transition:transform .2s ease}
+.related-link:hover,.related-link:focus-visible{color:var(--accent)}
+.related-link:hover .related-arrow,.related-link:focus-visible .related-arrow{transform:translate(4px,-50%)}
+.related-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+
 ::selection{background:var(--accent);color:var(--bg)}
 
 @media(max-width:820px){
