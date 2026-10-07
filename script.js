@@ -83,6 +83,28 @@ function refreshReadingStatus() {
   updateArticles();
   updateArticleReadButton();
 }
+const discoverButton = document.querySelector('.library-actions') ? document.createElement('button') : null;
+if (discoverButton) {
+  discoverButton.type = 'button';
+  discoverButton.className = 'discover-random';
+  discoverButton.innerHTML = '<span aria-hidden="true">↝</span> Odkryj coś nowego';
+  discoverButton.setAttribute('aria-label', 'Otwórz losowy nieprzeczytany artykuł');
+  discoverButton.addEventListener('click', () => {
+    const available = cards.map(card => {
+      const link = card.querySelector('.card-link')?.getAttribute('href') || '';
+      return { link, id: articleIdFromUrl(link) };
+    }).filter(item => item.link);
+
+    const unread = available.filter(item => !isRead(item.id));
+    const pool = unread.length ? unread : available;
+    if (!pool.length) return;
+
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    window.location.href = picked.link;
+  });
+  document.querySelector('.library-actions').prepend(discoverButton);
+}
+
 const unreadFilter = document.querySelector('.library-actions') ? document.createElement('button') : null;
 if (unreadFilter) {
   unreadFilter.type = 'button';
