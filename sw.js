@@ -1,10 +1,10 @@
-const CACHE_NAME = 'poza-szumem-v1';
+const CACHE_NAME = 'poza-szumem-v2';
 const ROOT = new URL('./', self.location.href);
 const CORE = [
   new URL('./', ROOT).href,
   new URL('index.html', ROOT).href,
-  new URL('styles.css?v=20261007g', ROOT).href,
-  new URL('script.js?v=20261007g', ROOT).href,
+  new URL('styles.css?v=20261007h', ROOT).href,
+  new URL('script.js?v=20261007h', ROOT).href,
   new URL('manifest.webmanifest', ROOT).href,
   new URL('icon.svg', ROOT).href
 ];
