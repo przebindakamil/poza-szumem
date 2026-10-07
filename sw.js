@@ -1,12 +1,14 @@
-const CACHE_NAME = 'poza-szumem-v2';
+const CACHE_NAME = 'poza-szumem-v3';
 const ROOT = new URL('./', self.location.href);
 const CORE = [
   new URL('./', ROOT).href,
   new URL('index.html', ROOT).href,
-  new URL('styles.css?v=20261007h', ROOT).href,
-  new URL('script.js?v=20261007h', ROOT).href,
+  new URL('styles.css?v=20261007i', ROOT).href,
+  new URL('script.js?v=20261007i', ROOT).href,
   new URL('manifest.webmanifest', ROOT).href,
-  new URL('icon.svg', ROOT).href
+  new URL('icon.svg', ROOT).href,
+  new URL('icon-192.svg', ROOT).href,
+  new URL('icon-512.svg', ROOT).href
 ];
 
 async function cacheArticlesFromIndex(response) {
