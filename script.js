@@ -218,6 +218,84 @@ if (readingBody && currentArticleId) {
   }, { passive: true });
 }
 
+// Focus mode strips the article down to the reading experience.
+const FOCUS_SIZE_KEY = 'poza-szumem-reader-size-v1';
+const articleShell = document.querySelector('.article-shell');
+if (articleShell && readingBody) {
+  const focusBar = document.createElement('div');
+  focusBar.className = 'focus-bar';
+
+  const focusToggle = document.createElement('button');
+  focusToggle.type = 'button';
+  focusToggle.className = 'focus-toggle';
+  focusToggle.innerHTML = '<span aria-hidden="true">◎</span><span class="focus-label">Tryb skupienia</span>';
+  focusToggle.setAttribute('aria-pressed', 'false');
+
+  const sizeControls = document.createElement('div');
+  sizeControls.className = 'reader-size-controls';
+  sizeControls.hidden = true;
+
+  const smaller = document.createElement('button');
+  smaller.type = 'button';
+  smaller.className = 'reader-size-button';
+  smaller.textContent = 'A−';
+  smaller.setAttribute('aria-label', 'Zmniejsz tekst');
+
+  const larger = document.createElement('button');
+  larger.type = 'button';
+  larger.className = 'reader-size-button';
+  larger.textContent = 'A+';
+  larger.setAttribute('aria-label', 'Powiększ tekst');
+
+  sizeControls.append(smaller, larger);
+  focusBar.append(focusToggle, sizeControls);
+  document.body.appendChild(focusBar);
+
+  const sizes = ['compact', 'normal', 'large'];
+  let readerSize = 'normal';
+  try {
+    const storedSize = localStorage.getItem(FOCUS_SIZE_KEY);
+    if (sizes.includes(storedSize)) readerSize = storedSize;
+  } catch (_) {}
+
+  function applyReaderSize() {
+    document.documentElement.dataset.readerSize = readerSize;
+    smaller.disabled = readerSize === 'compact';
+    larger.disabled = readerSize === 'large';
+  }
+
+  function changeReaderSize(direction) {
+    const index = sizes.indexOf(readerSize);
+    const next = Math.min(sizes.length - 1, Math.max(0, index + direction));
+    readerSize = sizes[next];
+    try { localStorage.setItem(FOCUS_SIZE_KEY, readerSize); } catch (_) {}
+    applyReaderSize();
+  }
+
+  function setFocusMode(active) {
+    document.body.classList.toggle('focus-mode', active);
+    focusToggle.classList.toggle('active', active);
+    focusToggle.setAttribute('aria-pressed', String(active));
+    focusToggle.querySelector('.focus-label').textContent = active ? 'Wyjdź ze skupienia' : 'Tryb skupienia';
+    focusToggle.querySelector('span[aria-hidden="true"]').textContent = active ? '×' : '◎';
+    sizeControls.hidden = !active;
+  }
+
+  focusToggle.addEventListener('click', () => {
+    setFocusMode(!document.body.classList.contains('focus-mode'));
+  });
+  smaller.addEventListener('click', () => changeReaderSize(-1));
+  larger.addEventListener('click', () => changeReaderSize(1));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && document.body.classList.contains('focus-mode')) {
+      setFocusMode(false);
+      focusToggle.focus();
+    }
+  });
+
+  applyReaderSize();
+}
+
 // Keep states in sync if the reader uses multiple tabs of the same site.
 window.addEventListener('storage', event => {
   if (event.key !== READ_STORAGE_KEY) return;
