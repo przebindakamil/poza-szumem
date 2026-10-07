@@ -229,6 +229,21 @@ body.highlights-open{overflow:hidden}
 .highlights-button .highlights-count{right:-3px;top:-4px;min-width:16px;height:16px;padding:0 4px;border:2px solid var(--bg);border-radius:999px;background:var(--accent);color:var(--bg);font-size:.58rem;font-weight:800;line-height:12px;text-align:center}
 .site-header.scrolled .highlights-button .highlights-count{border-color:color-mix(in srgb,var(--bg) 84%,transparent)}
 
-.pwa-install{border:0;background:transparent;color:var(--muted);font-size:.8rem;cursor:pointer;padding:0}
-.pwa-install:hover{color:var(--accent)}
+.pwa-install{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:11px 14px;background:transparent;color:var(--muted);font-size:.86rem;font-weight:700;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease}
+.pwa-install:hover,.pwa-install.native-install-ready{color:var(--text);background:var(--surface);border-color:color-mix(in srgb,var(--accent) 32%,var(--line));transform:translateY(-1px)}
 .pwa-install[hidden]{display:none!important}
+.pwa-install-icon{display:grid;place-items:center;width:18px;height:18px;color:var(--accent)}
+.pwa-install-icon svg{display:block;width:18px;height:18px}
+.install-dialog[hidden]{display:none!important}
+.install-dialog{position:fixed;inset:0;z-index:100}
+.install-dialog-backdrop{position:absolute;inset:0;background:rgba(10,14,11,.34);backdrop-filter:blur(4px)}
+.install-dialog-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(430px,calc(100% - 32px));padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.install-dialog-card h2{margin:.18em 36px 18px 0;font-family:Georgia,"Times New Roman",serif;font-size:2rem;line-height:1.05;font-weight:500;letter-spacing:-.03em}
+.install-dialog-copy{color:var(--muted)}
+.install-dialog-copy p{margin:0 0 14px}
+.install-dialog-copy ol{margin:10px 0 0;padding-left:22px}
+.install-dialog-copy li{margin:.55em 0}
+.install-dialog-copy strong{color:var(--text)}
+.install-dialog-close{position:absolute;right:16px;top:16px;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--muted);font-size:1.25rem;cursor:pointer}
+.install-dialog-close:hover{color:var(--text);border-color:var(--accent)}
+body.install-dialog-open{overflow:hidden}
