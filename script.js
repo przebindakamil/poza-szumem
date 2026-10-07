@@ -649,7 +649,7 @@ async function renderRelatedArticles() {
 renderRelatedArticles();
 
 
-// PWA: offline reading and optional installation on supported browsers.
+// PWA: offline reading plus an install entry point that also works on iOS.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     const swUrl = window.location.pathname.includes('/artykuly/') ? '../sw.js' : './sw.js';
@@ -658,29 +658,89 @@ if ('serviceWorker' in navigator) {
 }
 
 let deferredInstallPrompt = null;
-const footer = document.querySelector('.footer');
+const isStandalone = window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
+
+const installHost = document.querySelector('.hero-discovery') || document.querySelector('.footer');
 let installButton = null;
-if (footer) {
+let installDialog = null;
+
+function closeInstallDialog() {
+  if (!installDialog) return;
+  installDialog.hidden = true;
+  document.body.classList.remove('install-dialog-open');
+}
+
+function showInstallInstructions() {
+  if (!installDialog) {
+    installDialog = document.createElement('div');
+    installDialog.className = 'install-dialog';
+    installDialog.hidden = true;
+    installDialog.innerHTML =
+      '<div class="install-dialog-backdrop" data-close-install></div>' +
+      '<section class="install-dialog-card" role="dialog" aria-modal="true" aria-labelledby="install-dialog-title">' +
+      '<button type="button" class="install-dialog-close" data-close-install aria-label="Zamknij">×</button>' +
+      '<span class="eyebrow">Poza Szumem</span>' +
+      '<h2 id="install-dialog-title">Zainstaluj jako aplikację</h2>' +
+      '<div class="install-dialog-copy"></div>' +
+      '</section>';
+    document.body.appendChild(installDialog);
+    installDialog.addEventListener('click', event => {
+      if (event.target.closest('[data-close-install]')) closeInstallDialog();
+    });
+  }
+
+  const copy = installDialog.querySelector('.install-dialog-copy');
+  if (isIOS && isSafari) {
+    copy.innerHTML =
+      '<p>Na iPhonie instalacja odbywa się z menu Safari.</p>' +
+      '<ol><li>Stuknij <strong>Udostępnij</strong>.</li>' +
+      '<li>Wybierz <strong>Dodaj do ekranu początkowego</strong>.</li>' +
+      '<li>Włącz <strong>Otwórz jako aplikację</strong> i wybierz <strong>Dodaj</strong>.</li></ol>';
+  } else if (isIOS) {
+    copy.innerHTML =
+      '<p>Na iPhonie aplikacje webowe instaluje się przez Safari.</p>' +
+      '<ol><li>Otwórz tę stronę w <strong>Safari</strong>.</li>' +
+      '<li>Stuknij <strong>Udostępnij</strong>.</li>' +
+      '<li>Wybierz <strong>Dodaj do ekranu początkowego</strong>.</li></ol>';
+  } else {
+    copy.innerHTML =
+      '<p>Twoja przeglądarka nie udostępniła jeszcze systemowego okna instalacji.</p>' +
+      '<p>Użyj opcji <strong>Zainstaluj aplikację</strong> lub <strong>Dodaj do ekranu głównego</strong> w menu przeglądarki.</p>';
+  }
+
+  installDialog.hidden = false;
+  document.body.classList.add('install-dialog-open');
+  installDialog.querySelector('.install-dialog-close')?.focus();
+}
+
+if (installHost && !isStandalone) {
   installButton = document.createElement('button');
   installButton.type = 'button';
   installButton.className = 'pwa-install';
   installButton.id = 'poza-szumem-install';
-  installButton.textContent = 'Dodaj do ekranu';
-  installButton.hidden = true;
-  footer.insertBefore(installButton, footer.lastElementChild);
+  installButton.innerHTML =
+    '<span class="pwa-install-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16.5v1.75A2.75 2.75 0 0 0 7.75 21h8.5A2.75 2.75 0 0 0 19 18.25V16.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
+    '<span>Zainstaluj aplikację</span>';
+  installHost.appendChild(installButton);
 
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    installButton.hidden = false;
+    installButton.classList.add('native-install-ready');
   });
 
   installButton.addEventListener('click', async () => {
-    if (!deferredInstallPrompt) return;
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    installButton.hidden = true;
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      if (choice?.outcome === 'accepted') installButton.hidden = true;
+      deferredInstallPrompt = null;
+      return;
+    }
+    showInstallInstructions();
   });
 
   window.addEventListener('appinstalled', () => {
@@ -688,3 +748,8 @@ if (footer) {
     installButton.hidden = true;
   });
 }
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && installDialog && !installDialog.hidden) closeInstallDialog();
+});
+
