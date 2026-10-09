@@ -1,32 +1,30 @@
-const CACHE_NAME = 'poza-szumem-v3';
+const CACHE_PREFIX = 'poza-szumem-';
+const CACHE_NAME = CACHE_PREFIX + '20261009a';
 const ROOT = new URL('./', self.location.href);
-const CORE = [
-  new URL('./', ROOT).href,
-  new URL('index.html', ROOT).href,
-  new URL('styles.css?v=20261007i', ROOT).href,
-  new URL('script.js?v=20261007i', ROOT).href,
-  new URL('manifest.webmanifest', ROOT).href,
-  new URL('icon.svg', ROOT).href,
-  new URL('icon-192.svg', ROOT).href,
-  new URL('icon-512.svg', ROOT).href
-];
+const CORE = ['./', 'index.html', 'styles.css?v=20261009a', 'script.js?v=20261009a',
+  'manifest.webmanifest', 'icon.svg', 'icon-192.svg', 'icon-512.svg'].map(path => new URL(path, ROOT).href);
 
-async function cacheArticlesFromIndex(response) {
+async function timedFetch(request) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 4000);
   try {
-    const html = await response.clone().text();
-    const paths = [...html.matchAll(/href=["'](artykuly\/[^"']+\.html)["']/g)].map(match => match[1]);
-    const unique = [...new Set(paths)];
+    return await fetch(request, { signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function remember(request, response) {
+  if (response?.ok && response.type !== 'opaque') {
     const cache = await caches.open(CACHE_NAME);
-    await Promise.allSettled(unique.map(path => cache.add(new URL(path, ROOT).href)));
-  } catch (_) {}
+    await cache.put(request, response.clone());
+  }
 }
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(CORE);
-    const indexResponse = await fetch(new URL('index.html', ROOT));
-    if (indexResponse.ok) await cacheArticlesFromIndex(indexResponse);
     await self.skipWaiting();
   })());
 });
@@ -34,7 +32,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
+    await Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
@@ -43,37 +41,44 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-
-  if (request.mode === 'navigate') {
-    event.respondWith((async () => {
+  if (url.origin !== ROOT.origin || !url.pathname.startsWith(ROOT.pathname)) return;
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    if (request.mode === 'navigate') {
       try {
-        const response = await fetch(request);
-        if (response && response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(request, response.clone());
-          if (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html')) {
-            cacheArticlesFromIndex(response);
-          }
+        const response = await timedFetch(request);
+        if (response.ok) {
+          event.waitUntil(remember(request, response));
+          return response;
+        }
+        // Preserve real 404s; an unavailable server can use an exact saved page.
+        if (response.status >= 500) {
+          const saved = await cache.match(request);
+          if (saved) return saved;
         }
         return response;
       } catch (_) {
-        return (await caches.match(request)) || (await caches.match(new URL('index.html', ROOT).href));
+        const saved = await cache.match(request);
+        if (saved) return saved;
+        const homePath = url.pathname === ROOT.pathname || url.pathname === new URL('index.html', ROOT).pathname;
+        if (homePath) {
+          const home = await cache.match(new URL('index.html', ROOT).href);
+          if (home) return home;
+        }
+        return new Response('<!doctype html><html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Poza Szumem</title><body><main><h1>Ten tekst nie jest jeszcze zapisany offline.</h1><p>Polacz sie z internetem i otworz go ponownie.</p><a href="' + ROOT.href + '">Wroc do biblioteki</a></main></body></html>', {
+          status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
       }
-    })());
-    return;
-  }
-
-  event.respondWith((async () => {
-    const cached = await caches.match(request);
-    const networkPromise = fetch(request).then(async response => {
-      if (response && response.ok) {
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(request, response.clone());
-      }
+    }
+    const saved = await cache.match(request);
+    const update = timedFetch(request).then(async response => {
+      await remember(request, response);
       return response;
     }).catch(() => null);
-
-    return cached || (await networkPromise) || Response.error();
+    if (saved) {
+      event.waitUntil(update);
+      return saved;
+    }
+    return (await update) || Response.error();
   })());
 });

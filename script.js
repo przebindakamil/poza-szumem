@@ -322,7 +322,7 @@ const HIGHLIGHTS_KEY = 'poza-szumem-highlights-v1';
 function loadHighlights() {
   try {
     const value = JSON.parse(localStorage.getItem(HIGHLIGHTS_KEY) || '[]');
-    return Array.isArray(value) ? value : [];
+    return Array.isArray(value) ? value.filter(item => item && typeof item.text === 'string' && typeof item.articleId === 'string' && typeof item.url === 'string' && (() => { try { const url = new URL(item.url, document.baseURI); return ['http:', 'https:', 'file:'].includes(url.protocol) && url.origin === location.origin; } catch (_) { return false; } })()) : [];
   } catch (_) { return []; }
 }
 let savedHighlights = loadHighlights();
@@ -542,14 +542,16 @@ if(progress){
 
 const themeButton=document.querySelector('.theme-toggle');
 const root=document.documentElement;
-const savedTheme=localStorage.getItem('poza-szumem-theme');
+let savedTheme = null;
+try { savedTheme = localStorage.getItem('poza-szumem-theme'); } catch (_) {}
+if (!['light', 'dark'].includes(savedTheme)) savedTheme = null;
 const systemDark=window.matchMedia?.('(prefers-color-scheme: dark)').matches;
 root.dataset.theme=savedTheme||(systemDark?'dark':'light');
 
 themeButton?.addEventListener('click',()=>{
   const next=root.dataset.theme==='dark'?'light':'dark';
   root.dataset.theme=next;
-  localStorage.setItem('poza-szumem-theme',next);
+  try { localStorage.setItem('poza-szumem-theme',next); } catch (_) {}
 });
 
 const header=document.querySelector('.site-header');
@@ -673,7 +675,7 @@ renderRelatedArticles();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     const swUrl = window.location.pathname.includes('/artykuly/') ? '../sw.js' : './sw.js';
-    navigator.serviceWorker.register(swUrl).catch(() => {});
+    navigator.serviceWorker.register(swUrl, { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {});
   });
 }
 
