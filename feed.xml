@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Poza Szumem</title>
+        <link>https://przebindakamil.github.io/poza-szumem/</link>
+        <description>Eseje, reportaże i teksty warte uwagi.</description>
+        <lastBuildDate>Fri, 09 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>pl</language>
+        <image>
+            <title>Poza Szumem</title>
+            <url>https://przebindakamil.github.io/poza-szumem/assets/share.png</url>
+            <link>https://przebindakamil.github.io/poza-szumem/</link>
+        </image>
+        <copyright>Poza Szumem</copyright>
+        <item>
+            <title><![CDATA[Firma, w której wszyscy są zajęci, a nic nie jest gotowe]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/firma-w-ktorej-wszyscy-sa-zajeci-a-nic-nie-jest-gotowe.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/firma-w-ktorej-wszyscy-sa-zajeci-a-nic-nie-jest-gotowe.html</guid>
+            <pubDate>Fri, 09 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Dlaczego pełne kalendarze i maksymalne obłożenie potrafią wydłużać kolejki, zamiast przyspieszać pracę.]]></description>
+            <category>Finanse i biznes</category>
+        </item>
+        <item>
+            <title><![CDATA[Dzień, w którym miasta przestały mieć własną godzinę]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dzien-w-ktorym-miasta-przestaly-miec-wlasna-godzine.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dzien-w-ktorym-miasta-przestaly-miec-wlasna-godzine.html</guid>
+            <pubDate>Thu, 08 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Zanim powstały strefy czasowe, każde miasto mogło mieć własne południe. Dopiero kolej zmusiła świat, by uzgodnił, która jest godzina.]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego tak trudno odejść od czegoś, w co włożyliśmy już dużo życia]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-tak-trudno-odejsc-od-czegos-w-co-wlozylismy-juz-duzo-zycia.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-tak-trudno-odejsc-od-czegos-w-co-wlozylismy-juz-duzo-zycia.html</guid>
+            <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Dlaczego przeszły wysiłek tak łatwo staje się argumentem za kolejnymi latami — nawet jeśli przyszłość nie wygląda już przekonująco.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Co naprawdę dzieje się w głowie modelu AI, kiedy z nim rozmawiasz]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/co-naprawde-dzieje-sie-w-glowie-modelu-ai.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/co-naprawde-dzieje-sie-w-glowie-modelu-ai.html</guid>
+            <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Jak modele językowe uczą się wzorców, generują odpowiedzi i dlaczego potrafią tak przekonująco się mylić.]]></description>
+            <category>AI i technologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Dom, który psuje się po cichu]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dom-ktory-psuje-sie-po-cichu.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dom-ktory-psuje-sie-po-cichu.html</guid>
+            <pubDate>Sun, 04 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O wilgoci, pęknięciach i drobnych sygnałach, które pozwalają dostrzec kosztowny problem, zanim naprawdę się rozwinie.]]></description>
+            <category>Dom i codzienność</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego po ciężkim treningu nie stajesz się silniejszy]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-po-ciezkim-treningu-nie-stajesz-sie-silniejszy.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-po-ciezkim-treningu-nie-stajesz-sie-silniejszy.html</guid>
+            <pubDate>Sat, 03 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O adaptacji, śnie i regeneracji, bez których nawet najlepszy plan treningowy nie przynosi oczekiwanych rezultatów.]]></description>
+            <category>Sport i zdrowie</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego woda może zagotować się wcześniej w górach, a makaron później]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-woda-wrze-wczesniej-w-gorach-a-makaron-pozniej.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-woda-wrze-wczesniej-w-gorach-a-makaron-pozniej.html</guid>
+            <pubDate>Fri, 02 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Od wrzącego garnka w Himalajach po lodówkę i nurkowanie: zaskakująco wiele codziennych zjawisk łączy ciśnienie.]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Najlepsza mapa świata zaczęła się od problemu, którego nie da się rozwiązać]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/najlepsza-mapa-swiata-zaczela-sie-od-problemu.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/najlepsza-mapa-swiata-zaczela-sie-od-problemu.html</guid>
+            <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Każda mapa musi coś zniekształcić. Podobnie jest z liczbami i modelami, których używamy do rozumienia świata.]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Człowiek, który nauczył świat myć ręce, został uznany za wariata]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-ktory-nauczyl-swiat-myc-rece.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-ktory-nauczyl-swiat-myc-rece.html</guid>
+            <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Ignaz Semmelweis zauważył, że odkażanie rąk może ratować życie pacjentek. Dlaczego tak trudno było przekonać do tego innych lekarzy?]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego dobra rozmowa nie polega na mówieniu ciekawych rzeczy]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy.html</guid>
+            <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O pytaniach, uważności i zwyczajnej ciekawości, która pozwala zobaczyć w drugim człowieku coś więcej niż kilka faktów.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Najbardziej niebezpieczna liczba w twoich finansach to ta, do której szybko się przyzwyczajasz]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/najbardziej-niebezpieczna-liczba-w-twoich-finansach.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/najbardziej-niebezpieczna-liczba-w-twoich-finansach.html</guid>
+            <pubDate>Mon, 28 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Dlaczego rosnąca pensja nie zawsze oznacza większą swobodę — i co naprawdę kupujemy, kiedy nie wydajemy wszystkiego.]]></description>
+            <category>Finanse i biznes</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego pamiętamy życie w scenach, a nie w godzinach]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-pamietamy-zycie-w-scenach-a-nie-w-godzinach.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-pamietamy-zycie-w-scenach-a-nie-w-godzinach.html</guid>
+            <pubDate>Sun, 27 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O tym, dlaczego niektóre dni zapamiętujemy na całe życie, podczas gdy całe miesiące potrafią zniknąć bez śladu.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego kiedyś mieliśmy więcej czasu, choć mieliśmy mniej udogodnień]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-kiedys-mielismy-wiecej-czasu.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-kiedys-mielismy-wiecej-czasu.html</guid>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Technologia potrafi oszczędzić nam godziny. Dlaczego więc tak często mamy poczucie, że cały dzień przecieka nam przez palce?]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Od przypadkowego odkrycia do leku, który zmienił medycynę]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/od-przypadkowego-odkrycia-do-leku-ktory-zmienil-medycyne.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/od-przypadkowego-odkrycia-do-leku-ktory-zmienil-medycyne.html</guid>
+            <pubDate>Fri, 25 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Przypadkowa obserwacja Fleminga była początkiem historii. Żeby penicylina mogła ratować życie, potrzebne były lata badań i zupełnie nowy sposób produkcji leków.]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego świat wydaje się prostszy, kiedy wiemy o nim mniej]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-swiat-wydaje-sie-prostszy-kiedy-wiemy-o-nim-mniej.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-swiat-wydaje-sie-prostszy-kiedy-wiemy-o-nim-mniej.html</guid>
+            <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Im więcej poznajemy, tym wyraźniej widzimy, ile jeszcze zostało do zrozumienia.]]></description>
+            <category>Świat i nauka</category>
+        </item>
+        <item>
+            <title><![CDATA[Człowiek nie został stworzony do siedzenia. Ale problem jest trochę inny, niż myślimy]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-nie-zostal-stworzony-do-siedzenia.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-nie-zostal-stworzony-do-siedzenia.html</guid>
+            <pubDate>Wed, 23 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O tym, dlaczego godzinny trening nie zawsze równoważy cały dzień bez ruchu i czemu najważniejsza aktywność bywa tą, której nawet nie nazywamy sportem.]]></description>
+            <category>Sport i zdrowie</category>
+        </item>
+        <item>
+            <title><![CDATA[Najdroższe rzeczy w życiu często nic nie kosztują]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/najdrozsze-rzeczy-w-zyciu-czesto-nic-nie-kosztuja.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/najdrozsze-rzeczy-w-zyciu-czesto-nic-nie-kosztuja.html</guid>
+            <pubDate>Wed, 23 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O adaptacji hedonicznej, porównaniach społecznych i wartości chwil, które na co dzień niemal umykają uwadze.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Człowiek, który zawsze czekał na lepszy moment]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-ktory-zawsze-czekal-na-lepszy-moment.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/czlowiek-ktory-zawsze-czekal-na-lepszy-moment.html</guid>
+            <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O odkładaniu życia na później, kosztach niewykorzystanych możliwości i o tym, że niektóre doświadczenia mają swój najlepszy moment.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+        <item>
+            <title><![CDATA[Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?]]></title>
+            <link>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html</link>
+            <guid>https://przebindakamil.github.io/poza-szumem/artykuly/dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni.html</guid>
+            <pubDate>Mon, 21 Sep 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[O efekcie reflektora, społecznej niezręczności i o tym, dlaczego działanie często daje nam więcej niż kolejne godziny przygotowań.]]></description>
+            <category>Rozwój i psychologia</category>
+        </item>
+    </channel>
+</rss>

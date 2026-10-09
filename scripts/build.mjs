@@ -152,7 +152,9 @@ for (const record of records) {
   const paragraphs = body.find('p').toArray();
   paragraphs.forEach((node, index) => { $(node).attr('id', 'reading-p-' + index); });
   for (const [index, title] of record.headings) {
-    if (paragraphs[index] && !body.find('#section-' + index).length) $(paragraphs[index]).before('<h2 id="section-' + index + '">' + escape(title) + '</h2>');
+    const existing = body.find('#section-' + index);
+    if (existing.length) existing.text(title);
+    else if (paragraphs[index]) $(paragraphs[index]).before('<h2 id="section-' + index + '">' + escape(title) + '</h2>');
   }
   const headings = body.find('h2, h3').toArray();
   if (headings.length > 1) {
@@ -177,7 +179,7 @@ home('.featured-reading h2 a').text(recommended.title).attr('href', 'artykuly/' 
 home('.featured-reading p').text(recommended.excerpt);
 home('.featured-meta').text(categoryLabels[recommended.category]);
 const categoryCounts = Object.entries(categoryLabels).map(([id, name]) => ({ id, name, count: records.filter(record => record.category === id).length })).filter(category => category.count);
-home('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + category.count + ' tekstów</small></a>').join(''));
+home('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + textCount(category.count) + '</small></a>').join(''));
 metadata(home, 'Poza Szumem — teksty warte uwagi', 'Spokojna biblioteka esejów, reportaży i tekstów, do których warto wracać.', 'index.html', { '@type': 'WebSite', name: 'Poza Szumem', url: site.href, inLanguage: 'pl' });
 await writePage(home, 'index.html');
 
@@ -190,7 +192,7 @@ function collection(title, excerpt, subset, file, category) {
   $('.hero p').text(excerpt);
   $('.hero-orbit, .featured-reading, .categories-section').remove();
   $('.article-grid').html(subset.map(card).join(''));
-  $('.library-count').text(subset.length + ' tekstów');
+  $('.library-count').text(textCount(subset.length));
   metadata($, title + ' — Poza Szumem', excerpt, file, {
     '@type': 'CollectionPage', name: title, url: new URL(file, site).href, inLanguage: 'pl',
     mainEntity: { '@type': 'ItemList', itemListElement: subset.map((record, index) => ({ '@type': 'ListItem', position: index + 1, url: new URL('artykuly/' + record.slug + '.html', site).href, name: record.title })) }
@@ -202,7 +204,7 @@ const categoryIndex = load(homepage);
 categoryIndex('.hero h1').text('Kategorie');
 categoryIndex('.hero p').text('Psychologia, nauka, technologia i codzienność.');
 categoryIndex('.featured-reading, .library, .hero-orbit, .search-toggle, .hero-discovery').remove();
-categoryIndex('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + category.count + ' tekstów</small></a>').join(''));
+categoryIndex('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + textCount(category.count) + '</small></a>').join(''));
 metadata(categoryIndex, 'Kategorie — Poza Szumem', 'Teksty z biblioteki Poza Szumem według tematów.', 'kategorie/index.html', { '@type': 'CollectionPage', name: 'Kategorie', inLanguage: 'pl' });
 await writePage(categoryIndex, 'kategorie/index.html');
 pageFiles.push('kategorie/index.html');
@@ -217,7 +219,7 @@ seriesIndex('.hero h1').text('Serie');
 seriesIndex('.hero p').text('Historie i idee połączone wspólnym tematem.');
 seriesIndex('.featured-reading, .library, .hero-orbit, .search-toggle, .hero-discovery').remove();
 seriesIndex('#categories-heading').text('Serie tematyczne');
-seriesIndex('.category-index').html(seriesNames.map(name => '<a href="serie/' + slugify(name) + '.html"><span>' + escape(name) + '</span><small>' + records.filter(record => record.series === name).length + ' tekstów</small></a>').join(''));
+seriesIndex('.category-index').html(seriesNames.map(name => '<a href="serie/' + slugify(name) + '.html"><span>' + escape(name) + '</span><small>' + textCount(records.filter(record => record.series === name).length) + '</small></a>').join(''));
 metadata(seriesIndex, 'Serie — Poza Szumem', 'Serie tematyczne z biblioteki Poza Szumem.', 'serie/index.html', { '@type': 'CollectionPage', name: 'Serie', inLanguage: 'pl' });
 await writePage(seriesIndex, 'serie/index.html');
 pageFiles.push('serie/index.html');

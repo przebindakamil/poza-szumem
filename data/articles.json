@@ -1,0 +1,344 @@
+[
+  {
+    "slug": "firma-w-ktorej-wszyscy-sa-zajeci-a-nic-nie-jest-gotowe",
+    "title": "Firma, w której wszyscy są zajęci, a nic nie jest gotowe",
+    "excerpt": "Dlaczego pełne kalendarze i maksymalne obłożenie potrafią wydłużać kolejki, zamiast przyspieszać pracę.",
+    "date": "2026-10-09",
+    "category": "finanse",
+    "minutes": 8,
+    "author": "Poza Szumem",
+    "updated": "2026-10-09",
+    "series": "Praca i decyzje",
+    "sources": [
+      {
+        "title": "MIT — Queuing models and Little’s law",
+        "url": "https://web.mit.edu/1.041/www/lectures/L8-queuing-models-2026sp.pdf"
+      }
+    ],
+    "keywords": "firma w której wszyscy są zajęci a nic nie jest gotowe kolejki erlang little produktywność zadania obłożenie praca zarządzanie"
+  },
+  {
+    "slug": "dzien-w-ktorym-miasta-przestaly-miec-wlasna-godzine",
+    "title": "Dzień, w którym miasta przestały mieć własną godzinę",
+    "excerpt": "Zanim powstały strefy czasowe, każde miasto mogło mieć własne południe. Dopiero kolej zmusiła świat, by uzgodnił, która jest godzina.",
+    "date": "2026-10-08",
+    "category": "swiat",
+    "minutes": 7,
+    "author": "Poza Szumem",
+    "updated": "2026-10-08",
+    "series": "Historie odkryć",
+    "sources": [
+      {
+        "title": "Royal Museums Greenwich — The Greenwich Time Ball",
+        "url": "https://www.rmg.co.uk/stories/time/greenwich-time-ball-one-time-all"
+      }
+    ],
+    "keywords": "dzień, w którym miasta przestały mieć własną godzinę zanim powstały strefy czasowe, każde miasto mogło mieć własne południe. dopiero kolej zmusiła świat, by uzgodnił, która jest godzina. kolej pociągi zegary strefy czasowe greenwich południe historia czas słoneczny telegraf 1883 1884"
+  },
+  {
+    "slug": "dlaczego-tak-trudno-odejsc-od-czegos-w-co-wlozylismy-juz-duzo-zycia",
+    "title": "Dlaczego tak trudno odejść od czegoś, w co włożyliśmy już dużo życia",
+    "excerpt": "Dlaczego przeszły wysiłek tak łatwo staje się argumentem za kolejnymi latami — nawet jeśli przyszłość nie wygląda już przekonująco.",
+    "date": "2026-10-06",
+    "category": "rozwoj",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-10-06",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Arkes i Blumer — The psychology of sunk cost",
+        "url": "https://www.sciencedirect.com/science/article/pii/0749597885900494"
+      }
+    ],
+    "keywords": "dlaczego tak trudno odejść od czegoś w co włożyliśmy już dużo życia koszt utopiony sunk cost concorde fallacy decyzje rezygnacja praca psychologia"
+  },
+  {
+    "slug": "co-naprawde-dzieje-sie-w-glowie-modelu-ai",
+    "title": "Co naprawdę dzieje się w głowie modelu AI, kiedy z nim rozmawiasz",
+    "excerpt": "Jak modele językowe uczą się wzorców, generują odpowiedzi i dlaczego potrafią tak przekonująco się mylić.",
+    "date": "2026-10-05",
+    "category": "ai",
+    "minutes": 5,
+    "author": "Poza Szumem",
+    "updated": "2026-10-05",
+    "series": "Jak działa świat",
+    "sources": [
+      {
+        "title": "Vaswani i in. — Attention Is All You Need",
+        "url": "https://arxiv.org/abs/1706.03762"
+      }
+    ],
+    "keywords": "co naprawdę dzieje się w głowie modelu ai, kiedy z nim rozmawiasz sztuczna inteligencja ai chatgpt modele językowe tokeny transformer halucynacje uczenie"
+  },
+  {
+    "slug": "dom-ktory-psuje-sie-po-cichu",
+    "title": "Dom, który psuje się po cichu",
+    "excerpt": "O wilgoci, pęknięciach i drobnych sygnałach, które pozwalają dostrzec kosztowny problem, zanim naprawdę się rozwinie.",
+    "date": "2026-10-04",
+    "category": "dom",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-10-04",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "US EPA — A Brief Guide to Mold, Moisture and Your Home",
+        "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+      }
+    ],
+    "keywords": "dom, który psuje się po cichu dom remont budynek wilgoć pleśń izolacja skraplanie pęknięcia przegląd"
+  },
+  {
+    "slug": "dlaczego-po-ciezkim-treningu-nie-stajesz-sie-silniejszy",
+    "title": "Dlaczego po ciężkim treningu nie stajesz się silniejszy",
+    "excerpt": "O adaptacji, śnie i regeneracji, bez których nawet najlepszy plan treningowy nie przynosi oczekiwanych rezultatów.",
+    "date": "2026-10-03",
+    "category": "sport",
+    "minutes": 5,
+    "author": "Poza Szumem",
+    "updated": "2026-10-03",
+    "series": "Ciało i regeneracja",
+    "sources": [
+      {
+        "title": "ACSM — A Road Map to Effective Muscle Recovery",
+        "url": "https://www.acsm.org/docs/default-source/files-for-resource-library/a-road-map-to-effective-muscle-recovery.pdf"
+      }
+    ],
+    "keywords": "dlaczego po ciężkim treningu nie stajesz się silniejszy sport trening regeneracja doms sen siłownia bieganie fizjologia adaptacja"
+  },
+  {
+    "slug": "dlaczego-woda-wrze-wczesniej-w-gorach-a-makaron-pozniej",
+    "title": "Dlaczego woda może zagotować się wcześniej w górach, a makaron później",
+    "excerpt": "Od wrzącego garnka w Himalajach po lodówkę i nurkowanie: zaskakująco wiele codziennych zjawisk łączy ciśnienie.",
+    "date": "2026-10-02",
+    "category": "swiat",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-10-02",
+    "series": "Jak działa świat",
+    "sources": [
+      {
+        "title": "OpenStax — Humidity, Evaporation, and Boiling",
+        "url": "https://openstax.org/books/college-physics-2e/pages/13-6-humidity-evaporation-and-boiling"
+      }
+    ],
+    "keywords": "dlaczego woda może zagotować się wcześniej w górach a makaron później ciśnienie wrzenie everest lodówka szybkowar nurkowanie fizyka pompa ciepła"
+  },
+  {
+    "slug": "najlepsza-mapa-swiata-zaczela-sie-od-problemu",
+    "title": "Najlepsza mapa świata zaczęła się od problemu, którego nie da się rozwiązać",
+    "excerpt": "Każda mapa musi coś zniekształcić. Podobnie jest z liczbami i modelami, których używamy do rozumienia świata.",
+    "date": "2026-10-01",
+    "category": "swiat",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-10-01",
+    "series": "Jak działa świat",
+    "sources": [
+      {
+        "title": "John P. Snyder — Map projections: A working manual",
+        "url": "https://www.usgs.gov/publications/map-projections-a-working-manual"
+      }
+    ],
+    "keywords": "najlepsza mapa świata zaczęła się od problemu którego nie da się rozwiązać mercator odwzorowanie korzybski goodhart mapa rzeczywistość wskaźniki liczby"
+  },
+  {
+    "slug": "czlowiek-ktory-nauczyl-swiat-myc-rece",
+    "title": "Człowiek, który nauczył świat myć ręce, został uznany za wariata",
+    "excerpt": "Ignaz Semmelweis zauważył, że odkażanie rąk może ratować życie pacjentek. Dlaczego tak trudno było przekonać do tego innych lekarzy?",
+    "date": "2026-09-30",
+    "category": "swiat",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-30",
+    "series": "Historie odkryć",
+    "sources": [
+      {
+        "title": "WHO — Guidelines on hand hygiene in health care",
+        "url": "https://www.who.int/publications/i/item/9789241597906"
+      }
+    ],
+    "keywords": "człowiek który nauczył świat myć ręce został uznany za wariata ignaz semmelweis gorączka połogowa historia medycyny higiena ręce odkrycie"
+  },
+  {
+    "slug": "dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy",
+    "title": "Dlaczego dobra rozmowa nie polega na mówieniu ciekawych rzeczy",
+    "excerpt": "O pytaniach, uważności i zwyczajnej ciekawości, która pozwala zobaczyć w drugim człowieku coś więcej niż kilka faktów.",
+    "date": "2026-09-29",
+    "category": "rozwoj",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-29",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Aron i in. — The Experimental Generation of Interpersonal Closeness",
+        "url": "https://doi.org/10.1177/0146167297234003"
+      }
+    ],
+    "keywords": "dlaczego dobra rozmowa nie polega na mówieniu ciekawych rzeczy arthur aron pytania słuchanie samoujawnianie relacje zainteresowanie ciekawość"
+  },
+  {
+    "slug": "najbardziej-niebezpieczna-liczba-w-twoich-finansach",
+    "title": "Najbardziej niebezpieczna liczba w twoich finansach to ta, do której szybko się przyzwyczajasz",
+    "excerpt": "Dlaczego rosnąca pensja nie zawsze oznacza większą swobodę — i co naprawdę kupujemy, kiedy nie wydajemy wszystkiego.",
+    "date": "2026-09-28",
+    "category": "finanse",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-28",
+    "series": "Praca i decyzje",
+    "sources": [
+      {
+        "title": "Brattleboro Memorial Hospital — Ronald Read (Healthwise, 2021)",
+        "url": "https://www.bmhvt.org/wp-content/uploads/Healthwise_2021-Spreads.pdf"
+      }
+    ],
+    "keywords": "najbardziej niebezpieczna liczba w twoich finansach inflacja stylu życia podwyżka wydatki oszczędności parkinson ronald read pieniądze majątek"
+  },
+  {
+    "slug": "dlaczego-pamietamy-zycie-w-scenach-a-nie-w-godzinach",
+    "title": "Dlaczego pamiętamy życie w scenach, a nie w godzinach",
+    "excerpt": "O tym, dlaczego niektóre dni zapamiętujemy na całe życie, podczas gdy całe miesiące potrafią zniknąć bez śladu.",
+    "date": "2026-09-27",
+    "category": "rozwoj",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-27",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Flexibility of Event Boundaries in Autobiographical Memory",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3914309/"
+      }
+    ],
+    "keywords": "dlaczego pamiętamy życie w scenach a nie w godzinach pamięć autobiograficzna czas rutyna podróże nowość william james reminiscence bump"
+  },
+  {
+    "slug": "dlaczego-kiedys-mielismy-wiecej-czasu",
+    "title": "Dlaczego kiedyś mieliśmy więcej czasu, choć mieliśmy mniej udogodnień",
+    "excerpt": "Technologia potrafi oszczędzić nam godziny. Dlaczego więc tak często mamy poczucie, że cały dzień przecieka nam przez palce?",
+    "date": "2026-09-26",
+    "category": "rozwoj",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-26",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Sophie Leroy — The challenge of attention residue",
+        "url": "https://www.sciencedirect.com/science/article/pii/S0749597809000399"
+      }
+    ],
+    "keywords": "dlaczego kiedyś mieliśmy więcej czasu choć mieliśmy mniej udogodnień keynes gloria mark sophie leroy technologia uwaga powiadomienia czas praca"
+  },
+  {
+    "slug": "od-przypadkowego-odkrycia-do-leku-ktory-zmienil-medycyne",
+    "title": "Od przypadkowego odkrycia do leku, który zmienił medycynę",
+    "excerpt": "Przypadkowa obserwacja Fleminga była początkiem historii. Żeby penicylina mogła ratować życie, potrzebne były lata badań i zupełnie nowy sposób produkcji leków.",
+    "date": "2026-09-25",
+    "category": "swiat",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-25",
+    "series": "Historie odkryć",
+    "sources": [
+      {
+        "title": "Alexander Fleming — Nobel Lecture: Penicillin",
+        "url": "https://www.nobelprize.org/uploads/2018/06/fleming-lecture.pdf"
+      }
+    ],
+    "keywords": "penicylina fleming florey chain heatley historia medycyny antybiotyki odporność bakterii"
+  },
+  {
+    "slug": "dlaczego-swiat-wydaje-sie-prostszy-kiedy-wiemy-o-nim-mniej",
+    "title": "Dlaczego świat wydaje się prostszy, kiedy wiemy o nim mniej",
+    "excerpt": "Im więcej poznajemy, tym wyraźniej widzimy, ile jeszcze zostało do zrozumienia.",
+    "date": "2026-09-24",
+    "category": "swiat",
+    "minutes": 5,
+    "author": "Poza Szumem",
+    "updated": "2026-09-24",
+    "series": "Jak działa świat",
+    "sources": [
+      {
+        "title": "Kruger i Dunning — Unskilled and unaware of it",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/10626367/"
+      }
+    ],
+    "keywords": "dlaczego świat wydaje się prostszy kiedy wiemy o nim mniej dunning kruger wiedza eksperci złudzenie rozumienia nauka"
+  },
+  {
+    "slug": "czlowiek-nie-zostal-stworzony-do-siedzenia",
+    "title": "Człowiek nie został stworzony do siedzenia. Ale problem jest trochę inny, niż myślimy",
+    "excerpt": "O tym, dlaczego godzinny trening nie zawsze równoważy cały dzień bez ruchu i czemu najważniejsza aktywność bywa tą, której nawet nie nazywamy sportem.",
+    "date": "2026-09-23",
+    "category": "sport",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-09-23",
+    "series": "Ciało i regeneracja",
+    "sources": [
+      {
+        "title": "Raichlen i in. — Sitting, squatting, and human inactivity",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7132251/"
+      }
+    ],
+    "keywords": "człowiek nie został stworzony do siedzenia ruch siedzenie neat aktywność hadza trening sport zdrowie"
+  },
+  {
+    "slug": "najdrozsze-rzeczy-w-zyciu-czesto-nic-nie-kosztuja",
+    "title": "Najdroższe rzeczy w życiu często nic nie kosztują",
+    "excerpt": "O adaptacji hedonicznej, porównaniach społecznych i wartości chwil, które na co dzień niemal umykają uwadze.",
+    "date": "2026-09-23",
+    "category": "rozwoj",
+    "minutes": 5,
+    "author": "Poza Szumem",
+    "updated": "2026-09-23",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Piff i in. — Higher social class predicts increased unethical behavior",
+        "url": "https://doi.org/10.1073/pnas.1118373109"
+      }
+    ],
+    "keywords": "najdroższe rzeczy w życiu często nic nie kosztują adaptacja hedoniczna porównania społeczne pieniądze dobrostan piff solnick"
+  },
+  {
+    "slug": "czlowiek-ktory-zawsze-czekal-na-lepszy-moment",
+    "title": "Człowiek, który zawsze czekał na lepszy moment",
+    "excerpt": "O odkładaniu życia na później, kosztach niewykorzystanych możliwości i o tym, że niektóre doświadczenia mają swój najlepszy moment.",
+    "date": "2026-09-22",
+    "category": "rozwoj",
+    "minutes": 6,
+    "author": "Poza Szumem",
+    "updated": "2026-10-09",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Karl Pillemer — The Cornell Legacy Project",
+        "url": "https://legacyproject.human.cornell.edu/sample-page-2/"
+      }
+    ],
+    "keywords": "człowiek który zawsze czekał na lepszy moment odkładanie życia przyszłość żal pillemer perkins die with zero"
+  },
+  {
+    "slug": "dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni",
+    "title": "Dlaczego tak bardzo przejmujemy się tym, co pomyślą inni?",
+    "excerpt": "O efekcie reflektora, społecznej niezręczności i o tym, dlaczego działanie często daje nam więcej niż kolejne godziny przygotowań.",
+    "date": "2026-09-21",
+    "category": "rozwoj",
+    "minutes": 5,
+    "author": "Poza Szumem",
+    "updated": "2026-09-21",
+    "series": "Uważna codzienność",
+    "sources": [
+      {
+        "title": "Gilovich, Medvec i Savitsky — The spotlight effect",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/10707330/"
+      }
+    ],
+    "keywords": "dlaczego tak bardzo przejmujemy się tym co pomyślą inni efekt reflektora psychologia pewność siebie"
+  }
+]
