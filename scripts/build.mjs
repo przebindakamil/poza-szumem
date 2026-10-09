@@ -15,6 +15,7 @@ await fs.mkdir(output, { recursive: true });
 const settings = JSON.parse(await fs.readFile('content/editorial.json', 'utf8'));
 const site = new URL(settings.siteUrl);
 if (site.protocol !== 'https:' || !site.pathname.endsWith('/')) throw new Error('siteUrl must be an HTTPS directory URL');
+const textCount = count => count + ' ' + (count === 1 ? 'tekst' : count % 10 >= 2 && count % 10 <= 4 && !(count % 100 >= 12 && count % 100 <= 14) ? 'teksty' : 'tekstów');
 const categoryLabels = { rozwoj: 'Rozwój i psychologia', ai: 'AI i technologia', sport: 'Sport i zdrowie', finanse: 'Finanse i biznes', swiat: 'Świat i nauka', dom: 'Dom i codzienność', kultura: 'Kultura i reportaż' };
 const slugify = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
@@ -169,7 +170,8 @@ for (const record of records) {
   await writePage($, 'artykuly/' + record.slug + '.html');
 }
 home('.article-grid').html(records.map(card).join(''));
-home('.library-count').text(records.length + ' tekstów');
+home('.library-count').text(textCount(records.length));
+home('.library').after(home('.categories-section'));
 const recommended = records.find(record => record.slug === settings.recommendedSlug) || records[0];
 home('.featured-reading h2 a').text(recommended.title).attr('href', 'artykuly/' + recommended.slug + '.html');
 home('.featured-reading p').text(recommended.excerpt);

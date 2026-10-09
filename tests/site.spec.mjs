@@ -132,3 +132,40 @@ test('the library works without JavaScript', async ({ browser }) => {
   await expect(page.locator('.article-body h2').first()).toBeVisible();
   await context.close();
 });
+
+test('category views ignore personal saved filters and return to their category', async ({ page }) => {
+  await page.goto('./');
+  await page.locator('.article-card .bookmark-toggle').first().click();
+  await page.getByRole('link', { name: 'Zapisane', exact: true }).click();
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(1);
+  await page.getByRole('link', { name: 'Kategorie', exact: true }).click();
+  await page.locator('a[href="finanse.html"]').click();
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+  await page.locator('.article-card .card-link').first().click();
+  await page.locator('.article-back').click();
+  await expect(page).toHaveURL(/kategorie\/finanse\.html/);
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+});
+test('an update preserves previously cached articles and their offline styling', async ({ page, context, request }) => {
+  await page.goto('./');
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) await new Promise(resolve => navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true }));
+  });
+  const url = await page.locator('.article-card .card-link').first().getAttribute('href');
+  const html = await (await request.get(url)).text();
+  const target = new URL(url, 'http://127.0.0.1:4173/poza-szumem/').href;
+  await page.evaluate(async ({ target, html }) => {
+    const old = await caches.open('poza-szumem-previous-release');
+    await old.put(target, new Response(html.replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=old'), { headers: { 'Content-Type': 'text/html' } }));
+    const changed = new Promise(resolve => navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true }));
+    await navigator.serviceWorker.register('sw.js?upgrade-test=1', { updateViaCache: 'none' });
+    await changed;
+  }, { target, html });
+  await expect.poll(() => page.evaluate(() => caches.keys())).not.toContain('poza-szumem-previous-release');
+  await context.setOffline(true);
+  await page.goto(target);
+  await expect(page.locator('.article-body')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).margin)).toBe('0px');
+  await expect(page.locator('.focus-toggle')).toBeVisible();
+});

@@ -7,8 +7,9 @@ const empty = document.querySelector('#empty-state');
 const categoryMenu = document.querySelector('.category-menu');
 const categorySummary = categoryMenu?.querySelector('summary');
 const LIBRARY_STATE_KEY = 'poza-szumem-library-v1';
+const isLibraryHome = document.body.classList.contains('home') && cards.length > 0;
 let libraryState = {};
-try { libraryState = JSON.parse(sessionStorage.getItem(LIBRARY_STATE_KEY) || '{}') || {}; } catch (_) {}
+if (isLibraryHome) { try { libraryState = JSON.parse(sessionStorage.getItem(LIBRARY_STATE_KEY) || '{}') || {}; } catch (_) {} }
 const knownCategories = new Set(cards.map(card => card.dataset.category));
 const BOOKMARKS_KEY = 'poza-szumem-bookmarks-v1';
 const POSITIONS_KEY = 'poza-szumem-positions-v1';
@@ -43,7 +44,7 @@ function applyLibraryView() {
   viewControls.forEach(input => { input.checked = input.value === libraryView; });
 }
 function saveLibraryState() {
-  if (!cards.length) return;
+  if (!isLibraryHome) return;
   const state = { category: activeFilter, search: search?.value || '', sort: sortControl?.value || 'newest', view: libraryView, unread: unreadOnly, saved: savedOnly, scrollY: window.scrollY };
   try { sessionStorage.setItem(LIBRARY_STATE_KEY, JSON.stringify(state)); } catch (_) {}
 }
@@ -55,7 +56,7 @@ viewControls.forEach(input => input.addEventListener('change', () => {
 applyLibraryView();
 window.addEventListener('pagehide', saveLibraryState);
 window.addEventListener('pageshow', event => {
-  if (!event.persisted && cards.length && Number.isFinite(libraryState.scrollY) && libraryState.scrollY > 0 && !location.hash.startsWith('#category/')) {
+  if (!event.persisted && isLibraryHome && Number.isFinite(libraryState.scrollY) && libraryState.scrollY > 0 && !location.hash.startsWith('#category/')) {
     setTimeout(() => window.scrollTo(0, libraryState.scrollY), 0);
   }
 });
@@ -275,6 +276,12 @@ function openCategory(id) {
 }
 document.querySelectorAll('[data-category-link]').forEach(link => link.addEventListener('click', () => openCategory(link.dataset.categoryLink)));
 function showSavedArticles(active) {
+  if (!isLibraryHome) {
+    try {
+      const state = JSON.parse(sessionStorage.getItem(LIBRARY_STATE_KEY) || '{}') || {};
+      sessionStorage.setItem(LIBRARY_STATE_KEY, JSON.stringify({ ...state, saved: active, category: 'all', search: '', unread: false, scrollY: 0 }));
+    } catch (_) {}
+  }
   savedOnly = active;
   activeFilter = 'all';
   if (search) search.value = '';
@@ -456,6 +463,7 @@ if (headerActions) {
   openHighlights.type = 'button';
   openHighlights.className = 'icon-button highlights-button';
   openHighlights.setAttribute('aria-label', 'Moje fragmenty');
+  openHighlights.title = 'Moje fragmenty';
   openHighlights.setAttribute('aria-expanded', 'false');
   openHighlights.innerHTML = '<span class="saved-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.75 4.75c0-.97.78-1.75 1.75-1.75h7c.97 0 1.75.78 1.75 1.75v15.1a.65.65 0 0 1-1.02.54L12 17.48l-4.23 2.91a.65.65 0 0 1-1.02-.54V4.75Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><span class="highlights-count" hidden>0</span>';
   const themeToggle = headerActions.querySelector('.theme-toggle');
@@ -1050,4 +1058,23 @@ if (window.lucide) {
     setIcon('.theme-toggle > span', root.dataset.theme === 'dark' ? 'sun' : 'moon');
     window.lucide.createIcons();
   });
+}
+
+const RETURN_KEY = 'poza-szumem-return-v1';
+if (cards.length) {
+  cards.forEach(card => card.querySelector('.card-link')?.addEventListener('click', () => {
+    try { sessionStorage.setItem(RETURN_KEY, location.href.split('#')[0] + '#artykuly'); } catch (_) {}
+  }));
+}
+if (readingBody) {
+  try {
+    const previous = sessionStorage.getItem(RETURN_KEY);
+    if (previous) {
+      const url = new URL(previous);
+      const appRoot = new URL('./', document.querySelector('.brand')?.href || location.href);
+      if (url.origin === location.origin && url.pathname.startsWith(appRoot.pathname) && !url.pathname.includes('/artykuly/')) {
+        document.querySelectorAll('.article-back, .article-end a').forEach(link => { link.href = url.href; });
+      }
+    }
+  } catch (_) {}
 }
