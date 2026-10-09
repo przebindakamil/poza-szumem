@@ -13,6 +13,7 @@ if (path.dirname(output) !== process.cwd()) throw new Error('Invalid output dire
 await fs.rm(output, { recursive: true, force: true });
 await fs.mkdir(output, { recursive: true });
 const settings = JSON.parse(await fs.readFile('content/editorial.json', 'utf8'));
+const tagline = 'Teksty do których warto wracać.';
 const site = new URL(settings.siteUrl);
 if (site.protocol !== 'https:' || !site.pathname.endsWith('/')) throw new Error('siteUrl must be an HTTPS directory URL');
 const textCount = count => count + ' ' + (count === 1 ? 'tekst' : count % 10 >= 2 && count % 10 <= 4 && !(count % 100 >= 12 && count % 100 <= 14) ? 'teksty' : 'tekstów');
@@ -69,22 +70,24 @@ for (const name of markdownNames) {
   addRecord(slug, $, parsed.data, 'content/' + name);
 }
 records.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
-const card = record => '<article class="article-card" data-category="' + record.category + '" data-search="' + escape(record.keywords) + '"><a class="card-link" href="artykuly/' + record.slug + '.html" aria-label="Czytaj: ' + escape(record.title) + '"></a><div class="card-topline"><span class="pill">' + categoryLabels[record.category] + '</span><time datetime="' + record.date + '">' + record.date.split('-').reverse().join('.') + '</time></div><div class="card-copy"><h3>' + escape(record.title) + '</h3><p>' + escape(record.excerpt) + '</p></div><div class="card-footer"><span>' + record.minutes + ' min czytania</span><span class="arrow" aria-hidden="true">↗</span></div></article>';
+const card = record => '<article class="article-card" data-category="' + record.category + '" data-search="' + escape(record.keywords) + '"><a class="card-link" href="artykuly/' + record.slug + '.html" aria-label="Czytaj: ' + escape(record.title) + '"></a><div class="card-topline"><span class="pill">' + categoryLabels[record.category] + '</span><time datetime="' + record.date + '">' + record.date.split('-').reverse().join('.') + '</time></div><div class="card-copy"><h3>' + escape(record.title) + '</h3><p>' + escape(record.excerpt) + '</p></div><div class="card-footer"><div class="card-meta"><span class="reading-time">' + record.minutes + ' min czytania</span></div></div></article>';
 
-const assetNames = ['script.js', 'styles.css', 'manifest.webmanifest', 'icon.svg', 'icon-192.svg', 'icon-512.svg'];
+const assetNames = ['script.js', 'styles.css', 'manifest.webmanifest'];
 for (const name of assetNames) await fs.copyFile(name, path.join(output, name));
+for (const name of ['icon.svg', 'icon-192.svg', 'icon-512.svg']) await fs.copyFile('assets/brand.svg', path.join(output, name));
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
 await fs.copyFile('assets/LUCIDE-LICENSE.txt', path.join(output, 'assets/LUCIDE-LICENSE.txt'));
 await bundle({ entryPoints: ['scripts/icons.mjs'], outfile: path.join(output, 'assets/lucide.min.js'), bundle: true, minify: true, format: 'iife', target: 'es2020' });
-const icon = Buffer.from(await fs.readFile('icon.svg')).toString('base64');
-const shareSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f6f8f6"/><rect x="0" y="0" width="18" height="630" fill="#355f4a"/><image x="80" y="70" width="145" height="145" href="data:image/svg+xml;base64,' + icon + '"/><text x="80" y="340" font-family="Georgia,serif" font-size="100" fill="#171b18">Poza Szumem</text><text x="86" y="424" font-family="sans-serif" font-size="33" fill="#515c55">Eseje, reportaże i teksty warte uwagi.</text></svg>';
+const brand = await fs.readFile('assets/brand.svg');
+const icon = brand.toString('base64');
+const shareSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f6f8f6"/><rect x="0" y="0" width="18" height="630" fill="#355f4a"/><image x="80" y="70" width="145" height="145" href="data:image/svg+xml;base64,' + icon + '"/><text x="80" y="340" font-family="Georgia,serif" font-size="100" fill="#171b18">Poza Szumem</text><text x="86" y="424" font-family="sans-serif" font-size="33" fill="#515c55">' + escape(tagline) + '</text></svg>';
 await sharp(Buffer.from(shareSvg)).png().toFile(path.join(output, 'assets/share.png'));
-await sharp(Buffer.from(await fs.readFile('icon-192.svg'))).resize(192, 192).png().toFile(path.join(output, 'assets/icon-192.png'));
-await sharp(Buffer.from(await fs.readFile('icon-512.svg'))).resize(512, 512).png().toFile(path.join(output, 'assets/icon-512.png'));
+await sharp(brand).resize(192, 192).png().toFile(path.join(output, 'assets/icon-192.png'));
+await sharp(brand).resize(512, 512).png().toFile(path.join(output, 'assets/icon-512.png'));
 const manifest = JSON.parse(await fs.readFile('manifest.webmanifest', 'utf8'));
 manifest.icons = [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' }, { src: 'assets/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' }];
 await fs.writeFile(path.join(output, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2));
-const version = createHash('sha256').update(await fs.readFile('script.js')).update(await fs.readFile('styles.css')).update(await fs.readFile('content/editorial.json')).update(JSON.stringify(records.map(record => [record.slug, record.date, record.title, record.excerpt]))).digest('hex').slice(0, 12);
+const version = createHash('sha256').update(await fs.readFile('script.js')).update(await fs.readFile('styles.css')).update(await fs.readFile('scripts/icons.mjs')).update(brand).update(await fs.readFile('content/editorial.json')).update(JSON.stringify(records.map(record => [record.slug, record.date, record.title, record.excerpt]))).digest('hex').slice(0, 12);
 
 function metadata($, title, description, file, schema) {
   $('title').text(title);
@@ -120,11 +123,29 @@ async function writePage($, file) {
   $('script[src*="lucide"]').attr('src', 'assets/lucide.min.js');
   $('link[rel="alternate"][type="application/rss+xml"]').attr('href', 'feed.xml');
   if (!$('.skip-link').length) $('body').prepend('<a class="skip-link" href="#main-content">Przejdź do treści</a>');
+  $('.skip-link').attr('href', '#main-content').text('Przejdź do treści');
   $('main').attr('id', 'main-content');
   $('.brand').attr('href', 'index.html');
+  $('.brand-mark').html('<img class="brand-symbol" src="icon.svg?v=' + version + '" alt="" width="36" height="36">');
+  $('.search-toggle, .theme-toggle, .library-actions').attr('data-requires-js', '');
+  if ($('.library').length) {
+    const heading = $('body').hasClass('home') ? 'Biblioteka' : 'Teksty';
+    $('.library').attr('data-default-heading', heading);
+    $('.library-title').html('<h2><span data-library-heading>' + heading + '</span></h2><p class="library-count" role="status" aria-live="polite">' + textCount($('.article-card').length) + '</p>');
+    if (!$('#clear-filters').length) $('.library-actions').append('<button id="clear-filters" class="clear-filters" type="button" hidden>Wyczyść filtry</button>');
+    $('.category-menu summary').text('Wszystkie tematy');
+    if ($('body').attr('data-category')) {
+      $('.category-menu').each((_, node) => {
+        for (const sibling of [node.prev, node.next]) {
+          if (sibling?.type === 'text' && !sibling.data.trim()) sibling.data = '\n';
+        }
+      }).remove();
+    }
+  }
   $('.article-back, .article-end a').attr('href', 'index.html#artykuly');
   if (!$('.primary-nav').length) $('.header-actions').before('<nav class="primary-nav" aria-label="Główna nawigacja"></nav>');
   $('.primary-nav').html('<a href="index.html#artykuly" data-library-view>Biblioteka</a><a href="kategorie/index.html">Kategorie</a><a href="index.html#saved" data-saved-view>Zapisane</a>');
+  if (file.startsWith('kategorie/')) $('.primary-nav a[href="kategorie/index.html"]').attr('aria-current', 'page');
   $('footer').html('<span>Poza Szumem</span><nav aria-label="Stopka"><a href="wybor-tygodnia.html">Wybór tygodnia</a><a href="serie/index.html">Serie</a><a href="feed.xml">RSS</a></nav>');
   $('input[name="library-view"]').each((_, node) => {
     const input = $(node);
@@ -133,7 +154,7 @@ async function writePage($, file) {
     input.next('span').html('<i data-lucide="' + (list ? 'rows-3' : 'columns-2') + '"></i>');
   });
   $('script[data-theme-init]').remove();
-  $('head').prepend('<script data-theme-init>try{var t=localStorage.getItem("poza-szumem-theme");document.documentElement.dataset.theme=t==="dark"||t==="light"?t:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"}</script>');
+  $('head').prepend('<script data-theme-init>document.documentElement.classList.add("js");try{var t=localStorage.getItem("poza-szumem-theme");document.documentElement.dataset.theme=t==="dark"||t==="light"?t:(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"}</script>');
   relativeLinks($, file);
   const target = path.join(output, file);
   await fs.mkdir(path.dirname(target), { recursive: true });
@@ -173,12 +194,11 @@ for (const record of records) {
   await writePage($, 'artykuly/' + record.slug + '.html');
 }
 home('.article-grid').html(records.map(card).join(''));
+home('.hero-copy p').text(tagline);
 home('.library-count').text(textCount(records.length));
 home('.library').after(home('.categories-section'));
 const recommended = records.find(record => record.slug === settings.recommendedSlug) || records[0];
-home('.featured-reading h2 a').text(recommended.title).attr('href', 'artykuly/' + recommended.slug + '.html');
-home('.featured-reading p').text(recommended.excerpt);
-home('.featured-meta').text(categoryLabels[recommended.category]);
+home('.featured-reading').removeClass('wrap').html('<div class="wrap featured-inner"><span class="featured-label" id="featured-heading">Polecany tekst</span><div class="featured-meta"><span>' + categoryLabels[recommended.category] + '</span><span>' + recommended.minutes + ' min czytania</span></div><h2><a href="artykuly/' + recommended.slug + '.html">' + escape(recommended.title) + '</a></h2><p>' + escape(recommended.excerpt) + '</p><a class="featured-cta" href="artykuly/' + recommended.slug + '.html">Przeczytaj tekst</a></div>');
 const categoryCounts = Object.entries(categoryLabels).map(([id, name]) => ({ id, name, count: records.filter(record => record.category === id).length })).filter(category => category.count);
 home('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + textCount(category.count) + '</small></a>').join(''));
 metadata(home, 'Poza Szumem — teksty warte uwagi', 'Spokojna biblioteka esejów, reportaży i tekstów, do których warto wracać.', 'index.html', { '@type': 'WebSite', name: 'Poza Szumem', url: site.href, inLanguage: 'pl' });

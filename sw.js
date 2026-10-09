@@ -1,8 +1,8 @@
 const CACHE_PREFIX = 'poza-szumem-';
-const CACHE_NAME = CACHE_PREFIX + '8ceee4873314';
+const CACHE_NAME = CACHE_PREFIX + '366f150c9f38';
 const ARTICLE_CACHE = CACHE_PREFIX + 'articles-v1';
 const ROOT = new URL('./', self.location.href);
-const CORE = ['./', 'index.html', 'styles.css?v=8ceee4873314', 'script.js?v=8ceee4873314',
+const CORE = ['./', 'index.html', 'styles.css?v=366f150c9f38', 'script.js?v=366f150c9f38',
   'manifest.webmanifest', 'icon.svg', 'icon-192.svg', 'icon-512.svg', 'assets/lucide.min.js', 'assets/icon-192.png', 'assets/icon-512.png'].map(path => new URL(path, ROOT).href);
 
 async function timedFetch(request) {
@@ -88,7 +88,7 @@ self.addEventListener('fetch', event => {
         });
       }
     }
-    const saved = await cache.match(request);
+    const saved = await cache.match(request, { ignoreSearch: url.pathname === new URL('icon.svg', ROOT).pathname });
     const update = timedFetch(request).then(async response => {
       await remember(request, response);
       return response;

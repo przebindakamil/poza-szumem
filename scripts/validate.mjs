@@ -33,6 +33,11 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html'))) {
   }
   const ids = $('[id]').toArray().map(node => $(node).attr('id'));
   assert.equal(new Set(ids).size, ids.length, file + ': duplicate IDs');
+  for (const node of $('a[href^="#"]').toArray()) {
+    const href = $(node).attr('href');
+    if (href === '#' || href === '#saved' || href.startsWith('#category/')) continue;
+    assert(ids.includes(decodeURIComponent(href.slice(1))), file + ': missing anchor ' + href);
+  }
   for (const node of $('script[type="application/ld+json"]').toArray()) JSON.parse($(node).text());
 }
 const rss = load(await fs.readFile(path.join(root, 'feed.xml'), 'utf8'), { xmlMode: true });

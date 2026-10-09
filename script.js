@@ -25,7 +25,7 @@ try {
     }
   }
 } catch (_) {}
-let savedOnly = location.hash === '#saved' || libraryState.saved === true;
+let savedOnly = location.hash === '#saved';
 let activeFilter = knownCategories.has(document.body.dataset.category) ? document.body.dataset.category : (knownCategories.has(libraryState.category) ? libraryState.category : 'all');
 const sortControl = document.querySelector('#article-sort');
 if (sortControl && ['newest', 'shortest', 'longest'].includes(libraryState.sort)) sortControl.value = libraryState.sort;
@@ -56,6 +56,10 @@ viewControls.forEach(input => input.addEventListener('change', () => {
 applyLibraryView();
 window.addEventListener('pagehide', saveLibraryState);
 window.addEventListener('pageshow', event => {
+  if (isLibraryHome && savedOnly !== (location.hash === '#saved')) {
+    savedOnly = location.hash === '#saved';
+    updateArticles();
+  }
   if (!event.persisted && isLibraryHome && Number.isFinite(libraryState.scrollY) && libraryState.scrollY > 0 && !location.hash.startsWith('#category/')) {
     setTimeout(() => window.scrollTo(0, libraryState.scrollY), 0);
   }
@@ -152,13 +156,14 @@ function refreshReadingStatus() {
       status = document.createElement('span');
       status.className = 'read-indicator';
       status.setAttribute('aria-label', 'Przeczytany');
-      status.textContent = '✓ Przeczytany';
-      card.querySelector('.card-footer')?.prepend(status);
+      status.innerHTML = '<i data-lucide="check" aria-hidden="true"></i><span>Przeczytany</span>';
+      (card.querySelector('.card-meta') || card.querySelector('.card-footer'))?.appendChild(status);
     }
     status.hidden = !read;
   });
   updateArticles();
   updateArticleReadButton();
+  window.lucide?.createIcons();
 }
 const discoverHost = document.querySelector('.hero-discovery');
 const discoverButton = discoverHost ? document.createElement('button') : null;
@@ -218,7 +223,7 @@ function updateArticles() {
     button.setAttribute('aria-pressed', String(selected));
   });
   const selectedFilter = filters.find(button => button.dataset.filter === activeFilter);
-  if (categorySummary) categorySummary.textContent = activeFilter === 'all' ? 'Kategorie' : (selectedFilter?.textContent.trim() || 'Kategorie');
+  if (categorySummary) categorySummary.textContent = activeFilter === 'all' ? 'Wszystkie tematy' : (selectedFilter?.textContent.trim() || 'Temat');
 
   cards.forEach(card => {
     const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
@@ -240,11 +245,24 @@ function updateArticles() {
 
   firstVisible?.classList.add('primary');
   const counter = document.querySelector('.library-count');
-  if (counter) { counter.textContent = visible + ' / ' + cards.length; counter.setAttribute('aria-label', visible + ' z ' + cards.length + ' artykułów'); }
+  if (counter) {
+    const noun = visible === 1 ? 'tekst' : visible % 10 >= 2 && visible % 10 <= 4 && !(visible % 100 >= 12 && visible % 100 <= 14) ? 'teksty' : 'tekstów';
+    counter.textContent = visible + ' ' + noun;
+    counter.setAttribute('aria-label', counter.textContent);
+  }
   saveLibraryState();
-  const libraryHeading = document.querySelector('.library-title h2');
-  if (libraryHeading?.firstChild?.nodeType === Node.TEXT_NODE) libraryHeading.firstChild.textContent = savedOnly ? 'Zapisane ' : 'Biblioteka ';
-  document.querySelector('[data-saved-view]')?.setAttribute('aria-current', savedOnly ? 'page' : 'false');
+  const libraryHeading = document.querySelector('[data-library-heading]');
+  if (libraryHeading) libraryHeading.textContent = savedOnly ? 'Zapisane artykuły' : (document.querySelector('.library')?.dataset.defaultHeading || 'Biblioteka');
+  const savedLink = document.querySelector('[data-saved-view]');
+  if (savedOnly) savedLink?.setAttribute('aria-current', 'page');
+  else savedLink?.removeAttribute('aria-current');
+  if (isLibraryHome) {
+    const libraryLink = document.querySelector('[data-library-view]');
+    if (savedOnly) libraryLink?.removeAttribute('aria-current');
+    else libraryLink?.setAttribute('aria-current', 'page');
+  }
+  const clearFilters = document.querySelector('#clear-filters');
+  if (clearFilters) clearFilters.hidden = !(activeFilter !== (document.body.dataset.category || 'all') || search?.value || unreadOnly);
   if (empty) {
     empty.hidden = visible !== 0;
     empty.textContent = savedOnly ? 'Brak zapisanych artykułów pasujących do filtrów.' : 'Nie znaleziono artykułów. Zmień wyszukiwanie lub filtry.';
@@ -258,7 +276,7 @@ filters.forEach(button => button.addEventListener('click', () => {
     filter.classList.toggle('active', selected);
     filter.setAttribute('aria-pressed', String(selected));
   });
-  if (categorySummary) categorySummary.textContent = activeFilter === 'all' ? 'Kategorie' : button.textContent.trim();
+  if (categorySummary) categorySummary.textContent = activeFilter === 'all' ? 'Wszystkie tematy' : button.textContent.trim();
   updateArticles();
   if (categoryMenu) categoryMenu.open = false;
 }));
@@ -290,11 +308,32 @@ function showSavedArticles(active) {
   updateArticles();
   document.querySelector('#artykuly')?.scrollIntoView({ block: 'start' });
 }
-document.querySelector('[data-saved-view]')?.addEventListener('click', () => showSavedArticles(true));
-document.querySelector('[data-library-view]')?.addEventListener('click', () => showSavedArticles(false));
+document.querySelector('[data-saved-view]')?.addEventListener('click', event => {
+  if (isLibraryHome) {
+    event.preventDefault();
+    if (location.hash !== '#saved') location.hash = 'saved';
+    else showSavedArticles(true);
+  } else showSavedArticles(true);
+});
+document.querySelector('[data-library-view]')?.addEventListener('click', event => {
+  if (isLibraryHome) {
+    event.preventDefault();
+    if (location.hash !== '#artykuly') location.hash = 'artykuly';
+    showSavedArticles(false);
+  } else showSavedArticles(false);
+});
 window.addEventListener('hashchange', () => {
   if (location.hash === '#saved') showSavedArticles(true);
+  else if (isLibraryHome && savedOnly) showSavedArticles(false);
   if (location.hash.startsWith('#category/')) openCategory(location.hash.slice(10));
+});
+document.querySelector('#clear-filters')?.addEventListener('click', () => {
+  activeFilter = document.body.dataset.category || 'all';
+  if (search) search.value = '';
+  unreadOnly = false;
+  unreadFilter?.classList.remove('active');
+  unreadFilter?.setAttribute('aria-pressed', 'false');
+  updateArticles();
 });
 search?.addEventListener('input', updateArticles);
 search?.addEventListener('search', updateArticles);
@@ -309,6 +348,22 @@ searchToggle?.addEventListener('click', () => {
     updateArticles();
   }
 });
+search?.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && searchPanel && !searchPanel.hidden) {
+    event.preventDefault();
+    searchToggle?.click();
+    searchToggle?.focus();
+  }
+});
+document.addEventListener('click', event => {
+  if (categoryMenu?.open && !categoryMenu.contains(event.target)) categoryMenu.open = false;
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && categoryMenu?.open && categoryMenu.contains(document.activeElement)) {
+    categoryMenu.open = false;
+    categorySummary?.focus();
+  }
+});
 
 // A reader can mark an article manually, including reverting an automatic mark.
 // Automatic marking happens only when the reader reaches the final paragraph.
@@ -319,7 +374,7 @@ let manualReadChoice = false;
 function updateArticleReadButton() {
   if (!readButton) return;
   const read = isRead(currentArticleId);
-  readButton.textContent = read ? '✓ Przeczytany · oznacz jako nieprzeczytany' : '○ Oznacz jako przeczytany';
+  readButton.textContent = read ? 'Oznacz jako nieprzeczytany' : 'Oznacz jako przeczytany';
   readButton.setAttribute('aria-pressed', String(read));
   readButton.classList.toggle('is-read', read);
 }
@@ -362,7 +417,9 @@ if (articleShell && readingBody) {
   const focusToggle = document.createElement('button');
   focusToggle.type = 'button';
   focusToggle.className = 'focus-toggle';
-  focusToggle.innerHTML = '<span aria-hidden="true">◎</span><span class="focus-label">Tryb skupienia</span>';
+  focusToggle.innerHTML = '<span aria-hidden="true"><i data-lucide="focus"></i></span><span class="focus-label">Tryb skupienia</span>';
+  focusToggle.setAttribute('aria-label', 'Tryb skupienia');
+  focusToggle.title = 'Tryb skupienia';
   focusToggle.setAttribute('aria-pressed', 'false');
 
   const sizeControls = document.createElement('div');
@@ -411,7 +468,10 @@ if (articleShell && readingBody) {
     focusToggle.classList.toggle('active', active);
     focusToggle.setAttribute('aria-pressed', String(active));
     focusToggle.querySelector('.focus-label').textContent = active ? 'Wyjdź ze skupienia' : 'Tryb skupienia';
-    focusToggle.querySelector('span[aria-hidden="true"]').textContent = active ? '×' : '◎';
+    focusToggle.setAttribute('aria-label', active ? 'Wyjdź z trybu skupienia' : 'Tryb skupienia');
+    focusToggle.title = active ? 'Wyjdź z trybu skupienia' : 'Tryb skupienia';
+    focusToggle.querySelector('span[aria-hidden="true"]').innerHTML = '<i data-lucide="' + (active ? 'minimize-2' : 'focus') + '"></i>';
+    window.lucide?.createIcons();
     sizeControls.hidden = false;
   }
 
@@ -615,18 +675,20 @@ if (readingBody && currentArticleId) {
     }
 
     if (action === 'copy') {
+      let copied = false;
       try {
         await navigator.clipboard.writeText(selectedText);
+        copied = true;
       } catch (_) {
         const area = document.createElement('textarea');
         area.value = selectedText;
         document.body.appendChild(area);
         area.select();
-        document.execCommand('copy');
+        try { copied = document.execCommand('copy'); } catch (_) {}
         area.remove();
       }
-      button.textContent = 'Skopiowano ✓';
-      setTimeout(() => { button.textContent = 'Kopiuj'; hideSelectionMenu(); }, 850);
+      button.textContent = copied ? 'Skopiowano' : 'Nie udało się skopiować';
+      setTimeout(() => { button.textContent = 'Kopiuj'; if (copied) hideSelectionMenu(); }, copied ? 850 : 2200);
     }
   });
 }
@@ -775,12 +837,7 @@ async function renderRelatedArticles() {
     title.className = 'related-title';
     title.textContent = item.title;
 
-    const arrow = document.createElement('span');
-    arrow.className = 'related-arrow';
-    arrow.textContent = '↗';
-    arrow.setAttribute('aria-hidden', 'true');
-
-    link.append(meta, title, arrow);
+    link.append(meta, title);
     list.appendChild(link);
   });
 
@@ -794,7 +851,7 @@ renderRelatedArticles();
 // PWA: offline reading plus an install entry point that also works on iOS.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const swUrl = window.location.pathname.includes('/artykuly/') ? '../sw.js' : './sw.js';
+    const swUrl = new URL('sw.js', new URL('./', document.querySelector('.brand')?.href || location.href)).href;
     navigator.serviceWorker.register(swUrl, { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {});
   });
 }
@@ -805,7 +862,7 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const isSafari = /^((?!chrome|crios|fxios|edgios).)*safari/i.test(navigator.userAgent);
 
-const installHost = document.querySelector('.hero-discovery') || document.querySelector('.footer');
+const installHost = document.querySelector('.footer');
 let installButton = null;
 let installDialog = null;
 
@@ -925,7 +982,9 @@ function refreshBookmarks() {
     const selected = bookmarks.has(button.dataset.bookmark);
     const label = selected ? 'Usuń z zapisanych' : 'Zapisz artykuł';
     button.setAttribute('aria-pressed', String(selected));
-    button.setAttribute('aria-label', label);
+    const card = button.closest('.article-card');
+    const title = card?.querySelector('h3')?.textContent?.trim() || document.querySelector('.article-title')?.textContent?.trim();
+    button.setAttribute('aria-label', title ? label + ': ' + title : label);
     button.title = label;
     button.classList.toggle('active', selected);
   });
@@ -1048,7 +1107,7 @@ if (window.lucide) {
   setIcon('.theme-toggle > span', root.dataset.theme === 'dark' ? 'sun' : 'moon');
   document.querySelectorAll('.highlights-close, .install-dialog-close').forEach(button => { button.innerHTML = '<i data-lucide="x"></i>'; });
   document.querySelectorAll('.bookmark-toggle').forEach(button => { button.innerHTML = '<i data-lucide="bookmark"></i>'; });
-  document.querySelectorAll('.highlights-button .saved-icon').forEach(node => { node.innerHTML = '<i data-lucide="bookmark"></i>'; });
+  document.querySelectorAll('.highlights-button .saved-icon').forEach(node => { node.innerHTML = '<i data-lucide="quote"></i>'; });
   document.querySelector('.discover-random > span')?.replaceChildren(Object.assign(document.createElement('i'), { }));
   const discoverIcon = document.querySelector('.discover-random > span > i');
   discoverIcon?.setAttribute('data-lucide', 'shuffle');
@@ -1063,7 +1122,7 @@ if (window.lucide) {
 const RETURN_KEY = 'poza-szumem-return-v1';
 if (cards.length) {
   cards.forEach(card => card.querySelector('.card-link')?.addEventListener('click', () => {
-    try { sessionStorage.setItem(RETURN_KEY, location.href.split('#')[0] + '#artykuly'); } catch (_) {}
+    try { sessionStorage.setItem(RETURN_KEY, location.href.split('#')[0] + (savedOnly ? '#saved' : '#artykuly')); } catch (_) {}
   }));
 }
 if (readingBody) {
