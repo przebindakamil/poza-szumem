@@ -59,7 +59,9 @@ self.addEventListener('fetch', event => {
     const cache = await caches.open(article ? ARTICLE_CACHE : CACHE_NAME);
     const offlineResponse = async saved => {
       if (!article) return saved;
-      const html = (await saved.text()).replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=' + CACHE_NAME.slice(CACHE_PREFIX.length));
+      const html = (await saved.text())
+        .replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=' + CACHE_NAME.slice(CACHE_PREFIX.length))
+        .replace(/assets\/lucide\.min\.js(?:\?v=[a-z0-9]+)?/g, 'assets/lucide.min.js?v=' + CACHE_NAME.slice(CACHE_PREFIX.length));
       return new Response(html, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     };
     if (request.mode === 'navigate') {

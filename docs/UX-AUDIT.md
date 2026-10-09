@@ -12,6 +12,7 @@ zapisane artykuly, fragmenty, klawiatura, historia przegladarki i offline.
 | P1 | Nieudane kopiowanie moglo pokazywac sukces | Potwierdzenie jest wyswietlane tylko po udanej operacji; blad pozwala sprobowac ponownie |
 | P1 | Przycisk skupienia tracil dostepna nazwe na telefonie | Stale aria-label, title oraz ikony Focus/Minimize dla obu stanow |
 | P1 | Link pomijania naglowka wskazywal brakujaca sekcje na stronach kategorii | Wspolny cel main-content i walidacja lokalnych kotwic |
+| P1 | Starszy service worker mogl zwrocic pakiet bez nowych ikon | Wersjonowane URL ikon, dopasowanie cache i migracja adresow w artykulach offline |
 | P2 | Status przeczytania zawieral dwa znaki wyboru | Usuniety pseudo-element CSS; jedna ikona Check i jeden podpis |
 | P2 | 19/19 bylo niejednoznaczne | Licznik 19 tekstow, 2 teksty lub 1 tekst; oddzielony od naglowka |
 | P2 | Biblioteka powtarzala sie w naglowku | Jeden naglowek; podstrony kategorii maja sekcje Teksty |

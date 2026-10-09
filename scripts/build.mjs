@@ -120,7 +120,7 @@ async function writePage($, file) {
   $('link[rel="manifest"]').attr('href', 'manifest.webmanifest');
   $('link[rel="icon"]').attr('href', 'icon.svg');
   if (!$('script[src*="lucide"]').length) $('script[src*="script.js"]').before('<script src="assets/lucide.min.js"></script>');
-  $('script[src*="lucide"]').attr('src', 'assets/lucide.min.js');
+  $('script[src*="lucide"]').attr('src', 'assets/lucide.min.js?v=' + version);
   $('link[rel="alternate"][type="application/rss+xml"]').attr('href', 'feed.xml');
   if (!$('.skip-link').length) $('body').prepend('<a class="skip-link" href="#main-content">Przejdź do treści</a>');
   $('.skip-link').attr('href', '#main-content').text('Przejdź do treści');
@@ -287,7 +287,8 @@ await fs.writeFile(path.join(output, 'data/articles.json'), JSON.stringify(recor
 let worker = await fs.readFile('sw.js', 'utf8');
 worker = worker.replace(/const CACHE_NAME = CACHE_PREFIX \+ '[^']+';/, "const CACHE_NAME = CACHE_PREFIX + '" + version + "';");
 worker = worker.replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=' + version);
-if (!worker.includes("'assets/lucide.min.js'")) worker = worker.replace("'icon.svg', 'icon-192.svg', 'icon-512.svg'", "'icon.svg', 'icon-192.svg', 'icon-512.svg', 'assets/lucide.min.js', 'assets/icon-192.png', 'assets/icon-512.png'");
+if (!worker.includes("assets/lucide.min.js")) worker = worker.replace("'icon.svg', 'icon-192.svg', 'icon-512.svg'", "'icon.svg', 'icon-192.svg', 'icon-512.svg', 'assets/lucide.min.js', 'assets/icon-192.png', 'assets/icon-512.png'");
+worker = worker.replace(/'assets\/lucide\.min\.js(?:\?v=[a-z0-9]+)?'/, "'assets/lucide.min.js?v=" + version + "'");
 await fs.writeFile(path.join(output, 'sw.js'), worker);
 await fs.writeFile(path.join(output, '.nojekyll'), '');
 console.log('Built ' + records.length + ' articles; asset version ' + version);

@@ -21,6 +21,9 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html'))) {
   assert.equal($('h1').length, 1, file + ': one H1');
   assert.equal($('link[rel="canonical"]').length, 1, file + ': canonical');
   assert($('meta[property="og:image"]').attr('content'), file + ': share image');
+  const appVersion = new URL($('script[src*="script.js"]').attr('src'), 'https://local.test').searchParams.get('v');
+  const iconVersion = new URL($('script[src*="lucide"]').attr('src'), 'https://local.test').searchParams.get('v');
+  assert(appVersion && iconVersion === appVersion, file + ': matching icon asset version');
   for (const node of $('[href], [src]').toArray()) {
     for (const attribute of ['href', 'src']) {
       const href = $(node).attr(attribute);
