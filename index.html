@@ -8,9 +8,10 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <title>Poza Szumem</title>
-  <link rel="stylesheet" href="styles.css?v=20261009a" />
+  <link rel="stylesheet" href="styles.css?v=20261009b" />
 </head>
 <body class="home">
+  <a class="skip-link" href="#artykuly">Przejdź do biblioteki</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="Poza Szumem — strona główna">
@@ -25,6 +26,7 @@
         <span>POZA SZUMEM</span>
       </a>
 
+      <nav class="primary-nav" aria-label="Główna nawigacja"><a href="#artykuly">Biblioteka</a><a href="#kategorie">Kategorie</a></nav>
       <div class="header-actions">
         <button class="icon-button search-toggle" type="button" aria-expanded="false" aria-controls="search-panel" aria-label="Szukaj">
           <span aria-hidden="true">⌕</span>
@@ -39,7 +41,7 @@
   <main>
     <section class="hero wrap">
       <div class="hero-copy">
-<h1>Mniej szumu.<br><span>Więcej sensu.</span></h1>
+<h1>Poza Szumem</h1>
         <p>Eseje, reportaże i teksty, do których warto wracać.</p>
         <div class="hero-discovery" aria-label="Odkrywanie artykułów"></div>
       </div>
@@ -51,14 +53,20 @@
       </div>
     </section>
 
+    <section class="wrap featured-reading" aria-labelledby="featured-heading">
+      <div><span class="eyebrow" id="featured-heading">Polecany tekst</span><h2><a href="artykuly/dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy.html">Dlaczego dobra rozmowa nie polega na mówieniu ciekawych rzeczy</a></h2><p>O pytaniach, uważności i ciekawości, która pozwala naprawdę poznać drugiego człowieka.</p></div><span class="featured-meta">Rozwój i psychologia</span>
+    </section>
+    <section class="wrap categories-section" id="kategorie" aria-labelledby="categories-heading"><div class="section-heading"><h2 id="categories-heading">Kategorie</h2></div><div class="category-index"><a href="#category/rozwoj" data-category-link="rozwoj"><span>Rozwój i psychologia</span><small>7 tekstów</small></a><a href="#category/swiat" data-category-link="swiat"><span>Świat i nauka</span><small>6 tekstów</small></a><a href="#category/finanse" data-category-link="finanse"><span>Finanse i biznes</span><small>2 teksty</small></a><a href="#category/sport" data-category-link="sport"><span>Sport i zdrowie</span><small>2 teksty</small></a><a href="#category/ai" data-category-link="ai"><span>AI i technologia</span><small>1 tekst</small></a><a href="#category/dom" data-category-link="dom"><span>Dom i codzienność</span><small>1 tekst</small></a></div></section>
     <section class="wrap library" id="artykuly">
       <div class="library-bar">
         <div class="library-title">
           <span class="eyebrow">Biblioteka</span>
-          <h2>Najnowsze</h2>
+          <h2>Biblioteka <span class="library-count">19 tekstów</span></h2>
         </div>
 
         <div class="library-actions">
+          <label class="sort-control">Sortuj <select id="article-sort"><option value="newest">Najnowsze</option><option value="shortest">Najkrótsze</option><option value="longest">Najdłuższe</option></select></label>
+          <fieldset class="view-controls" aria-label="Widok biblioteki"><legend class="sr-only">Widok</legend><label title="Widok kart"><input type="radio" name="library-view" value="grid" checked><span>Karty</span></label><label title="Widok listy"><input type="radio" name="library-view" value="list"><span>Lista</span></label></fieldset>
           <details class="category-menu">
             <summary>Kategorie</summary>
             <div class="category-popover">
@@ -260,6 +268,6 @@
     <span>© 2026</span>
   </footer>
 
-  <script src="script.js?v=20261009a"></script>
+  <script src="script.js?v=20261009b"></script>
 </body>
 </html>

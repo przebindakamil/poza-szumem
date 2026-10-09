@@ -6,7 +6,44 @@ const searchPanel = document.querySelector('#search-panel');
 const empty = document.querySelector('#empty-state');
 const categoryMenu = document.querySelector('.category-menu');
 const categorySummary = categoryMenu?.querySelector('summary');
-let activeFilter = 'all';
+const LIBRARY_STATE_KEY = 'poza-szumem-library-v1';
+let libraryState = {};
+try { libraryState = JSON.parse(sessionStorage.getItem(LIBRARY_STATE_KEY) || '{}') || {}; } catch (_) {}
+const knownCategories = new Set(cards.map(card => card.dataset.category));
+let activeFilter = knownCategories.has(document.body.dataset.category) ? document.body.dataset.category : (knownCategories.has(libraryState.category) ? libraryState.category : 'all');
+const sortControl = document.querySelector('#article-sort');
+if (sortControl && ['newest', 'shortest', 'longest'].includes(libraryState.sort)) sortControl.value = libraryState.sort;
+if (search && typeof libraryState.search === 'string') {
+  search.value = libraryState.search.slice(0, 200);
+  if (search.value && searchPanel) {
+    searchPanel.hidden = false;
+    searchToggle?.setAttribute('aria-expanded', 'true');
+  }
+}
+const articleGrid = document.querySelector('.article-grid');
+const viewControls = [...document.querySelectorAll('input[name="library-view"]')];
+let libraryView = libraryState.view === 'list' ? 'list' : 'grid';
+function applyLibraryView() {
+  articleGrid?.classList.toggle('list-view', libraryView === 'list');
+  viewControls.forEach(input => { input.checked = input.value === libraryView; });
+}
+function saveLibraryState() {
+  if (!cards.length) return;
+  const state = { category: activeFilter, search: search?.value || '', sort: sortControl?.value || 'newest', view: libraryView, unread: unreadOnly, scrollY: window.scrollY };
+  try { sessionStorage.setItem(LIBRARY_STATE_KEY, JSON.stringify(state)); } catch (_) {}
+}
+viewControls.forEach(input => input.addEventListener('change', () => {
+  libraryView = input.value;
+  applyLibraryView();
+  saveLibraryState();
+}));
+applyLibraryView();
+window.addEventListener('pagehide', saveLibraryState);
+window.addEventListener('pageshow', event => {
+  if (!event.persisted && cards.length && Number.isFinite(libraryState.scrollY) && libraryState.scrollY > 0 && !location.hash.startsWith('#category/')) {
+    setTimeout(() => window.scrollTo(0, libraryState.scrollY), 0);
+  }
+});
 
 function polishArticleLabel(count) {
   if (count === 1) return 'artykuł';
@@ -72,7 +109,7 @@ function loadReadArticles() {
   } catch (_) { return new Set(); }
 }
 let readArticles = loadReadArticles();
-let unreadOnly = false;
+let unreadOnly = libraryState.unread === true;
 function isRead(id) { return Boolean(id) && readArticles.has(id); }
 function persistReadArticles() {
   try { localStorage.setItem(READ_STORAGE_KEY, JSON.stringify([...readArticles])); }
@@ -131,7 +168,8 @@ if (unreadFilter) {
   unreadFilter.type = 'button';
   unreadFilter.className = 'unread-filter';
   unreadFilter.textContent = 'Nieprzeczytane';
-  unreadFilter.setAttribute('aria-pressed', 'false');
+  unreadFilter.setAttribute('aria-pressed', String(unreadOnly));
+  unreadFilter.classList.toggle('active', unreadOnly);
   document.querySelector('.library-actions').prepend(unreadFilter);
   unreadFilter.addEventListener('click', () => {
     unreadOnly = !unreadOnly;
@@ -145,6 +183,22 @@ function updateArticles() {
   const terms = normalizeSearch(search?.value || '').split(' ').filter(Boolean);
   let visible = 0;
   let firstVisible = null;
+  const sort = sortControl?.value || 'newest';
+  const minutes = card => Number(card.querySelector('.card-footer')?.textContent?.match(/(\d+)\s*min/)?.[1] || 0);
+  const date = card => card.querySelector('time')?.dateTime || '';
+  const ordered = [...cards].sort((a, b) => {
+    if (sort === 'shortest') return minutes(a) - minutes(b) || date(b).localeCompare(date(a));
+    if (sort === 'longest') return minutes(b) - minutes(a) || date(b).localeCompare(date(a));
+    return date(b).localeCompare(date(a));
+  });
+  ordered.forEach(card => articleGrid?.appendChild(card));
+  filters.forEach(button => {
+    const selected = button.dataset.filter === activeFilter;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  const selectedFilter = filters.find(button => button.dataset.filter === activeFilter);
+  if (categorySummary) categorySummary.textContent = activeFilter === 'all' ? 'Kategorie' : (selectedFilter?.textContent.trim() || 'Kategorie');
 
   cards.forEach(card => {
     const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
@@ -165,9 +219,12 @@ function updateArticles() {
   });
 
   firstVisible?.classList.add('primary');
+  const counter = document.querySelector('.library-count');
+  if (counter) { counter.textContent = visible + ' / ' + cards.length; counter.setAttribute('aria-label', visible + ' z ' + cards.length + ' artykułów'); }
+  saveLibraryState();
   if (empty) {
     empty.hidden = visible !== 0;
-    empty.textContent = 'Nie znaleziono artykułów.';
+    empty.textContent = 'Nie znaleziono artykułów. Zmień wyszukiwanie lub filtry.';
   }
 }
 
@@ -183,6 +240,20 @@ filters.forEach(button => button.addEventListener('click', () => {
   if (categoryMenu) categoryMenu.open = false;
 }));
 
+sortControl?.addEventListener('change', updateArticles);
+function openCategory(id) {
+  if (!knownCategories.has(id)) return;
+  activeFilter = id;
+  if (search) search.value = '';
+  unreadOnly = false;
+  if (unreadFilter) { unreadFilter.classList.remove('active'); unreadFilter.setAttribute('aria-pressed', 'false'); }
+  updateArticles();
+  document.querySelector('#artykuly')?.scrollIntoView({ block: 'start' });
+}
+document.querySelectorAll('[data-category-link]').forEach(link => link.addEventListener('click', () => openCategory(link.dataset.categoryLink)));
+window.addEventListener('hashchange', () => {
+  if (location.hash.startsWith('#category/')) openCategory(location.hash.slice(10));
+});
 search?.addEventListener('input', updateArticles);
 search?.addEventListener('search', updateArticles);
 
@@ -528,6 +599,7 @@ window.addEventListener('storage', event => {
 
 hideEmptyCategories();
 refreshReadingStatus();
+if (location.hash.startsWith('#category/')) openCategory(location.hash.slice(10));
 
 const progress=document.querySelector('.read-progress');
 if(progress){
