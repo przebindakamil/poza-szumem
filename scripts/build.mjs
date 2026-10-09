@@ -262,7 +262,7 @@ await fs.writeFile(path.join(output, 'data/articles.json'), JSON.stringify(recor
 let worker = await fs.readFile('sw.js', 'utf8');
 worker = worker.replace(/const CACHE_NAME = CACHE_PREFIX \+ '[^']+';/, "const CACHE_NAME = CACHE_PREFIX + '" + version + "';");
 worker = worker.replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=' + version);
-worker = worker.replace("'icon.svg', 'icon-192.svg', 'icon-512.svg'", "'icon.svg', 'icon-192.svg', 'icon-512.svg', 'assets/lucide.min.js', 'assets/icon-192.png', 'assets/icon-512.png'");
+if (!worker.includes("'assets/lucide.min.js'")) worker = worker.replace("'icon.svg', 'icon-192.svg', 'icon-512.svg'", "'icon.svg', 'icon-192.svg', 'icon-512.svg', 'assets/lucide.min.js', 'assets/icon-192.png', 'assets/icon-512.png'");
 await fs.writeFile(path.join(output, 'sw.js'), worker);
 await fs.writeFile(path.join(output, '.nojekyll'), '');
 console.log('Built ' + records.length + ' articles; asset version ' + version);
