@@ -20,7 +20,7 @@ try {
   const positions = JSON.parse(localStorage.getItem(POSITIONS_KEY) || '{}');
   if (positions && typeof positions === 'object' && !Array.isArray(positions)) {
     for (const [id, entry] of Object.entries(positions)) {
-      if (entry && typeof entry.anchor === 'string' && /^reading-p-\d+$/.test(entry.anchor) && Number.isFinite(entry.progress) && Number.isFinite(entry.updatedAt)) readingPositions[id] = entry;
+      if (entry && typeof entry.anchor === 'string' && /^(?:reading-p|section)-\d+$/.test(entry.anchor) && Number.isFinite(entry.progress) && Number.isFinite(entry.updatedAt)) readingPositions[id] = entry;
     }
   }
 } catch (_) {}
@@ -906,6 +906,11 @@ function toggleBookmark(id) {
   if (bookmarks.has(id)) bookmarks.delete(id); else bookmarks.add(id);
   try { localStorage.setItem(BOOKMARKS_KEY, JSON.stringify([...bookmarks])); } catch (_) {}
   refreshBookmarks();
+  if (bookmarks.has(id) && navigator.serviceWorker?.controller) {
+    const card = cards.find(card => articleIdFromUrl(card.querySelector('.card-link')?.getAttribute('href') || '') === id);
+    const href = card?.querySelector('.card-link')?.getAttribute('href') || (currentArticleId === id ? location.href : '');
+    if (href) navigator.serviceWorker.controller.postMessage({ type: 'CACHE_ARTICLE', url: new URL(href, document.baseURI).href });
+  }
 }
 function refreshBookmarks() {
   document.querySelectorAll('[data-bookmark]').forEach(button => {
@@ -1025,3 +1030,24 @@ window.addEventListener('storage', event => {
     renderContinueReading();
   }
 });
+
+if (window.lucide) {
+  const setIcon = (selector, name) => {
+    const node = document.querySelector(selector);
+    if (node) node.innerHTML = '<i data-lucide="' + name + '"></i>';
+  };
+  setIcon('.search-toggle > span', 'search');
+  setIcon('.theme-toggle > span', root.dataset.theme === 'dark' ? 'sun' : 'moon');
+  document.querySelectorAll('.highlights-close, .install-dialog-close').forEach(button => { button.innerHTML = '<i data-lucide="x"></i>'; });
+  document.querySelectorAll('.bookmark-toggle').forEach(button => { button.innerHTML = '<i data-lucide="bookmark"></i>'; });
+  document.querySelectorAll('.highlights-button .saved-icon').forEach(node => { node.innerHTML = '<i data-lucide="bookmark"></i>'; });
+  document.querySelector('.discover-random > span')?.replaceChildren(Object.assign(document.createElement('i'), { }));
+  const discoverIcon = document.querySelector('.discover-random > span > i');
+  discoverIcon?.setAttribute('data-lucide', 'shuffle');
+  setIcon('.pwa-install-icon', 'download');
+  window.lucide.createIcons();
+  themeButton?.addEventListener('click', () => {
+    setIcon('.theme-toggle > span', root.dataset.theme === 'dark' ? 'sun' : 'moon');
+    window.lucide.createIcons();
+  });
+}

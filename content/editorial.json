@@ -1,0 +1,449 @@
+{
+  "siteUrl": "https://przebindakamil.github.io/poza-szumem/",
+  "publisher": "Poza Szumem",
+  "recommendedSlug": "dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy",
+  "articles": {
+    "co-naprawde-dzieje-sie-w-glowie-modelu-ai": {
+      "headings": [
+        [
+          0,
+          "Od tokenów do odpowiedzi"
+        ],
+        [
+          6,
+          "Uwaga i kontekst"
+        ],
+        [
+          9,
+          "Skąd biorą się pomyłki"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Vaswani i in. — Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        }
+      ],
+      "series": "Jak działa świat"
+    },
+    "czlowiek-ktory-nauczyl-swiat-myc-rece": {
+      "headings": [
+        [
+          0,
+          "Zagadka dwóch oddziałów"
+        ],
+        [
+          6,
+          "Prosta zmiana i trudny opór"
+        ],
+        [
+          12,
+          "Co robić z niewygodnymi danymi"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "WHO — Guidelines on hand hygiene in health care",
+          "url": "https://www.who.int/publications/i/item/9789241597906"
+        }
+      ],
+      "series": "Historie odkryć"
+    },
+    "czlowiek-ktory-zawsze-czekal-na-lepszy-moment": {
+      "headings": [
+        [
+          0,
+          "Lekcje ludzi z długim życiem"
+        ],
+        [
+          11,
+          "Możliwości mają swój czas"
+        ],
+        [
+          21,
+          "Przygotowanie do życia i samo życie"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Karl Pillemer — The Cornell Legacy Project",
+          "url": "https://legacyproject.human.cornell.edu/sample-page-2/"
+        }
+      ],
+      "series": "Uważna codzienność",
+      "updated": "2026-10-09"
+    },
+    "czlowiek-nie-zostal-stworzony-do-siedzenia": {
+      "headings": [
+        [
+          0,
+          "Trening i reszta dnia"
+        ],
+        [
+          10,
+          "Ruch, którego nie liczymy"
+        ],
+        [
+          18,
+          "Codzienna aktywność"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Raichlen i in. — Sitting, squatting, and human inactivity",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7132251/"
+        }
+      ],
+      "series": "Ciało i regeneracja"
+    },
+    "dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy": {
+      "headings": [
+        [
+          0,
+          "Co zbliża rozmówców"
+        ],
+        [
+          5,
+          "Pytania i słuchanie"
+        ],
+        [
+          11,
+          "Ciekawość bez przesłuchania"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Aron i in. — The Experimental Generation of Interpersonal Closeness",
+          "url": "https://doi.org/10.1177/0146167297234003"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dlaczego-kiedys-mielismy-wiecej-czasu": {
+      "headings": [
+        [
+          0,
+          "Obietnica oszczędzonego czasu"
+        ],
+        [
+          7,
+          "Uwaga podzielona między zadania"
+        ],
+        [
+          13,
+          "Dlaczego zyski znikają"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Sophie Leroy — The challenge of attention residue",
+          "url": "https://www.sciencedirect.com/science/article/pii/S0749597809000399"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dlaczego-pamietamy-zycie-w-scenach-a-nie-w-godzinach": {
+      "headings": [
+        [
+          0,
+          "Jak pamiętamy własne życie"
+        ],
+        [
+          5,
+          "Rutyna i granice wydarzeń"
+        ],
+        [
+          11,
+          "Co zostaje w pamięci"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Flexibility of Event Boundaries in Autobiographical Memory",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3914309/"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dlaczego-po-ciezkim-treningu-nie-stajesz-sie-silniejszy": {
+      "headings": [
+        [
+          0,
+          "Wysiłek to początek"
+        ],
+        [
+          5,
+          "Jak organizm się przystosowuje"
+        ],
+        [
+          10,
+          "Regeneracja jest częścią treningu"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "ACSM — A Road Map to Effective Muscle Recovery",
+          "url": "https://www.acsm.org/docs/default-source/files-for-resource-library/a-road-map-to-effective-muscle-recovery.pdf"
+        }
+      ],
+      "series": "Ciało i regeneracja"
+    },
+    "dlaczego-swiat-wydaje-sie-prostszy-kiedy-wiemy-o-nim-mniej": {
+      "headings": [
+        [
+          0,
+          "Pewność i granice wiedzy"
+        ],
+        [
+          5,
+          "Kiedy pojawiają się szczegóły"
+        ],
+        [
+          10,
+          "Lepsze pytania"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Kruger i Dunning — Unskilled and unaware of it",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10626367/"
+        }
+      ],
+      "series": "Jak działa świat"
+    },
+    "dlaczego-tak-bardzo-przejmujemy-sie-tym-co-pomysla-inni": {
+      "headings": [
+        [
+          0,
+          "W centrum własnej uwagi"
+        ],
+        [
+          8,
+          "Jak widzą nas inni"
+        ],
+        [
+          16,
+          "Mniej widoczny koszt rezygnacji"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Gilovich, Medvec i Savitsky — The spotlight effect",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10707330/"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dlaczego-tak-trudno-odejsc-od-czegos-w-co-wlozylismy-juz-duzo-zycia": {
+      "headings": [
+        [
+          0,
+          "Ciężar dawnych decyzji"
+        ],
+        [
+          6,
+          "Koszty, których nie odzyskamy"
+        ],
+        [
+          13,
+          "Kiedy decyzja staje się tożsamością"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Arkes i Blumer — The psychology of sunk cost",
+          "url": "https://www.sciencedirect.com/science/article/pii/0749597885900494"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dlaczego-woda-wrze-wczesniej-w-gorach-a-makaron-pozniej": {
+      "headings": [
+        [
+          0,
+          "Wrzątek wysoko w górach"
+        ],
+        [
+          5,
+          "Ciśnienie i zmiana stanu"
+        ],
+        [
+          11,
+          "Od lodówki do pompy ciepła"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "OpenStax — Humidity, Evaporation, and Boiling",
+          "url": "https://openstax.org/books/college-physics-2e/pages/13-6-humidity-evaporation-and-boiling"
+        }
+      ],
+      "series": "Jak działa świat"
+    },
+    "dom-ktory-psuje-sie-po-cichu": {
+      "headings": [
+        [
+          0,
+          "Pierwsze sygnały"
+        ],
+        [
+          5,
+          "Wilgoć i zimne powierzchnie"
+        ],
+        [
+          11,
+          "Obserwacja zamiast zgadywania"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "US EPA — A Brief Guide to Mold, Moisture and Your Home",
+          "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "dzien-w-ktorym-miasta-przestaly-miec-wlasna-godzine": {
+      "headings": [
+        [
+          0,
+          "Kiedy południe było lokalne"
+        ],
+        [
+          6,
+          "Kolej potrzebuje wspólnego zegara"
+        ],
+        [
+          13,
+          "Godzina uzgodniona przez świat"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Royal Museums Greenwich — The Greenwich Time Ball",
+          "url": "https://www.rmg.co.uk/stories/time/greenwich-time-ball-one-time-all"
+        }
+      ],
+      "series": "Historie odkryć"
+    },
+    "firma-w-ktorej-wszyscy-sa-zajeci-a-nic-nie-jest-gotowe": {
+      "headings": [
+        [
+          0,
+          "Zajętość nie oznacza przepływu"
+        ],
+        [
+          6,
+          "Skąd biorą się kolejki"
+        ],
+        [
+          15,
+          "Mniej pracy w toku"
+        ],
+        [
+          23,
+          "Miejsce na nieprzewidziane"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "MIT — Queuing models and Little’s law",
+          "url": "https://web.mit.edu/1.041/www/lectures/L8-queuing-models-2026sp.pdf"
+        }
+      ],
+      "series": "Praca i decyzje"
+    },
+    "najbardziej-niebezpieczna-liczba-w-twoich-finansach": {
+      "headings": [
+        [
+          0,
+          "Wydatki doganiają dochody"
+        ],
+        [
+          6,
+          "Przyzwyczajenie do nowego poziomu"
+        ],
+        [
+          11,
+          "Pieniądze jako możliwość wyboru"
+        ]
+      ],
+      "series": "Praca i decyzje",
+      "sources": [
+        {
+          "title": "Brattleboro Memorial Hospital — Ronald Read (Healthwise, 2021)",
+          "url": "https://www.bmhvt.org/wp-content/uploads/Healthwise_2021-Spreads.pdf"
+        }
+      ]
+    },
+    "najdrozsze-rzeczy-w-zyciu-czesto-nic-nie-kosztuja": {
+      "headings": [
+        [
+          0,
+          "Kiedy dobre staje się zwyczajne"
+        ],
+        [
+          6,
+          "Dochody i porównania"
+        ],
+        [
+          12,
+          "Wartość zwykłych chwil"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Piff i in. — Higher social class predicts increased unethical behavior",
+          "url": "https://doi.org/10.1073/pnas.1118373109"
+        }
+      ],
+      "series": "Uważna codzienność"
+    },
+    "najlepsza-mapa-swiata-zaczela-sie-od-problemu": {
+      "headings": [
+        [
+          0,
+          "Co musi pominąć mapa"
+        ],
+        [
+          6,
+          "Liczby i etykiety"
+        ],
+        [
+          11,
+          "Kiedy wskaźnik staje się celem"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "John P. Snyder — Map projections: A working manual",
+          "url": "https://www.usgs.gov/publications/map-projections-a-working-manual"
+        }
+      ],
+      "series": "Jak działa świat"
+    },
+    "od-przypadkowego-odkrycia-do-leku-ktory-zmienil-medycyne": {
+      "headings": [
+        [
+          0,
+          "Obserwacja i pierwszy pacjent"
+        ],
+        [
+          7,
+          "Od laboratorium do produkcji"
+        ],
+        [
+          15,
+          "Sukces i jego konsekwencje"
+        ]
+      ],
+      "sources": [
+        {
+          "title": "Alexander Fleming — Nobel Lecture: Penicillin",
+          "url": "https://www.nobelprize.org/uploads/2018/06/fleming-lecture.pdf"
+        }
+      ],
+      "series": "Historie odkryć"
+    }
+  }
+}

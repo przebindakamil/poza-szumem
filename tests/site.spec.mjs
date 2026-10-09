@@ -36,7 +36,7 @@ test('exact article stays readable offline', async ({ page, context }) => {
   await page.evaluate(async () => {
     const cache = await caches.open((await caches.keys()).find(key => key.startsWith('poza-szumem-')));
     for (let i = 0; i < 50; i++) {
-      if (await cache.match(location.href)) return;
+      if (await caches.match(location.href)) return;
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     throw new Error('Article was not cached: ' + JSON.stringify({ url: location.href, controller: navigator.serviceWorker.controller?.scriptURL, caches: await caches.keys(), keys: (await cache.keys()).map(request => request.url) }));
@@ -100,4 +100,35 @@ test('highlights dialog restores keyboard focus', async ({ page }) => {
   await expect(page.locator('.highlights-panel')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(opener).toBeFocused();
+});
+
+test('generated collections, article metadata and feed work', async ({ page, request }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await expect(page.locator('svg.lucide-search')).toHaveCount(1);
+  await page.screenshot({ path: 'test-results/home-' + test.info().project.name + '.png' });
+  await page.getByRole('link', { name: 'Kategorie', exact: true }).click();
+  await expect(page.locator('h1')).toHaveText('Kategorie');
+  await page.locator('.category-index a').first().click();
+  await expect(page.locator('.article-card').first()).toBeVisible();
+  await page.locator('.article-card .card-link').first().click();
+  await expect(page.locator('.article-toc')).toBeVisible();
+  await expect(page.locator('.article-byline')).toHaveText(/Poza Szumem/);
+  await expect(page.locator('.article-sources a').first()).toBeVisible();
+  const schema = await page.locator('script[type="application/ld+json"]').textContent();
+  expect(JSON.parse(schema)['@type']).toBe('Article');
+  expect((await request.get('feed.xml')).status()).toBe(200);
+  expect((await request.get('sitemap.xml')).status()).toBe(200);
+  expect((await request.get('assets/share.png')).headers()['content-type']).toBe('image/png');
+  expect(errors).toEqual([]);
+});
+test('the library works without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4173/poza-szumem/');
+  await expect(page.locator('.article-card').first()).toBeVisible();
+  await page.locator('.article-card .card-link').first().click();
+  await expect(page.locator('.article-body h2').first()).toBeVisible();
+  await context.close();
 });
