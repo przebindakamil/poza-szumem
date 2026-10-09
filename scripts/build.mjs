@@ -74,6 +74,7 @@ const card = record => '<article class="article-card" data-category="' + record.
 const assetNames = ['script.js', 'styles.css', 'manifest.webmanifest', 'icon.svg', 'icon-192.svg', 'icon-512.svg'];
 for (const name of assetNames) await fs.copyFile(name, path.join(output, name));
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
+await fs.copyFile('assets/LUCIDE-LICENSE.txt', path.join(output, 'assets/LUCIDE-LICENSE.txt'));
 await bundle({ entryPoints: ['scripts/icons.mjs'], outfile: path.join(output, 'assets/lucide.min.js'), bundle: true, minify: true, format: 'iife', target: 'es2020' });
 const icon = Buffer.from(await fs.readFile('icon.svg')).toString('base64');
 const shareSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f6f8f6"/><rect x="0" y="0" width="18" height="630" fill="#355f4a"/><image x="80" y="70" width="145" height="145" href="data:image/svg+xml;base64,' + icon + '"/><text x="80" y="340" font-family="Georgia,serif" font-size="100" fill="#171b18">Poza Szumem</text><text x="86" y="424" font-family="sans-serif" font-size="33" fill="#515c55">Eseje, reportaże i teksty warte uwagi.</text></svg>';

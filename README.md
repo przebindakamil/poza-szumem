@@ -61,3 +61,8 @@ npm test
 Testy obejmuja odczyt artykulow, offline, blokade storage, zapisane teksty,
 wznawianie czytania, filtry, sortowanie, klawiature, kategorie, metadane i RSS.
 Raport i zrzuty ekranu sa dostepne jako artefakt `browser-report` w GitHub Actions.
+
+## Ikony
+
+Ikony Lucide sa dolaczone lokalnie. Informacja licencyjna znajduje sie w 
+`assets/LUCIDE-LICENSE.txt`; bundler zachowuje tez naglowki licencji w pliku JS.
