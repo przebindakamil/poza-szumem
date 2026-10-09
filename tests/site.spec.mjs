@@ -67,3 +67,37 @@ test('library sorting, filters and list view survive a return from an article', 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: 'test-results/library-' + test.info().project.name + '.png', fullPage: true });
 });
+
+test('saved articles persist and are separate from highlights', async ({ page }) => {
+  await page.goto('./');
+  await page.locator('.article-card .bookmark-toggle').first().click();
+  await page.getByRole('link', { name: 'Zapisane', exact: true }).click();
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(1);
+  await page.reload();
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(1);
+  await page.locator('.article-card:not([hidden]) .bookmark-toggle').click();
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(0);
+  await expect(page.locator('#empty-state')).toBeVisible();
+});
+test('unfinished reading can be resumed from the library', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('./');
+  await page.locator('.article-card .card-link').first().click();
+  await page.evaluate(() => window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) * 0.35));
+  await expect.poll(() => page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('poza-szumem-positions-v1') || '{}')).length)).toBe(1);
+  await page.locator('.article-back').click();
+  await expect(page.locator('.continue-reading')).toBeVisible();
+  await page.locator('.continue-reading a').first().click();
+  await expect(page.getByRole('button', { name: 'Wznów czytanie' })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(200);
+  expect(errors).toEqual([]);
+});
+test('highlights dialog restores keyboard focus', async ({ page }) => {
+  await page.goto('./');
+  const opener = page.getByRole('button', { name: 'Moje fragmenty', exact: true });
+  await opener.click();
+  await expect(page.locator('.highlights-panel')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(opener).toBeFocused();
+});

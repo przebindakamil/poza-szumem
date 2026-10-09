@@ -1,7 +1,7 @@
 const CACHE_PREFIX = 'poza-szumem-';
-const CACHE_NAME = CACHE_PREFIX + '20261009b';
+const CACHE_NAME = CACHE_PREFIX + '20261009c';
 const ROOT = new URL('./', self.location.href);
-const CORE = ['./', 'index.html', 'styles.css?v=20261009b', 'script.js?v=20261009b',
+const CORE = ['./', 'index.html', 'styles.css?v=20261009c', 'script.js?v=20261009c',
   'manifest.webmanifest', 'icon.svg', 'icon-192.svg', 'icon-512.svg'].map(path => new URL(path, ROOT).href);
 
 async function timedFetch(request) {

@@ -10,6 +10,21 @@ const LIBRARY_STATE_KEY = 'poza-szumem-library-v1';
 let libraryState = {};
 try { libraryState = JSON.parse(sessionStorage.getItem(LIBRARY_STATE_KEY) || '{}') || {}; } catch (_) {}
 const knownCategories = new Set(cards.map(card => card.dataset.category));
+const BOOKMARKS_KEY = 'poza-szumem-bookmarks-v1';
+const POSITIONS_KEY = 'poza-szumem-positions-v1';
+let bookmarks = new Set();
+let readingPositions = {};
+try {
+  const stored = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]');
+  if (Array.isArray(stored)) bookmarks = new Set(stored.filter(id => typeof id === 'string'));
+  const positions = JSON.parse(localStorage.getItem(POSITIONS_KEY) || '{}');
+  if (positions && typeof positions === 'object' && !Array.isArray(positions)) {
+    for (const [id, entry] of Object.entries(positions)) {
+      if (entry && typeof entry.anchor === 'string' && /^reading-p-\d+$/.test(entry.anchor) && Number.isFinite(entry.progress) && Number.isFinite(entry.updatedAt)) readingPositions[id] = entry;
+    }
+  }
+} catch (_) {}
+let savedOnly = location.hash === '#saved' || libraryState.saved === true;
 let activeFilter = knownCategories.has(document.body.dataset.category) ? document.body.dataset.category : (knownCategories.has(libraryState.category) ? libraryState.category : 'all');
 const sortControl = document.querySelector('#article-sort');
 if (sortControl && ['newest', 'shortest', 'longest'].includes(libraryState.sort)) sortControl.value = libraryState.sort;
@@ -29,7 +44,7 @@ function applyLibraryView() {
 }
 function saveLibraryState() {
   if (!cards.length) return;
-  const state = { category: activeFilter, search: search?.value || '', sort: sortControl?.value || 'newest', view: libraryView, unread: unreadOnly, scrollY: window.scrollY };
+  const state = { category: activeFilter, search: search?.value || '', sort: sortControl?.value || 'newest', view: libraryView, unread: unreadOnly, saved: savedOnly, scrollY: window.scrollY };
   try { sessionStorage.setItem(LIBRARY_STATE_KEY, JSON.stringify(state)); } catch (_) {}
 }
 viewControls.forEach(input => input.addEventListener('change', () => {
@@ -117,7 +132,11 @@ function persistReadArticles() {
 }
 function setRead(id, value) {
   if (!id) return;
-  if (value) readArticles.add(id);
+  if (value) {
+    readArticles.add(id);
+    delete readingPositions[id];
+    try { localStorage.setItem(POSITIONS_KEY, JSON.stringify(readingPositions)); } catch (_) {}
+  }
   else readArticles.delete(id);
   persistReadArticles();
   refreshReadingStatus();
@@ -205,7 +224,7 @@ function updateArticles() {
     const haystack = searchIndex.get(card) || '';
     const searchMatch = terms.every(term => haystack.includes(term));
     const id = articleIdFromUrl(card.querySelector('.card-link')?.getAttribute('href') || '');
-    const show = categoryMatch && searchMatch && (!unreadOnly || !isRead(id));
+    const show = categoryMatch && searchMatch && (!unreadOnly || !isRead(id)) && (!savedOnly || bookmarks.has(id));
 
     // Both the hidden attribute and inline display are used deliberately:
     // an article card has display:flex and must never override filtering.
@@ -222,9 +241,12 @@ function updateArticles() {
   const counter = document.querySelector('.library-count');
   if (counter) { counter.textContent = visible + ' / ' + cards.length; counter.setAttribute('aria-label', visible + ' z ' + cards.length + ' artykułów'); }
   saveLibraryState();
+  const libraryHeading = document.querySelector('.library-title h2');
+  if (libraryHeading?.firstChild?.nodeType === Node.TEXT_NODE) libraryHeading.firstChild.textContent = savedOnly ? 'Zapisane ' : 'Biblioteka ';
+  document.querySelector('[data-saved-view]')?.setAttribute('aria-current', savedOnly ? 'page' : 'false');
   if (empty) {
     empty.hidden = visible !== 0;
-    empty.textContent = 'Nie znaleziono artykułów. Zmień wyszukiwanie lub filtry.';
+    empty.textContent = savedOnly ? 'Brak zapisanych artykułów pasujących do filtrów.' : 'Nie znaleziono artykułów. Zmień wyszukiwanie lub filtry.';
   }
 }
 
@@ -242,6 +264,7 @@ filters.forEach(button => button.addEventListener('click', () => {
 
 sortControl?.addEventListener('change', updateArticles);
 function openCategory(id) {
+  savedOnly = false;
   if (!knownCategories.has(id)) return;
   activeFilter = id;
   if (search) search.value = '';
@@ -251,7 +274,19 @@ function openCategory(id) {
   document.querySelector('#artykuly')?.scrollIntoView({ block: 'start' });
 }
 document.querySelectorAll('[data-category-link]').forEach(link => link.addEventListener('click', () => openCategory(link.dataset.categoryLink)));
+function showSavedArticles(active) {
+  savedOnly = active;
+  activeFilter = 'all';
+  if (search) search.value = '';
+  unreadOnly = false;
+  if (unreadFilter) { unreadFilter.classList.remove('active'); unreadFilter.setAttribute('aria-pressed', 'false'); }
+  updateArticles();
+  document.querySelector('#artykuly')?.scrollIntoView({ block: 'start' });
+}
+document.querySelector('[data-saved-view]')?.addEventListener('click', () => showSavedArticles(true));
+document.querySelector('[data-library-view]')?.addEventListener('click', () => showSavedArticles(false));
 window.addEventListener('hashchange', () => {
+  if (location.hash === '#saved') showSavedArticles(true);
   if (location.hash.startsWith('#category/')) openCategory(location.hash.slice(10));
 });
 search?.addEventListener('input', updateArticles);
@@ -325,7 +360,7 @@ if (articleShell && readingBody) {
 
   const sizeControls = document.createElement('div');
   sizeControls.className = 'reader-size-controls';
-  sizeControls.hidden = true;
+  sizeControls.hidden = false;
 
   const smaller = document.createElement('button');
   smaller.type = 'button';
@@ -370,7 +405,7 @@ if (articleShell && readingBody) {
     focusToggle.setAttribute('aria-pressed', String(active));
     focusToggle.querySelector('.focus-label').textContent = active ? 'Wyjdź ze skupienia' : 'Tryb skupienia';
     focusToggle.querySelector('span[aria-hidden="true"]').textContent = active ? '×' : '◎';
-    sizeControls.hidden = !active;
+    sizeControls.hidden = false;
   }
 
   focusToggle.addEventListener('click', () => {
@@ -434,6 +469,8 @@ if (headerActions) {
   highlightsPanel.className = 'highlights-panel';
   highlightsPanel.hidden = true;
   highlightsPanel.setAttribute('aria-label', 'Zapisane fragmenty');
+  highlightsPanel.setAttribute('role', 'dialog');
+  highlightsPanel.setAttribute('aria-modal', 'true');
   highlightsPanel.innerHTML =
     '<div class="highlights-panel-head"><div><span class="eyebrow">Kolekcja</span><h2>Moje fragmenty</h2></div>' +
     '<button class="highlights-close" type="button" aria-label="Zamknij">×</button></div>' +
@@ -447,12 +484,15 @@ if (headerActions) {
     document.body.classList.toggle('highlights-open', open);
     openHighlights.setAttribute('aria-expanded', String(open));
     if (open) highlightsPanel.querySelector('.highlights-close')?.focus();
+    else openHighlights.focus();
+    document.querySelector('main')?.toggleAttribute('inert', open);
   };
   openHighlights.addEventListener('click', () => setPanel(true));
   highlightsPanel.querySelector('.highlights-close')?.addEventListener('click', () => setPanel(false));
   highlightsBackdrop.addEventListener('click', () => setPanel(false));
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !highlightsPanel.hidden) setPanel(false);
+    if (event.key === 'Tab' && !highlightsPanel.hidden) trapPanelFocus(event, highlightsPanel);
   });
 }
 
@@ -761,10 +801,20 @@ const installHost = document.querySelector('.hero-discovery') || document.queryS
 let installButton = null;
 let installDialog = null;
 
+function trapPanelFocus(event, panel) {
+  const focusable = [...panel.querySelectorAll('a[href], button:not([disabled]), input, select, [tabindex="0"]')].filter(node => !node.hidden);
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!first) return;
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+}
 function closeInstallDialog() {
   if (!installDialog) return;
   installDialog.hidden = true;
   document.body.classList.remove('install-dialog-open');
+  document.querySelector('main')?.removeAttribute('inert');
+  installButton?.focus();
 }
 
 function showInstallInstructions() {
@@ -807,6 +857,7 @@ function showInstallInstructions() {
 
   installDialog.hidden = false;
   document.body.classList.add('install-dialog-open');
+  document.querySelector('main')?.setAttribute('inert', '');
   installDialog.querySelector('.install-dialog-close')?.focus();
 }
 
@@ -845,5 +896,132 @@ if (installHost && !isStandalone) {
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && installDialog && !installDialog.hidden) closeInstallDialog();
+  if (event.key === 'Tab' && installDialog && !installDialog.hidden) trapPanelFocus(event, installDialog);
 });
 
+
+const bookmarkIcon = document.querySelector('.highlights-button .saved-icon')?.innerHTML || '☆';
+function toggleBookmark(id) {
+  if (!id) return;
+  if (bookmarks.has(id)) bookmarks.delete(id); else bookmarks.add(id);
+  try { localStorage.setItem(BOOKMARKS_KEY, JSON.stringify([...bookmarks])); } catch (_) {}
+  refreshBookmarks();
+}
+function refreshBookmarks() {
+  document.querySelectorAll('[data-bookmark]').forEach(button => {
+    const selected = bookmarks.has(button.dataset.bookmark);
+    const label = selected ? 'Usuń z zapisanych' : 'Zapisz artykuł';
+    button.setAttribute('aria-pressed', String(selected));
+    button.setAttribute('aria-label', label);
+    button.title = label;
+    button.classList.toggle('active', selected);
+  });
+  if (cards.length) updateArticles();
+}
+function makeBookmarkButton(id) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'bookmark-toggle';
+  button.dataset.bookmark = id;
+  button.innerHTML = bookmarkIcon;
+  button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); toggleBookmark(id); });
+  return button;
+}
+cards.forEach(card => {
+  const id = articleIdFromUrl(card.querySelector('.card-link')?.getAttribute('href') || '');
+  if (id) card.querySelector('.card-footer')?.appendChild(makeBookmarkButton(id));
+});
+if (readingBody && currentArticleId) {
+  document.querySelector('.article-heading')?.appendChild(makeBookmarkButton(currentArticleId));
+}
+refreshBookmarks();
+
+function renderContinueReading() {
+  if (!cards.length) return;
+  let section = document.querySelector('.continue-reading');
+  const pending = cards.map(card => {
+    const href = card.querySelector('.card-link')?.getAttribute('href');
+    const id = articleIdFromUrl(href || '');
+    return { href, id, title: card.querySelector('h3')?.textContent || '', entry: readingPositions[id] };
+  }).filter(item => item.entry && !isRead(item.id) && item.entry.progress > 0.02 && item.entry.progress < 0.96)
+    .sort((a, b) => b.entry.updatedAt - a.entry.updatedAt).slice(0, 3);
+  if (!pending.length) { section?.remove(); return; }
+  if (!section) {
+    section = document.createElement('section');
+    section.className = 'wrap continue-reading';
+    section.setAttribute('aria-labelledby', 'continue-heading');
+    document.querySelector('.featured-reading')?.insertAdjacentElement('afterend', section);
+  }
+  section.replaceChildren();
+  const heading = document.createElement('h2');
+  heading.id = 'continue-heading';
+  heading.textContent = 'Czytaj dalej';
+  section.appendChild(heading);
+  pending.forEach(item => {
+    const link = document.createElement('a');
+    link.href = item.href + '#resume';
+    const title = document.createElement('span');
+    title.textContent = item.title;
+    const progress = document.createElement('small');
+    progress.textContent = Math.round(item.entry.progress * 100) + '%';
+    link.append(title, progress);
+    section.appendChild(link);
+  });
+}
+renderContinueReading();
+
+if (readingBody && currentArticleId) {
+  const paragraphs = [...readingBody.querySelectorAll('p, h2, h3')];
+  paragraphs.forEach((paragraph, index) => { paragraph.id ||= 'reading-p-' + index; });
+  const savedPosition = readingPositions[currentArticleId];
+  const rememberPosition = () => {
+    if (isRead(currentArticleId)) return;
+    const total = document.documentElement.scrollHeight - innerHeight;
+    const progress = total > 0 ? Math.min(1, Math.max(0, scrollY / total)) : 0;
+    if (progress < 0.02) return;
+    const nearest = paragraphs.reduce((best, paragraph) => Math.abs(paragraph.getBoundingClientRect().top - 140) < Math.abs(best.getBoundingClientRect().top - 140) ? paragraph : best, paragraphs[0]);
+    if (!nearest) return;
+    readingPositions[currentArticleId] = { anchor: nearest.id, progress, updatedAt: Date.now() };
+    try { localStorage.setItem(POSITIONS_KEY, JSON.stringify(readingPositions)); } catch (_) {}
+  };
+  const resume = () => {
+    if (!savedPosition) return;
+    document.getElementById(savedPosition.anchor)?.scrollIntoView({ block: 'start' });
+  };
+  if (savedPosition && !isRead(currentArticleId)) {
+    const controls = document.createElement('div');
+    controls.className = 'resume-controls';
+    const resumeButton = document.createElement('button');
+    resumeButton.type = 'button';
+    resumeButton.textContent = 'Wznów czytanie';
+    resumeButton.addEventListener('click', resume);
+    const restart = document.createElement('button');
+    restart.type = 'button';
+    restart.textContent = 'Od początku';
+    restart.addEventListener('click', () => {
+      delete readingPositions[currentArticleId];
+      try { localStorage.setItem(POSITIONS_KEY, JSON.stringify(readingPositions)); } catch (_) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      controls.remove();
+    });
+    controls.append(resumeButton, restart);
+    document.querySelector('.article-heading')?.appendChild(controls);
+    if (location.hash === '#resume') requestAnimationFrame(() => requestAnimationFrame(resume));
+  }
+  let positionTimer;
+  window.addEventListener('scroll', () => { clearTimeout(positionTimer); positionTimer = setTimeout(rememberPosition, 250); }, { passive: true });
+  window.addEventListener('pagehide', rememberPosition);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) rememberPosition(); });
+}
+window.addEventListener('storage', event => {
+  if (event.key === BOOKMARKS_KEY) {
+    try { const values = JSON.parse(event.newValue || '[]'); if (Array.isArray(values)) bookmarks = new Set(values.filter(id => typeof id === 'string')); } catch (_) {}
+    refreshBookmarks();
+  }
+  if (event.key === READ_STORAGE_KEY || event.key === POSITIONS_KEY) {
+    if (event.key === POSITIONS_KEY) {
+      try { const values = JSON.parse(event.newValue || '{}'); if (values && typeof values === 'object' && !Array.isArray(values)) readingPositions = values; } catch (_) {}
+    }
+    renderContinueReading();
+  }
+});

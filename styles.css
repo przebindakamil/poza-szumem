@@ -348,3 +348,23 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .article-heading{margin-bottom:24px}
 .article-deck{font-size:1.1rem}
 }
+
+.card-footer{z-index:4}
+.bookmark-toggle{position:relative;pointer-events:auto;flex-shrink:0;width:44px;height:44px;display:inline-grid;place-items:center;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--muted);cursor:pointer}
+.bookmark-toggle svg{width:22px;height:22px}
+.bookmark-toggle.active{color:var(--accent);background:var(--accent-soft);border-color:var(--accent)}
+.bookmark-toggle.active svg path{fill:var(--accent-soft)}
+.article-heading>.bookmark-toggle{margin-top:18px}
+.continue-reading{padding:28px 0;border-bottom:1px solid var(--line)}
+.continue-reading h2{font:500 1.65rem/1.2 Georgia,serif;margin:0 0 12px}
+.continue-reading a{display:flex;justify-content:space-between;gap:24px;padding:12px 0;text-decoration:none}
+.continue-reading a:hover span{text-decoration:underline}
+.continue-reading small{white-space:nowrap;color:var(--muted)}
+.resume-controls{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.resume-controls button{padding:9px 14px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--text);cursor:pointer}
+.resume-controls button:first-child{background:var(--accent);color:var(--bg)}
+.focus-bar{background:var(--surface);padding:6px;border:1px solid var(--line);border-radius:6px}
+.focus-label{display:inline}
+.reader-size-controls[hidden]{display:flex}
+.article-shell{padding-bottom:130px}
+@media(max-width:640px){.focus-label{display:none}.primary-nav{gap:18px}.continue-reading a{font-size:.9rem}.focus-bar{right:10px;bottom:10px}}
