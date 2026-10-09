@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
       try {
         const response = await timedFetch(request);
         if (response.ok) {
-          event.waitUntil(remember(request, response));
+          await remember(request, response);
           return response;
         }
         // Preserve real 404s; an unavailable server can use an exact saved page.

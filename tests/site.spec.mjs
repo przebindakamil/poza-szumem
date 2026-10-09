@@ -39,7 +39,7 @@ test('exact article stays readable offline', async ({ page, context }) => {
       if (await cache.match(location.href)) return;
       await new Promise(resolve => setTimeout(resolve, 100));
     }
-    throw new Error('Article was not cached');
+    throw new Error('Article was not cached: ' + JSON.stringify({ url: location.href, controller: navigator.serviceWorker.controller?.scriptURL, caches: await caches.keys(), keys: (await cache.keys()).map(request => request.url) }));
   });
   await context.setOffline(true);
   await page.reload();
