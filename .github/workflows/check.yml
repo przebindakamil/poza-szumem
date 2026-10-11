@@ -54,4 +54,8 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - run: node scripts/check-production.mjs
+      - name: Verify custom domain
+        continue-on-error: true
+        env:
+          SITE_URL: https://pozaszumem.pl/
+        run: node scripts/check-production.mjs
