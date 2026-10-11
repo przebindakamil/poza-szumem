@@ -74,6 +74,7 @@ const card = record => '<article class="article-card" data-category="' + record.
 
 const assetNames = ['script.js', 'styles.css', 'manifest.webmanifest'];
 for (const name of assetNames) await fs.copyFile(name, path.join(output, name));
+try { await fs.copyFile('CNAME', path.join(output, 'CNAME')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const name of ['icon.svg', 'icon-192.svg', 'icon-512.svg']) await fs.copyFile('assets/brand.svg', path.join(output, name));
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
 await fs.copyFile('assets/LUCIDE-LICENSE.txt', path.join(output, 'assets/LUCIDE-LICENSE.txt'));
