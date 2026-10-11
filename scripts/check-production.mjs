@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
-const { siteUrl } = JSON.parse(await fs.readFile('content/editorial.json', 'utf8'));
+const config = JSON.parse(await fs.readFile('content/editorial.json', 'utf8'));
+const siteUrl = process.env.SITE_URL || config.siteUrl;
 const pages = ['index.html', 'kategorie/index.html', 'wybor-tygodnia.html', 'feed.xml', 'sitemap.xml', 'assets/share.png'];
 for (let attempt = 0; attempt < 12; attempt++) {
   try {
