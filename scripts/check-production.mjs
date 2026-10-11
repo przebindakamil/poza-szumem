@@ -4,8 +4,13 @@ const pages = ['index.html', 'kategorie/index.html', 'wybor-tygodnia.html', 'fee
 for (let attempt = 0; attempt < 12; attempt++) {
   try {
     for (const page of pages) {
-      const response = await fetch(new URL(page, siteUrl), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000) });
+      const expected = new URL(page, siteUrl);
+      const response = await fetch(expected, { redirect: 'follow', cache: 'no-store', signal: AbortSignal.timeout(10000) });
       if (!response.ok) throw new Error(page + ': HTTP ' + response.status);
+      const finalUrl = new URL(response.url);
+      if (finalUrl.hostname !== new URL(siteUrl).hostname) {
+        throw new Error(page + ': unexpected host ' + finalUrl.hostname);
+      }
       if (page === 'index.html' && !(await response.text()).includes('data-saved-view')) throw new Error('Old homepage');
       if (page === 'feed.xml' && !(await response.text()).includes('<rss')) throw new Error('Invalid feed');
     }
