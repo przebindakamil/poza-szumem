@@ -14,14 +14,14 @@ SITE_DIR=_site npm run serve
 ```
 
 Na Windows PowerShell ustaw najpierw `$env:SITE_DIR = '_site'`, a potem wykonaj `npm run serve`.
-Adres lokalny: http://127.0.0.1:4173/poza-szumem/
+Adres lokalny: http://127.0.0.1:4173/
 
 ## Publikacja
 
 Workflow `Site checks` generuje katalog `_site`, sprawdza linki i metadane,
 uruchamia testy Playwright na desktopie i telefonie, a dopiero potem publikuje
 wynik na GitHub Pages. W Settings > Pages ustaw Source na GitHub Actions,
-aby uniknac rownoleglego publikowania plikow z galezi.
+aby uniknac rownoleglego publikowania plikow z galezi. Produkcyjna domena to https://pozaszumem.pl/.
 
 Stale adresy artykulow sa zachowane. Obecne pliki HTML pozostaja obslugiwane;
 nie trzeba migrowac calego archiwum naraz.
