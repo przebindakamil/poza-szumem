@@ -24,6 +24,7 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: node scripts/publish-queued.mjs
       - name: Commit published article
+        id: commit
         run: |
           if [ -z "$(git status --porcelain -- content/ planned/)" ]; then
             echo "No article to publish"
@@ -34,3 +35,9 @@ jobs:
           git add content/ planned/
           git commit -m "Publish next planned Poza Szumem article"
           git push
+          echo "published=true" >> "$GITHUB_OUTPUT"
+      - name: Trigger site build and deployment
+        if: steps.commit.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run check.yml --ref main
