@@ -1,4 +1,40 @@
 {
   "updated": "2026-10-13",
-  "items": []
+  "items": [
+    {
+      "date": "2026-10-14",
+      "title": "Dlaczego GPS potrzebuje Einsteina",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Relatywistyczny czas jako niewidoczny fundament codziennej nawigacji satelitarnej."
+    },
+    {
+      "date": "2026-10-15",
+      "title": "Co naprawdę dzieje się z pieniędzmi, kiedy płacisz kartą",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Rozdzielenie autoryzacji, clearingu i settlementu oraz pokazanie infrastruktury ukrytej za sekundą przy terminalu."
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Dlaczego mózg uczy się także wtedy, kiedy śpisz",
+      "category": "sport",
+      "status": "ready",
+      "notes": "Sen jako etap konsolidacji i reorganizacji pamięci, z zaznaczeniem tego, co w nauce jest dobrze potwierdzone, a co nadal dyskutowane."
+    },
+    {
+      "date": "2026-10-17",
+      "title": "Metalowe pudełko, które zmieniło świat",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Konteneryzacja jako historia standardu, który zmienił porty, koszty transportu i globalne łańcuchy dostaw."
+    },
+    {
+      "date": "2026-10-18",
+      "title": "Dlaczego deszcz pachnie inaczej niż woda",
+      "category": "dom",
+      "status": "ready",
+      "notes": "Petrichor, geosmina i mikroskopijne aerozole pokazujące, że zapach deszczu pochodzi głównie z tego, co woda uwalnia z podłoża."
+    }
+  ]
 }
