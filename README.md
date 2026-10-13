@@ -91,3 +91,12 @@ Przykład wpisu:
 ```
 
 Dozwolone statusy: `idea`, `research`, `draft`, `ready`. Gdy w `content/` pojawi się opublikowany artykuł z tą samą datą, dashboard automatycznie pokaże status „Opublikowany”.
+
+
+## Publikacja zaplanowana
+
+Artykuły z przyszłą datą mogą być zapisane wcześniej w `content/*.md`. Build odczytuje wszystkie pliki, ale do publicznej biblioteki, podstron kategorii, RSS, sitemap oraz `data/articles.json` trafiają tylko teksty z datą nie późniejszą niż bieżący dzień w strefie `Europe/Warsaw`.
+
+Dashboard `/admin/` widzi również przyszłe artykuły i pokazuje je jako „Gotowy”. Workflow `Site checks` uruchamia się także codziennie rano, dzięki czemu kolejny przygotowany tekst zostaje opublikowany automatycznie bez nowego commita.
+
+Raz w tygodniu zadanie „Poza Szumem — plan tygodnia” przygotowuje plan na poniedziałek–niedzielę, wykonuje research, tworzy 7 gotowych plików Markdown i aktualizuje `content/schedule.json`.
