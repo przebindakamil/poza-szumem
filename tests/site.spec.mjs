@@ -174,3 +174,12 @@ test('an update preserves previously cached articles and their offline styling',
   await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).margin)).toBe('0px');
   await expect(page.locator('.focus-toggle')).toBeVisible();
 });
+
+
+test('editorial dashboard shows seven day plan', async ({ page }) => {
+  await page.goto('admin/');
+  await expect(page.getByRole('heading', { name: 'Plan publikacji', exact: true })).toBeVisible();
+  await expect(page.locator('.plan-day')).toHaveCount(7);
+  await expect(page.locator('.summary-card')).toHaveCount(4);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
+});
