@@ -7,6 +7,17 @@ const catalog = JSON.parse(await fs.readFile(path.join(root, 'data/articles.json
 assert(catalog.length >= 19, 'Archive must be preserved');
 const unique = new Set(catalog.map(record => record.slug));
 assert.equal(unique.size, catalog.length, 'Duplicate slugs');
+const todayParts = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Warsaw',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+}).formatToParts(new Date());
+const todayValue = Object.fromEntries(todayParts.map(part => [part.type, part.value]));
+const warsawToday = todayValue.year + '-' + todayValue.month + '-' + todayValue.day;
+for (const record of catalog) {
+  assert(record.date <= warsawToday, 'Public catalog contains a future article: ' + record.slug);
+}
 async function walk(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const result = [];
