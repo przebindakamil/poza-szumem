@@ -285,6 +285,23 @@ await writePage(notFound, '404.html');
 
 await fs.mkdir(path.join(output, 'data'), { recursive: true });
 await fs.writeFile(path.join(output, 'data/articles.json'), JSON.stringify(records.map(({ $, headings, sourcePath, ...record }) => record), null, 2));
+const schedule = JSON.parse(await fs.readFile('content/schedule.json', 'utf8'));
+const adminData = {
+  schedule: Array.isArray(schedule.items) ? schedule.items : [],
+  articles: records.map(record => ({
+    slug: record.slug,
+    title: record.title,
+    date: record.date,
+    category: record.category,
+    minutes: record.minutes
+  })),
+  categories: categoryLabels
+};
+await fs.mkdir(path.join(output, 'admin'), { recursive: true });
+for (const name of ['index.html', 'dashboard.css', 'dashboard.js']) {
+  await fs.copyFile(path.join('admin', name), path.join(output, 'admin', name));
+}
+await fs.writeFile(path.join(output, 'admin', 'data.json'), JSON.stringify(adminData, null, 2));
 let worker = await fs.readFile('sw.js', 'utf8');
 worker = worker.replace(/const CACHE_NAME = CACHE_PREFIX \+ '[^']+';/, "const CACHE_NAME = CACHE_PREFIX + '" + version + "';");
 worker = worker.replace(/(script\.js|styles\.css)\?v=[a-z0-9]+/g, '$1?v=' + version);
