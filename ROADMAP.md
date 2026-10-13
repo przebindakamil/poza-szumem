@@ -16,6 +16,7 @@
 - [x] Podstrony kategorii i serii, wybor tygodnia.
 - [x] Canonical, Article/Open Graph, obraz udostepniania, RSS i sitemap.
 - [x] Walidacja linkow i testy przegladarkowe przed publikacja.
+- [x] 7-dniowy dashboard redakcyjny: plan, statusy, wolne dni i balans kategorii.
 
 ## Odlozone decyzja wlasciciela
 
@@ -31,6 +32,4 @@
 ## Ustawienia hostingu
 
 GitHub Pages powinno korzystac z Source: GitHub Actions.
-Domena kanoniczna obecnie: https://przebindakamil.github.io/poza-szumem/
-Wlasna domena wymaga osobnej poprawnej konfiguracji DNS/Pages;
-jej dawnych przekierowan w przegladarce nie mozna naprawic samym JavaScriptem.
+Domena kanoniczna: https://pozaszumem.pl/.
