@@ -17,6 +17,8 @@
 - [x] Canonical, Article/Open Graph, obraz udostepniania, RSS i sitemap.
 - [x] Walidacja linkow i testy przegladarkowe przed publikacja.
 - [x] 7-dniowy dashboard redakcyjny: plan, statusy, wolne dni i balans kategorii.
+- [x] Zaplanowana publikacja przyszłych artykułów i codzienny rebuild GitHub Pages.
+- [x] Tygodniowe przygotowanie 7 tematów i gotowych tekstów przez zadanie automatyczne.
 
 ## Odlozone decyzja wlasciciela
 
