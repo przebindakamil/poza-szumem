@@ -21,7 +21,7 @@ await fs.mkdir(queueDir, { recursive: true });
 const published = (await fs.readdir(contentDir)).filter(name => name.endsWith('.md') && !name.startsWith('_'));
 for (const name of published) {
   const text = await fs.readFile(path.join(contentDir, name), 'utf8');
-  if (new RegExp('^date:\\s*["\\\']?' + today + '["\\\']?\\s*$', 'm').test(text)) {
+  if (text.split('\n').some(line => line.trim().replace(/^date:\s*/, '').replace(/^["']|["']$/g, '') === today)) {
     console.log('Already published an article today: ' + name);
     process.exit(0);
   }
