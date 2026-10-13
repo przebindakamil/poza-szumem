@@ -70,6 +70,17 @@ for (const name of markdownNames) {
   addRecord(slug, $, parsed.data, 'content/' + name);
 }
 records.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
+const warsawToday = (() => {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Warsaw',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return value.year + '-' + value.month + '-' + value.day;
+})();
+const publishedRecords = records.filter(record => record.date <= warsawToday);
 const card = record => '<article class="article-card" data-category="' + record.category + '" data-search="' + escape(record.keywords) + '"><a class="card-link" href="artykuly/' + record.slug + '.html" aria-label="Czytaj: ' + escape(record.title) + '"></a><div class="card-topline"><span class="pill">' + categoryLabels[record.category] + '</span><time datetime="' + record.date + '">' + record.date.split('-').reverse().join('.') + '</time></div><div class="card-copy"><h3>' + escape(record.title) + '</h3><p>' + escape(record.excerpt) + '</p></div><div class="card-footer"><div class="card-meta"><span class="reading-time">' + record.minutes + ' min czytania</span></div></div></article>';
 
 const assetNames = ['script.js', 'styles.css', 'manifest.webmanifest'];
@@ -162,7 +173,7 @@ async function writePage($, file) {
   await fs.writeFile(target, $.html());
 }
 
-for (const record of records) {
+for (const record of publishedRecords) {
   const $ = record.$;
   $('.article-title').text(record.title);
   $('.article-deck').text(record.excerpt);
@@ -194,18 +205,18 @@ for (const record of records) {
   });
   await writePage($, 'artykuly/' + record.slug + '.html');
 }
-home('.article-grid').html(records.map(card).join(''));
+home('.article-grid').html(publishedRecords.map(card).join(''));
 home('.hero-copy p').text(tagline);
-home('.library-count').text(textCount(records.length));
+home('.library-count').text(textCount(publishedRecords.length));
 home('.library').after(home('.categories-section'));
-const recommended = records.find(record => record.slug === settings.recommendedSlug) || records[0];
+const recommended = publishedRecords.find(record => record.slug === settings.recommendedSlug) || publishedRecords[0];
 home('.featured-reading').removeClass('wrap').html('<div class="wrap featured-inner"><span class="featured-label" id="featured-heading">Polecany tekst</span><div class="featured-meta"><span>' + categoryLabels[recommended.category] + '</span><span>' + recommended.minutes + ' min czytania</span></div><h2><a href="artykuly/' + recommended.slug + '.html">' + escape(recommended.title) + '</a></h2><p>' + escape(recommended.excerpt) + '</p><a class="featured-cta" href="artykuly/' + recommended.slug + '.html">Przeczytaj tekst</a></div>');
-const categoryCounts = Object.entries(categoryLabels).map(([id, name]) => ({ id, name, count: records.filter(record => record.category === id).length })).filter(category => category.count);
+const categoryCounts = Object.entries(categoryLabels).map(([id, name]) => ({ id, name, count: publishedRecords.filter(record => record.category === id).length })).filter(category => category.count);
 home('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + textCount(category.count) + '</small></a>').join(''));
 metadata(home, 'Poza Szumem — teksty warte uwagi', 'Spokojna biblioteka esejów, reportaży i tekstów, do których warto wracać.', 'index.html', { '@type': 'WebSite', name: 'Poza Szumem', url: site.href, inLanguage: 'pl' });
 await writePage(home, 'index.html');
 
-const pageFiles = ['index.html', ...records.map(record => 'artykuly/' + record.slug + '.html')];
+const pageFiles = ['index.html', ...publishedRecords.map(record => 'artykuly/' + record.slug + '.html')];
 function collection(title, excerpt, subset, file, category) {
   const $ = load(homepage);
   $('body').removeClass('home');
@@ -232,32 +243,32 @@ await writePage(categoryIndex, 'kategorie/index.html');
 pageFiles.push('kategorie/index.html');
 for (const category of categoryCounts) {
   const file = 'kategorie/' + category.id + '.html';
-  const $ = collection(category.name, 'Eseje i teksty z kategorii ' + category.name.toLocaleLowerCase('pl-PL') + '.', records.filter(record => record.category === category.id), file, category.id);
+  const $ = collection(category.name, 'Eseje i teksty z kategorii ' + category.name.toLocaleLowerCase('pl-PL') + '.', publishedRecords.filter(record => record.category === category.id), file, category.id);
   await writePage($, file);
 }
-const seriesNames = [...new Set(records.map(record => record.series).filter(Boolean))];
+const seriesNames = [...new Set(publishedRecords.map(record => record.series).filter(Boolean))];
 const seriesIndex = load(homepage);
 seriesIndex('.hero h1').text('Serie');
 seriesIndex('.hero p').text('Historie i idee połączone wspólnym tematem.');
 seriesIndex('.featured-reading, .library, .hero-orbit, .search-toggle, .hero-discovery').remove();
 seriesIndex('#categories-heading').text('Serie tematyczne');
-seriesIndex('.category-index').html(seriesNames.map(name => '<a href="serie/' + slugify(name) + '.html"><span>' + escape(name) + '</span><small>' + textCount(records.filter(record => record.series === name).length) + '</small></a>').join(''));
+seriesIndex('.category-index').html(seriesNames.map(name => '<a href="serie/' + slugify(name) + '.html"><span>' + escape(name) + '</span><small>' + textCount(publishedRecords.filter(record => record.series === name).length) + '</small></a>').join(''));
 metadata(seriesIndex, 'Serie — Poza Szumem', 'Serie tematyczne z biblioteki Poza Szumem.', 'serie/index.html', { '@type': 'CollectionPage', name: 'Serie', inLanguage: 'pl' });
 await writePage(seriesIndex, 'serie/index.html');
 pageFiles.push('serie/index.html');
 for (const name of seriesNames) {
   const file = 'serie/' + slugify(name) + '.html';
-  const $ = collection(name, 'Seria tematyczna Poza Szumem.', records.filter(record => record.series === name), file);
+  const $ = collection(name, 'Seria tematyczna Poza Szumem.', publishedRecords.filter(record => record.series === name), file);
   await writePage($, file);
 }
-const latest = new Date(records[0].date + 'T12:00:00Z');
+const latest = new Date(publishedRecords[0].date + 'T12:00:00Z');
 const weekStart = new Date(latest);
 weekStart.setUTCDate(latest.getUTCDate() - (latest.getUTCDay() + 6) % 7);
 const weekDate = weekStart.toISOString().slice(0, 10);
-const recent = records.filter(record => record.date >= weekDate);
+const recent = publishedRecords.filter(record => record.date >= weekDate);
 const weekly = [];
 const used = new Set();
-for (const record of [...recent, ...records]) {
+for (const record of [...recent, ...publishedRecords]) {
   if (!used.has(record.category) && !weekly.some(item => item.slug === record.slug)) { weekly.push(record); used.add(record.category); }
   if (weekly.length === 3) break;
 }
@@ -266,13 +277,13 @@ await writePage(weekPage, 'wybor-tygodnia.html');
 const feed = new Feed({
   title: 'Poza Szumem', description: 'Eseje, reportaże i teksty warte uwagi.', id: site.href, link: site.href, language: 'pl',
   image: new URL('assets/share.png', site).href, favicon: new URL('icon.svg', site).href,
-  copyright: 'Poza Szumem', updated: new Date(records[0].date), feedLinks: { rss2: new URL('feed.xml', site).href }
+  copyright: 'Poza Szumem', updated: new Date(publishedRecords[0].date), feedLinks: { rss2: new URL('feed.xml', site).href }
 });
-for (const record of records) feed.addItem({ title: record.title, id: new URL('artykuly/' + record.slug + '.html', site).href, link: new URL('artykuly/' + record.slug + '.html', site).href, description: record.excerpt, date: new Date(record.date), author: [{ name: record.author }], category: [{ name: categoryLabels[record.category] }] });
+for (const record of publishedRecords) feed.addItem({ title: record.title, id: new URL('artykuly/' + record.slug + '.html', site).href, link: new URL('artykuly/' + record.slug + '.html', site).href, description: record.excerpt, date: new Date(record.date), author: [{ name: record.author }], category: [{ name: categoryLabels[record.category] }] });
 await fs.writeFile(path.join(output, 'feed.xml'), feed.rss2());
 const sitemap = load('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>', { xmlMode: true });
 for (const file of pageFiles) {
-  const record = records.find(item => file === 'artykuly/' + item.slug + '.html');
+  const record = publishedRecords.find(item => file === 'artykuly/' + item.slug + '.html');
   sitemap('urlset').append('<url><loc>' + escape(new URL(file, site).href) + '</loc>' + (record ? '<lastmod>' + record.updated + '</lastmod>' : '') + '</url>');
 }
 await fs.writeFile(path.join(output, 'sitemap.xml'), sitemap.xml());
@@ -284,11 +295,12 @@ metadata(notFound, 'Nie znaleziono strony — Poza Szumem', 'Wróć do bibliotek
 await writePage(notFound, '404.html');
 
 await fs.mkdir(path.join(output, 'data'), { recursive: true });
-await fs.writeFile(path.join(output, 'data/articles.json'), JSON.stringify(records.map(({ $, headings, sourcePath, ...record }) => record), null, 2));
+await fs.writeFile(path.join(output, 'data/articles.json'), JSON.stringify(publishedRecords.map(({ $, headings, sourcePath, ...record }) => record), null, 2));
 const schedule = JSON.parse(await fs.readFile('content/schedule.json', 'utf8'));
 const adminData = {
   schedule: Array.isArray(schedule.items) ? schedule.items : [],
   articles: records.map(record => ({
+    published: record.date <= warsawToday,
     slug: record.slug,
     title: record.title,
     date: record.date,
@@ -309,4 +321,4 @@ if (!worker.includes("assets/lucide.min.js")) worker = worker.replace("'icon.svg
 worker = worker.replace(/'assets\/lucide\.min\.js(?:\?v=[a-z0-9]+)?'/, "'assets/lucide.min.js?v=" + version + "'");
 await fs.writeFile(path.join(output, 'sw.js'), worker);
 await fs.writeFile(path.join(output, '.nojekyll'), '');
-console.log('Built ' + records.length + ' articles; asset version ' + version);
+console.log('Built ' + publishedRecords.length + ' published articles and kept ' + (records.length - publishedRecords.length) + ' scheduled drafts; asset version ' + version);
