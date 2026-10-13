@@ -37,10 +37,10 @@ function summaryCard(value,label){
   return node;
 }
 
-function dayCard({date,planned,published,categories,today}){
-  const status=published?'published':(planned?.status||'empty');
-  const title=published?.title||planned?.title||'Brak zaplanowanego tekstu';
-  const category=published?.category||planned?.category||'';
+function dayCard({date,planned,article,categories,today}){
+  const status=article?.published?'published':(article?'ready':(planned?.status||'empty'));
+  const title=article?.title||planned?.title||'Brak zaplanowanego tekstu';
+  const category=article?.category||planned?.category||'';
   const notes=planned?.notes||'';
   const card=document.createElement('article');
   card.className='plan-day '+(status==='empty'?'empty ':'')+(date===today?'today':'');
@@ -49,9 +49,9 @@ function dayCard({date,planned,published,categories,today}){
   const safeTitle=document.createElement('h3');
   safeTitle.className='plan-title';
 
-  if(published){
+  if(article?.published){
     const link=document.createElement('a');
-    link.href='../artykuly/'+published.slug+'.html';
+    link.href='../artykuly/'+article.slug+'.html';
     link.textContent=title;
     safeTitle.appendChild(link);
   }else{
@@ -117,8 +117,8 @@ async function init(){
 
     for(const date of days){
       const planned=schedule.get(date);
-      const published=articles.get(date);
-      const rendered=dayCard({date,planned,published,categories:data.categories||{},today});
+      const article=articles.get(date);
+      const rendered=dayCard({date,planned,article,categories:data.categories||{},today});
       grid.appendChild(rendered.card);
 
       if(rendered.status==='published') counts.published++;
