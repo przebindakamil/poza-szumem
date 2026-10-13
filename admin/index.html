@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Plan publikacji — Poza Szumem</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <main class="dashboard-shell">
+    <header class="dashboard-header">
+      <div>
+        <p class="eyebrow">Poza Szumem · panel redakcyjny</p>
+        <h1>Plan publikacji</h1>
+        <p class="lede">Najbliższe 7 dni, status przygotowania i balans tematów.</p>
+      </div>
+      <a class="back-link" href="../index.html">Otwórz stronę ↗</a>
+    </header>
+
+    <section id="summary" class="summary-grid" aria-label="Podsumowanie planu"></section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Dziś + 6 dni</p>
+          <h2>Najbliższy tydzień</h2>
+        </div>
+        <p id="range-label" class="range-label"></p>
+      </div>
+      <div class="plan-scroll">
+        <div id="plan-grid" class="plan-grid"></div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Kontrola różnorodności</p>
+          <h2>Balans tygodnia</h2>
+        </div>
+      </div>
+      <div id="balance" class="balance-grid"></div>
+    </section>
+
+    <section class="admin-note">
+      <strong>Jak edytować plan?</strong>
+      <p>Na tym etapie dashboard jest tylko do odczytu. Zmieniaj <code>content/schedule.json</code>; po pushu build odświeży plan automatycznie.</p>
+    </section>
+  </main>
+
+  <script src="dashboard.js" defer></script>
+</body>
+</html>
