@@ -6,14 +6,33 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '5 5 * * *'
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: site-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npm run validate
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
+
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -24,7 +43,6 @@ jobs:
           node-version: '22'
       - run: npm ci --no-audit --no-fund
       - run: npm run build
-      - run: npm run validate
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: node scripts/export-review.mjs
@@ -36,13 +54,10 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
-      - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
-        with:
-          path: _site
+
   deploy:
     if: github.event_name != 'pull_request'
-    needs: browser
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -52,10 +67,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Deploy tested site
+      - name: Deploy validated site
         id: deployment
         uses: actions/deploy-pages@v4
-
       - name: Verify custom domain
         continue-on-error: true
         env:
