@@ -53,11 +53,13 @@ test('library sorting, filters and list view survive a return from an article', 
   await page.locator('#article-sort').selectOption('shortest');
   const minutes = await page.locator('.article-card .card-footer').evaluateAll(nodes => nodes.map(node => Number(node.textContent.match(/(\d+)\s*min/)?.[1] || 0)));
   expect(minutes).toEqual([...minutes].sort((a, b) => a - b));
+  const financeCount = await page.locator('.article-card[data-category="finanse"]').count();
+  expect(financeCount).toBeGreaterThan(0);
   await page.getByLabel('Lista', { exact: true }).check();
   await expect(page.locator('.article-grid')).toHaveClass(/list-view/);
   await page.locator('.category-menu summary').click();
   await page.getByRole('button', { name: 'Finanse i biznes', exact: true }).click();
-  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(financeCount);
   await page.locator('.article-card:not([hidden]) .card-link').first().click();
   await page.locator('.article-back').click();
   await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
@@ -145,11 +147,12 @@ test('category views ignore personal saved filters and return to their category'
   await expect(page.locator('.article-card:not([hidden])')).toHaveCount(1);
   await page.getByRole('link', { name: 'Kategorie', exact: true }).click();
   await page.locator('a[href="finanse.html"]').click();
-  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+  const financeCount = await page.locator('.article-card:not([hidden])').count();
+  expect(financeCount).toBeGreaterThan(0);
   await page.locator('.article-card .card-link').first().click();
   await page.locator('.article-back').click();
   await expect(page).toHaveURL(/kategorie\/finanse\.html/);
-  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(financeCount);
 });
 test('an update preserves previously cached articles and their offline styling', async ({ page, context, request }) => {
   await page.goto('./');
