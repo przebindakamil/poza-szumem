@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13",
+  "updated": "2026-10-18",
   "items": [
     {
       "date": "2026-10-14",
@@ -35,6 +35,55 @@
       "category": "dom",
       "status": "ready",
       "notes": "Petrichor, geosmina i mikroskopijne aerozole pokazujące, że zapach deszczu pochodzi głównie z tego, co woda uwalnia z podłoża."
+    },
+    {
+      "date": "2026-10-19",
+      "title": "Dlaczego czekanie wydaje się dłuższe, niż trwa",
+      "category": "rozwoj",
+      "status": "ready",
+      "notes": "Uwaga, niepewność i poczucie sprawiedliwości wpływają na przeżywany czas oczekiwania; bez uproszczeń o uniwersalnych prawach kolejek."
+    },
+    {
+      "date": "2026-10-20",
+      "title": "Jak komputer nauczył się słuchać ludzkiej mowy",
+      "category": "ai",
+      "status": "ready",
+      "notes": "Rozpoznawanie mowy od sygnału akustycznego do tekstu; Whisper i ograniczenia automatycznej transkrypcji."
+    },
+    {
+      "date": "2026-10-21",
+      "title": "Czy mięśnie pamiętają dawny trening",
+      "category": "sport",
+      "status": "ready",
+      "notes": "Rozróżnienie pamięci ruchowej, adaptacji tkanki i hipotez epigenetycznych; ostrożność wobec twierdzeń o wiecznym zachowaniu jąder."
+    },
+    {
+      "date": "2026-10-22",
+      "title": "Dlaczego nie traktujemy wszystkich pieniędzy tak samo",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Rachunkowość mentalna Thalera: te same pieniądze otrzymują różne etykiety, co pomaga w budżetowaniu i prowadzi do błędów."
+    },
+    {
+      "date": "2026-10-23",
+      "title": "Jak jeden metr przestał być kawałkiem metalu",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Historia metra od wzorca materialnego do definicji opartej na prędkości światła; znaczenie spójnych pomiarów."
+    },
+    {
+      "date": "2026-10-24",
+      "title": "Niewidzialna podróż wody z kranu",
+      "category": "dom",
+      "status": "ready",
+      "notes": "Droga wody od ujęcia przez uzdatnianie i sieć; rozróżnienie przejrzystości, smaku i bezpieczeństwa."
+    },
+    {
+      "date": "2026-10-25",
+      "title": "Kolory, których nie widział malarz",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Zmiany pigmentów i werniksów w malarstwie; konserwacja jako badanie i wybór, nie mechaniczne odmładzanie dzieł."
     }
   ]
 }
