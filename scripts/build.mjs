@@ -175,12 +175,37 @@ async function writePage($, file) {
 
 for (const record of publishedRecords) {
   const $ = record.$;
-  $('.article-title').text(record.title);
-  $('.article-deck').text(record.excerpt);
-  $('.article-category').text(categoryLabels[record.category]);
-  $('.article-meta').text(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania');
-  $('.article-byline, .article-sources, .article-toc, .series-link').remove();
-  $('.article-heading').append('<p class="article-byline">' + escape(record.author) + (record.updated !== record.date ? ' · Aktualizacja: ' + record.updated.split('-').reverse().join('.') : '') + '</p>');
+  const heading = $('.article-heading');
+  $('.article-sources, .article-toc').remove();
+
+  const updatedLabel = record.updated !== record.date
+    ? ' · Aktualizacja: ' + record.updated.split('-').reverse().join('.')
+    : '';
+  const seriesMarkup = record.series
+    ? '<p class="series-link"><a href="serie/' + slugify(record.series) + '.html">' + escape(record.series) + '</a></p>'
+    : '<p class="series-link" hidden></p>';
+
+  heading.html(
+    '<div class="article-kicker-row">' +
+      '<span class="article-category">' + escape(categoryLabels[record.category]) + '</span>' +
+      '<div class="article-meta">' + escape(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania') + '</div>' +
+    '</div>' +
+    '<div class="article-hero-grid">' +
+      '<h1 class="article-title">' + escape(record.title) + '</h1>' +
+      '<p class="article-deck">' + escape(record.excerpt) + '</p>' +
+    '</div>' +
+    '<div class="article-heading-footer">' +
+      '<div class="article-author">' +
+        '<span class="article-author-avatar" aria-hidden="true">PS</span>' +
+        '<div class="article-author-copy">' +
+          '<p class="article-byline">' + escape(record.author) + escape(updatedLabel) + '</p>' +
+          seriesMarkup +
+        '</div>' +
+      '</div>' +
+      '<div class="article-actions" aria-label="Akcje artykułu"></div>' +
+    '</div>'
+  );
+
   const body = $('.article-body');
   if (record.slug === 'czlowiek-ktory-zawsze-czekal-na-lepszy-moment') body.html(body.html().replace('W 2009 roku Karl Pillemer', 'W 2004 roku Karl Pillemer'));
   const paragraphs = body.find('p').toArray();
@@ -198,7 +223,7 @@ for (const record of publishedRecords) {
     }).join('');
     $('.article-divider').before('<details class="article-toc"><summary>W tym tekście</summary><ol>' + items + '</ol></details>');
   }
-  if (record.series) $('.article-heading').append('<p class="series-link"><a href="serie/' + slugify(record.series) + '.html">' + escape(record.series) + '</a></p>');
+
   if (record.sources.length) $('.article-end').before('<section class="article-sources" aria-labelledby="sources-heading"><h2 id="sources-heading">Dalsza lektura</h2><ul>' + record.sources.map(source => '<li><a href="' + escape(source.url) + '" rel="noopener noreferrer">' + escape(source.title) + '</a></li>').join('') + '</ul></section>');
   metadata($, record.title + ' — Poza Szumem', record.excerpt, 'artykuly/' + record.slug + '.html', {
     '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL('assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
