@@ -1448,6 +1448,9 @@ html[data-theme="dark"] .article-author-avatar{
   width:min(100%,340px);
 }
 @media(max-width:900px){
+  .article-hero-grid.has-generated-art{
+    grid-template-columns:minmax(0,1fr);
+  }
   .article-hero-grid.has-image .article-title,
   .article-hero-grid.has-generated-art .article-title{
     max-width:15ch;
