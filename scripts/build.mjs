@@ -74,6 +74,9 @@ const addRecord = (slug, $, metadata, sourcePath) => {
     image,
     imageAlt,
     imageCredit,
+    visualMotif: typeof metadata.visualMotif === 'string' ? metadata.visualMotif.trim() : '',
+    visualAlt: typeof metadata.visualAlt === 'string' ? metadata.visualAlt.trim() : '',
+    socialImage: '',
     sourcePath
   });
 };
@@ -112,6 +115,159 @@ const warsawToday = (() => {
   const value = Object.fromEntries(parts.map(part => [part.type, part.value]));
   return value.year + '-' + value.month + '-' + value.day;
 })();
+const visualMotifs = new Set(['orbit', 'network', 'flow', 'grid', 'waves', 'rings', 'layers', 'signal']);
+
+function seededNumber(value) {
+  let hash = 2166136261;
+  for (const char of value) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) / 4294967295;
+}
+
+function chooseVisualMotif(record) {
+  if (visualMotifs.has(record.visualMotif)) return record.visualMotif;
+  const haystack = [record.title, ...(Array.isArray(record.keywords) ? record.keywords : [record.keywords || ''])]
+    .join(' ')
+    .toLocaleLowerCase('pl-PL');
+
+  if (/(gps|satelit|orbita|kosmos|einstein|gwiazd|planeta)/.test(haystack)) return 'orbit';
+  if (/(pieniadz|pieniądz|karta|platn|płatn|bank|finans|handel|transakc)/.test(haystack)) return 'flow';
+  if (/(mozg|mózg|sen|pamiec|pamięć|ai|model|mowa|komputer|sieć|siec)/.test(haystack)) return 'network';
+  if (/(kontener|port|metr|miasto|budynek|dom|logisty|transport)/.test(haystack)) return 'grid';
+  if (/(deszcz|woda|ocean|morze|fala|rzeka)/.test(haystack)) return 'waves';
+  if (/(czas|czek|zeg|cykl|nawyk|powtarz)/.test(haystack)) return 'rings';
+  if (/(malar|kolor|sztuk|kultur|warstw|histori)/.test(haystack)) return 'layers';
+
+  return {
+    rozwoj: 'rings',
+    ai: 'network',
+    sport: 'signal',
+    finanse: 'flow',
+    swiat: 'orbit',
+    dom: 'grid',
+    kultura: 'layers'
+  }[record.category] || 'signal';
+}
+
+const artPalettes = {
+  rozwoj: { accent: '#91664f', accent2: '#c7a78d', ink: '#26342c' },
+  ai: { accent: '#5d728f', accent2: '#9aabc2', ink: '#26323b' },
+  sport: { accent: '#71825f', accent2: '#a8b596', ink: '#29352a' },
+  finanse: { accent: '#8b6a42', accent2: '#c2a578', ink: '#382f25' },
+  swiat: { accent: '#4d7280', accent2: '#90aeb6', ink: '#25363b' },
+  dom: { accent: '#9a7858', accent2: '#ccb095', ink: '#3a3028' },
+  kultura: { accent: '#806982', accent2: '#b4a0b5', ink: '#352b36' }
+};
+
+function visualAltFor(record, motif) {
+  if (record.visualAlt) return record.visualAlt;
+  const labels = {
+    orbit: 'Abstrakcyjna ilustracja z orbitami i punktami krążącymi wokół centralnego kształtu.',
+    network: 'Abstrakcyjna ilustracja przedstawiająca sieć połączonych punktów i linii.',
+    flow: 'Abstrakcyjna ilustracja przedstawiająca przepływ między połączonymi elementami.',
+    grid: 'Abstrakcyjna ilustracja z uporządkowaną siatką modułów i geometrycznych bloków.',
+    waves: 'Abstrakcyjna ilustracja z falami i opadającymi punktami.',
+    rings: 'Abstrakcyjna ilustracja z koncentrycznymi kręgami i zaznaczonym rytmem.',
+    layers: 'Abstrakcyjna ilustracja z nakładającymi się półprzezroczystymi warstwami.',
+    signal: 'Abstrakcyjna ilustracja z rytmiczną linią sygnału i geometrycznymi punktami.'
+  };
+  return labels[motif] || 'Abstrakcyjna ilustracja redakcyjna.';
+}
+
+function motifMarkup(motif, palette, seed) {
+  const a = palette.accent;
+  const b = palette.accent2;
+  const ink = palette.ink;
+  const shift = Math.round(seed * 120);
+
+  if (motif === 'orbit') return `
+    <circle cx="800" cy="600" r="170" fill="${a}" opacity=".18"/>
+    <circle cx="800" cy="600" r="92" fill="${a}" opacity=".92"/>
+    <ellipse cx="800" cy="600" rx="520" ry="250" fill="none" stroke="${ink}" stroke-width="8" opacity=".65" transform="rotate(-12 800 600)"/>
+    <ellipse cx="800" cy="600" rx="390" ry="410" fill="none" stroke="${b}" stroke-width="10" opacity=".8" transform="rotate(22 800 600)"/>
+    <circle cx="${1180-shift}" cy="${430+shift/3}" r="34" fill="${ink}"/>
+    <circle cx="${510+shift/2}" cy="${900-shift/4}" r="24" fill="${b}"/>
+    <path d="M325 300H610" stroke="${ink}" stroke-width="8" stroke-linecap="round" opacity=".45"/>
+  `;
+
+  if (motif === 'network') return `
+    <path d="M330 780L570 430L840 600L1120 330L1310 760" fill="none" stroke="${ink}" stroke-width="9" opacity=".7"/>
+    <path d="M420 300L620 800L940 340L1210 850" fill="none" stroke="${b}" stroke-width="8" opacity=".55"/>
+    <g fill="${a}">
+      <circle cx="330" cy="780" r="36"/><circle cx="570" cy="430" r="48"/><circle cx="840" cy="600" r="32"/>
+      <circle cx="1120" cy="330" r="56"/><circle cx="1310" cy="760" r="38"/>
+    </g>
+    <circle cx="${650+shift}" cy="${250+shift/4}" r="96" fill="${b}" opacity=".25"/>
+  `;
+
+  if (motif === 'flow') return `
+    <rect x="260" y="300" width="280" height="600" rx="70" fill="${a}" opacity=".9"/>
+    <rect x="1060" y="300" width="280" height="600" rx="70" fill="${b}" opacity=".85"/>
+    <path d="M560 470C700 350 890 350 1035 470" fill="none" stroke="${ink}" stroke-width="16" stroke-linecap="round"/>
+    <path d="M560 720C720 860 890 850 1035 720" fill="none" stroke="${ink}" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+    <circle cx="${760+shift/3}" cy="600" r="42" fill="${ink}"/>
+    <circle cx="${900-shift/4}" cy="600" r="24" fill="${a}"/>
+  `;
+
+  if (motif === 'grid') return `
+    <g stroke="${ink}" stroke-width="6" opacity=".55">
+      <path d="M300 310H1300M300 500H1300M300 690H1300M300 880H1300"/>
+      <path d="M460 260V940M700 260V940M940 260V940M1180 260V940"/>
+    </g>
+    <rect x="${460+shift/2}" y="500" width="240" height="190" fill="${a}" opacity=".92"/>
+    <rect x="${940-shift/3}" y="310" width="240" height="190" fill="${b}" opacity=".88"/>
+    <circle cx="820" cy="785" r="70" fill="${ink}" opacity=".82"/>
+  `;
+
+  if (motif === 'waves') return `
+    <path d="M180 620C360 430 520 810 700 620S1040 430 1220 620S1480 790 1560 610" fill="none" stroke="${a}" stroke-width="34" stroke-linecap="round"/>
+    <path d="M160 760C350 590 520 920 710 760S1060 590 1240 760S1450 890 1560 730" fill="none" stroke="${ink}" stroke-width="10" opacity=".55"/>
+    <g fill="${b}">
+      <circle cx="${430+shift/3}" cy="300" r="28"/><circle cx="${760-shift/4}" cy="250" r="20"/><circle cx="${1050+shift/5}" cy="340" r="34"/>
+    </g>
+  `;
+
+  if (motif === 'rings') return `
+    <g fill="none" stroke-linecap="round">
+      <circle cx="800" cy="600" r="360" stroke="${ink}" stroke-width="12" opacity=".35"/>
+      <circle cx="800" cy="600" r="270" stroke="${b}" stroke-width="22" opacity=".62"/>
+      <circle cx="800" cy="600" r="165" stroke="${a}" stroke-width="34" opacity=".9"/>
+    </g>
+    <path d="M800 600L${1090-shift/3} ${420+shift/4}" stroke="${ink}" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="800" cy="600" r="34" fill="${ink}"/>
+  `;
+
+  if (motif === 'layers') return `
+    <rect x="330" y="250" width="620" height="700" rx="90" fill="${a}" opacity=".55" transform="rotate(-8 640 600)"/>
+    <rect x="650" y="250" width="620" height="700" rx="90" fill="${b}" opacity=".58" transform="rotate(9 960 600)"/>
+    <circle cx="${800+shift/4}" cy="600" r="210" fill="${ink}" opacity=".18"/>
+    <path d="M470 810C700 680 900 900 1180 690" fill="none" stroke="${ink}" stroke-width="12" opacity=".65"/>
+  `;
+
+  return `
+    <path d="M230 650H410L500 420L620 790L760 540L880 630L1010 360L1130 760L1370 560" fill="none" stroke="${ink}" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${500+shift/4}" cy="420" r="34" fill="${a}"/>
+    <circle cx="${1010-shift/5}" cy="360" r="48" fill="${b}"/>
+    <rect x="270" y="870" width="1060" height="16" rx="8" fill="${a}" opacity=".45"/>
+  `;
+}
+
+function articleArtSvg(record, motif) {
+  const palette = artPalettes[record.category] || artPalettes.swiat;
+  const seed = seededNumber(record.slug);
+  const accentX = 180 + Math.round(seed * 1100);
+  const accentY = 150 + Math.round((1 - seed) * 760);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+    <rect width="1600" height="1200" fill="#f3f0e8"/>
+    <circle cx="${accentX}" cy="${accentY}" r="240" fill="${palette.accent2}" opacity=".13"/>
+    <path d="M120 140H1480M120 1060H1480" stroke="#cbd2cc" stroke-width="4" opacity=".8"/>
+    ${motifMarkup(motif, palette, seed)}
+    <circle cx="1450" cy="150" r="16" fill="${palette.accent}" opacity=".85"/>
+  </svg>`;
+}
+
 const publishedRecords = records.filter(record => record.date <= warsawToday);
 const card = record => '<article class="article-card" data-category="' + record.category + '" data-search="' + escape(record.keywords) + '"><a class="card-link" href="artykuly/' + record.slug + '.html" aria-label="Czytaj: ' + escape(record.title) + '"></a><div class="card-topline"><span class="pill">' + categoryLabels[record.category] + '</span><time datetime="' + record.date + '">' + record.date.split('-').reverse().join('.') + '</time></div><div class="card-copy"><h3>' + escape(record.title) + '</h3><p>' + escape(record.excerpt) + '</p></div><div class="card-footer"><div class="card-meta"><span class="reading-time">' + record.minutes + ' min czytania</span></div></div></article>';
 
@@ -120,6 +276,34 @@ for (const name of assetNames) await fs.copyFile(name, path.join(output, name));
 try { await fs.copyFile('CNAME', path.join(output, 'CNAME')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const name of ['icon.svg', 'icon-192.svg', 'icon-512.svg']) await fs.copyFile('assets/brand.svg', path.join(output, name));
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
+await fs.mkdir(path.join(output, 'assets/articles'), { recursive: true });
+
+for (const record of records) {
+  if (record.image) {
+    record.socialImage = record.image;
+    continue;
+  }
+
+  const motif = chooseVisualMotif(record);
+  const svg = articleArtSvg(record, motif);
+  const heroFile = 'assets/articles/' + record.slug + '.webp';
+  const socialFile = 'assets/articles/' + record.slug + '-social.jpg';
+
+  await sharp(Buffer.from(svg))
+    .resize(1600, 1200, { fit: 'cover' })
+    .webp({ quality: 84, effort: 5 })
+    .toFile(path.join(output, heroFile));
+
+  await sharp(Buffer.from(svg))
+    .resize(1200, 630, { fit: 'cover' })
+    .jpeg({ quality: 86, chromaSubsampling: '4:4:4' })
+    .toFile(path.join(output, socialFile));
+
+  record.image = heroFile;
+  record.socialImage = socialFile;
+  record.imageAlt = visualAltFor(record, motif);
+  record.imageCredit = record.imageCredit || 'Ilustracja: Poza Szumem';
+}
 try {
   await fs.cp('assets/articles', path.join(output, 'assets/articles'), { recursive: true });
 } catch (error) {
@@ -136,7 +320,7 @@ await sharp(brand).resize(512, 512).png().toFile(path.join(output, 'assets/icon-
 const manifest = JSON.parse(await fs.readFile('manifest.webmanifest', 'utf8'));
 manifest.icons = [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' }, { src: 'assets/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' }];
 await fs.writeFile(path.join(output, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2));
-const version = createHash('sha256').update(await fs.readFile('script.js')).update(await fs.readFile('styles.css')).update(await fs.readFile('scripts/icons.mjs')).update(brand).update(await fs.readFile('content/editorial.json')).update(JSON.stringify(records.map(record => [record.slug, record.date, record.title, record.excerpt]))).digest('hex').slice(0, 12);
+const version = createHash('sha256').update(await fs.readFile('script.js')).update(await fs.readFile('styles.css')).update(await fs.readFile('scripts/icons.mjs')).update(brand).update(await fs.readFile('content/editorial.json')).update(JSON.stringify(records.map(record => [record.slug, record.date, record.title, record.excerpt, record.visualMotif, record.visualAlt]))).digest('hex').slice(0, 12);
 
 function metadata($, title, description, file, schema, socialImage = '') {
   $('title').text(title);
@@ -144,7 +328,7 @@ function metadata($, title, description, file, schema, socialImage = '') {
   $('head').find('link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"], script[type="application/ld+json"]').remove();
   const url = new URL(file, site).href;
   const image = socialImage ? new URL(socialImage, site).href : new URL('assets/share.png', site).href;
-  $('head').append('<link rel="canonical" href="' + url + '"><meta property="og:type" content="' + (schema?.['@type'] === 'Article' ? 'article' : 'website') + '"><meta property="og:locale" content="pl_PL"><meta property="og:site_name" content="Poza Szumem"><meta property="og:title" content="' + escape(title) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + url + '"><meta property="og:image" content="' + image + '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">');
+  $('head').append('<link rel="canonical" href="' + url + '"><meta property="og:type" content="' + (schema?.['@type'] === 'Article' ? 'article' : 'website') + '"><meta property="og:locale" content="pl_PL"><meta property="og:site_name" content="Poza Szumem"><meta property="og:title" content="' + escape(title) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + url + '"><meta property="og:image" content="' + image + '"><meta name="twitter:card" content="summary_large_image">');
   if (schema) $('head').append('<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', ...schema }).replace(/</g, '\\u003c') + '</script>');
   if (!$('link[rel="alternate"][type="application/rss+xml"]').length) $('head').append('<link rel="alternate" type="application/rss+xml" title="Poza Szumem" href="feed.xml">');
 }
@@ -348,8 +532,8 @@ for (const record of publishedRecords) {
   }
 
   metadata($, record.title + ' — Poza Szumem', record.excerpt, 'artykuly/' + record.slug + '.html', {
-    '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL(record.image || 'assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
-  }, record.image);
+    '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL(record.socialImage || record.image || 'assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
+  }, record.socialImage || record.image);
   await writePage($, 'artykuly/' + record.slug + '.html');
 }
 home('.article-grid').html(publishedRecords.map(card).join(''));
