@@ -544,8 +544,37 @@ home('.article-grid').html(publishedRecords.map(card).join(''));
 home('.hero-copy p').text(tagline);
 home('.library-count').text(textCount(publishedRecords.length));
 home('.library').after(home('.categories-section'));
-const recommended = publishedRecords.find(record => record.slug === settings.recommendedSlug) || publishedRecords[0];
-home('.featured-reading').removeClass('wrap').html('<div class="wrap featured-inner"><span class="featured-label" id="featured-heading">Polecany tekst</span><div class="featured-meta"><span>' + categoryLabels[recommended.category] + '</span><span>' + recommended.minutes + ' min czytania</span></div><h2><a href="artykuly/' + recommended.slug + '.html">' + escape(recommended.title) + '</a></h2><p>' + escape(recommended.excerpt) + '</p><a class="featured-cta" href="artykuly/' + recommended.slug + '.html">Przeczytaj tekst</a></div>');
+const recommendationRotationDays = Math.max(2, Math.min(14, Number(settings.recommendedRotationDays) || 3));
+const recommendationRotationStart = /^\d{4}-\d{2}-\d{2}$/.test(settings.recommendedRotationStart || '')
+  ? settings.recommendedRotationStart
+  : warsawToday;
+const recommendationStartDay = Math.floor(Date.parse(recommendationRotationStart + 'T00:00:00Z') / 86400000);
+const recommendationTodayDay = Math.floor(Date.parse(warsawToday + 'T00:00:00Z') / 86400000);
+const recommendationWindow = Math.max(0, Math.floor((recommendationTodayDay - recommendationStartDay) / recommendationRotationDays));
+const recommendationWindowStartDay = recommendationStartDay + recommendationWindow * recommendationRotationDays;
+const recommendationWindowStart = new Date(recommendationWindowStartDay * 86400000).toISOString().slice(0, 10);
+
+const recommendationPool = publishedRecords.filter(record => record.date < recommendationWindowStart);
+const recommendationCandidates = recommendationPool.length >= 3 ? recommendationPool : publishedRecords;
+const recommendationSignature = recommendationCandidates.map(record => record.slug).sort().join('|');
+const recommendationIndexForWindow = window => Math.floor(
+  seededNumber('featured:' + window + ':' + recommendationSignature) * recommendationCandidates.length
+);
+
+let recommendationIndex = recommendationIndexForWindow(recommendationWindow);
+if (recommendationCandidates.length > 1 && recommendationWindow > 0) {
+  const previousIndex = recommendationIndexForWindow(recommendationWindow - 1);
+  if (recommendationIndex === previousIndex) recommendationIndex = (recommendationIndex + 1) % recommendationCandidates.length;
+}
+const recommended = recommendationCandidates[recommendationIndex] || publishedRecords[0];
+
+home('.featured-reading')
+  .attr('data-recommended-slug', recommended.slug)
+  .attr('data-recommendation-window', String(recommendationWindow))
+  .attr('data-rotation-days', String(recommendationRotationDays))
+  .removeClass('wrap')
+  .html('<div class="wrap featured-inner"><span class="featured-label" id="featured-heading">Polecany tekst</span><div class="featured-meta"><span>' + categoryLabels[recommended.category] + '</span><span>' + recommended.minutes + ' min czytania</span></div><h2><a href="artykuly/' + recommended.slug + '.html">' + escape(recommended.title) + '</a></h2><p>' + escape(recommended.excerpt) + '</p><a class="featured-cta" href="artykuly/' + recommended.slug + '.html">Przeczytaj tekst</a></div>');
+
 const categoryCounts = Object.entries(categoryLabels).map(([id, name]) => ({ id, name, count: publishedRecords.filter(record => record.category === id).length })).filter(category => category.count);
 home('.category-index').html(categoryCounts.map(category => '<a href="kategorie/' + category.id + '.html"><span>' + category.name + '</span><small>' + textCount(category.count) + '</small></a>').join(''));
 metadata(home, 'Poza Szumem — teksty warte uwagi', 'Spokojna biblioteka esejów, reportaży i tekstów, do których warto wracać.', 'index.html', { '@type': 'WebSite', name: 'Poza Szumem', url: site.href, inLanguage: 'pl' });
