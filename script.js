@@ -369,6 +369,53 @@ document.addEventListener('keydown', event => {
 // Automatic marking happens only when the reader reaches the final paragraph.
 const readingBody = document.querySelector('.article-shell .article-body');
 const currentArticleId = articleIdFromUrl(window.location.pathname);
+
+// Article navigation: sticky desktop TOC, mobile accordion, and active-section tracking.
+const articleToc = document.querySelector('.article-toc');
+if (readingBody && articleToc) {
+  const tocLinks = [...articleToc.querySelectorAll('.toc-link')];
+  const sections = [...readingBody.querySelectorAll('h2[id], h3[id]')];
+
+  const setActiveToc = id => {
+    tocLinks.forEach(link => {
+      const active = link.dataset.tocTarget === id;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  let tocTicking = false;
+  const updateActiveToc = () => {
+    tocTicking = false;
+    if (!sections.length) return;
+
+    const marker = Math.min(180, Math.max(96, window.innerHeight * 0.22));
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= marker) current = section;
+      else break;
+    }
+    setActiveToc(current.id);
+  };
+
+  const scheduleTocUpdate = () => {
+    if (tocTicking) return;
+    tocTicking = true;
+    requestAnimationFrame(updateActiveToc);
+  };
+
+  tocLinks.forEach(link => link.addEventListener('click', () => {
+    setActiveToc(link.dataset.tocTarget);
+    const mobileDetails = link.closest('.article-toc-mobile');
+    if (mobileDetails) setTimeout(() => { mobileDetails.open = false; }, 120);
+  }));
+
+  window.addEventListener('scroll', scheduleTocUpdate, { passive: true });
+  window.addEventListener('resize', scheduleTocUpdate);
+  window.addEventListener('hashchange', scheduleTocUpdate);
+  updateActiveToc();
+}
 let readButton = null;
 let manualReadChoice = false;
 function updateArticleReadButton() {
