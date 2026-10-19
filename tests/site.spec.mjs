@@ -115,6 +115,9 @@ test('generated collections, article metadata and feed work', async ({ page, req
   await page.locator('.category-index a').first().click();
   await expect(page.locator('.article-card').first()).toBeVisible();
   await page.locator('.article-card .card-link').first().click();
+  await expect(page.locator('.article-hero-grid')).toBeVisible();
+  await expect(page.locator('.article-save-button')).toBeVisible();
+  await expect(page.locator('.article-save-button .bookmark-label')).toHaveText(/Zapisz|Zapisano/);
   const headingCount = await page.locator('.article-body h2, .article-body h3').count();
   if (headingCount > 1) {
     await expect(page.locator('.article-toc')).toBeVisible();
