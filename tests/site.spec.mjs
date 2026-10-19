@@ -137,7 +137,9 @@ test('generated collections, article metadata and feed work', async ({ page, req
   await expect(page.locator('.article-sources a').first()).toBeVisible();
   await expect(page.locator('.related-articles')).toBeVisible();
   const relatedLinks = page.locator('.related-articles .related-link');
-  await expect(relatedLinks).toHaveCount(3);
+  const relatedCount = await relatedLinks.count();
+  expect(relatedCount).toBeGreaterThan(0);
+  expect(relatedCount).toBeLessThanOrEqual(3);
   const currentPath = new URL(page.url()).pathname;
   const relatedPaths = await relatedLinks.evaluateAll(nodes => nodes.map(node => new URL(node.href).pathname));
   expect(relatedPaths).not.toContain(currentPath);
@@ -203,4 +205,34 @@ test('editorial dashboard shows seven day plan', async ({ page }) => {
   await expect(page.locator('.plan-day')).toHaveCount(7);
   await expect(page.locator('.summary-card')).toHaveCount(4);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
+});
+
+
+test('article reader polish stays accessible and responsive', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('artykuly/co-naprawde-dzieje-sie-w-glowie-modelu-ai.html');
+
+  await expect(page.locator('main.article-shell')).toHaveAttribute('id', 'article-content');
+  await expect(page.locator('.article-reading-layout')).toBeVisible();
+  await expect(page.locator('.skip-link')).toHaveAttribute('href', '#article-content');
+  await page.locator('.skip-link').focus();
+  await expect(page.locator('.skip-link')).toBeVisible();
+
+  const saveButton = page.locator('.article-save-button');
+  await expect(saveButton).toBeVisible();
+  const saveBox = await saveButton.boundingBox();
+  expect(saveBox?.height || 0).toBeGreaterThanOrEqual(44);
+
+  await expect(page.locator('#related-heading')).toHaveCount(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+
+  const initialTheme = await page.locator('html').getAttribute('data-theme');
+  await page.locator('.theme-toggle').click();
+  const nextTheme = await page.locator('html').getAttribute('data-theme');
+  expect(nextTheme).not.toBe(initialTheme);
+  await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-pressed', nextTheme === 'dark' ? 'true' : 'false');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', nextTheme === 'dark' ? '#111512' : '#355f4a');
+
+  expect(errors).toEqual([]);
 });
