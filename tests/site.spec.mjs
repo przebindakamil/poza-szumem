@@ -228,6 +228,7 @@ test('article reader polish stays accessible and responsive', async ({ page }) =
   await page.locator('.skip-link').focus();
   await expect(page.locator('.skip-link')).toBeVisible();
 
+  await expect(page.locator('.article-hero-copy > .article-heading-footer')).toHaveCount(1);
   const saveButton = page.locator('.article-save-button');
   await expect(saveButton).toBeVisible();
   const saveBox = await saveButton.boundingBox();
