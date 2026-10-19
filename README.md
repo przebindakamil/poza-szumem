@@ -102,16 +102,34 @@ Dashboard `/admin/` widzi również przyszłe artykuły i pokazuje je jako „Go
 Raz w tygodniu zadanie „Poza Szumem — plan tygodnia” przygotowuje plan na poniedziałek–niedzielę, wykonuje research, tworzy 7 gotowych plików Markdown i aktualizuje `content/schedule.json`.
 
 
-### Obraz hero artykułu
+### Ilustracje artykułów
 
-Artykuł może opcjonalnie mieć obraz hero. Dla plików lokalnych używaj katalogu `assets/articles/`.
+Każdy artykuł ma automatycznie generowaną ilustrację redakcyjną zgodną z systemem opisanym w `content/_visual-style.md`. Nie trzeba dodawać plików graficznych ręcznie.
+
+Domyślnie build generuje:
+
+- hero WebP 1600×1200,
+- osobny social image JPG 1200×630,
+- podpis `Ilustracja: Poza Szumem`,
+- tekst alternatywny,
+- spójny motyw i paletę zależną od kategorii.
+
+Dla nowych tekstów warto świadomie ustawić:
 
 ```yaml
-image: "assets/articles/nazwa-pliku.jpg"
+visualMotif: "orbit"
+visualAlt: "Abstrakcyjna ilustracja z orbitami satelitów i motywem odmierzania czasu."
+```
+
+Dostępne motywy: `orbit`, `network`, `flow`, `grid`, `waves`, `rings`, `layers`, `signal`. Jeśli ich zabraknie, build sam dobiera motyw z tytułu, słów kluczowych i kategorii.
+
+Własny obraz nadal można podać ręcznie:
+
+```yaml
+image: "assets/articles/nazwa-pliku.webp"
 imageAlt: "Krótki opis tego, co znajduje się na obrazie"
 imageCredit: "Opcjonalny podpis lub autor"
 ```
 
-`imageAlt` jest wymagane, jeśli ustawiono `image`. Build sprawdza istnienie lokalnego pliku. Można również użyć bezpośredniego adresu HTTPS. Artykuły bez obrazu pozostają w czystym wariancie tekstowym.
-
+Własny obraz ma pierwszeństwo przed generatorem automatycznym.
 Na końcu artykułu generator automatycznie pokazuje do trzech powiązanych tekstów. Priorytet mają wspólna seria, kategoria i słowa kluczowe; rekomendacje nie wymagają ręcznego utrzymywania list.
