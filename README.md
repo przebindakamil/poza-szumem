@@ -37,7 +37,7 @@ Alternatywnie mozna nadal dodac podstrone HTML do `artykuly/` z dotychczasowymi 
 
 Generator aktualizuje biblioteke, czas czytania (200 slow/min), podstrony kategorii
 i serii, feed.xml, sitemap.xml, metadane Article/Open Graph i obraz udostepniania.
-Metadane redakcyjne archiwum i polecany tekst znajduja sie w `content/editorial.json`.
+Metadane redakcyjne archiwum znajduja sie w `content/editorial.json`. Sekcja „Polecany tekst” losuje stabilny wpis na 3-dniowe okno (`recommendedRotationDays`); zmienia się przy codziennym buildzie dopiero po wejściu w kolejne okno i celowo omija teksty opublikowane już w trakcie bieżącego okna.
 Dalsza lektura zawiera powiazane publikacje; nie jest deklaracja pelnego audytu
 wszystkich twierdzen historycznych i naukowych.
 
