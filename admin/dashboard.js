@@ -75,7 +75,20 @@ function dayCard({date,planned,article,categories,today}){
   badge.textContent=statusLabels[status]||status;
 
   head.append(dateWrap,badge);
-  card.append(head,safeTitle);
+  card.append(head);
+
+  if(article?.image){
+    const media=document.createElement('div');
+    media.className='plan-media';
+    const img=document.createElement('img');
+    img.src='../'+article.image.replace(/^\.\//,'');
+    img.alt=article.imageAlt||'';
+    img.loading='lazy';
+    media.appendChild(img);
+    card.appendChild(media);
+  }
+
+  card.append(safeTitle);
 
   if(category){
     const cat=document.createElement('p');
