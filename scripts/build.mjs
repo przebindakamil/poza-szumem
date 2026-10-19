@@ -217,12 +217,24 @@ for (const record of publishedRecords) {
     else if (paragraphs[index]) $(paragraphs[index]).before('<h2 id="section-' + index + '">' + escape(title) + '</h2>');
   }
   const headings = body.find('h2, h3').toArray();
+  const readingLayout = $('.article-reading-layout');
+  readingLayout.find('.article-toc').remove();
   if (headings.length > 1) {
     const items = headings.map((node, index) => {
       $(node).attr('id', $(node).attr('id') || 'section-' + index);
-      return '<li><a href="#' + $(node).attr('id') + '">' + escape($(node).text()) + '</a></li>';
+      const id = $(node).attr('id');
+      const label = escape($(node).text());
+      return '<li><a class="toc-link" href="#' + id + '" data-toc-target="' + id + '">' + label + '</a></li>';
     }).join('');
-    $('.article-divider').before('<details class="article-toc"><summary>W tym tekście</summary><ol>' + items + '</ol></details>');
+    readingLayout.append(
+      '<aside class="article-toc" aria-label="Spis treści">' +
+        '<div class="article-toc-sticky">' +
+          '<p class="article-toc-label">W tym tekście</p>' +
+          '<nav class="article-toc-desktop" aria-label="Sekcje artykułu"><ol>' + items + '</ol></nav>' +
+          '<details class="article-toc-mobile"><summary>W tym tekście</summary><ol>' + items + '</ol></details>' +
+        '</div>' +
+      '</aside>'
+    );
   }
 
   if (record.sources.length) $('.article-end').before('<section class="article-sources" aria-labelledby="sources-heading"><h2 id="sources-heading">Dalsza lektura</h2><ul>' + record.sources.map(source => '<li><a href="' + escape(source.url) + '" rel="noopener noreferrer">' + escape(source.title) + '</a></li>').join('') + '</ul></section>');
