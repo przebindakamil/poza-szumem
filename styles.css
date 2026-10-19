@@ -1277,3 +1277,22 @@ html[data-theme="dark"] .article-author-avatar{
     background:Highlight;
   }
 }
+
+
+/* Safe-area and small-screen refinements for reader controls. */
+.focus-bar{
+  right:max(10px,env(safe-area-inset-right));
+  bottom:max(10px,env(safe-area-inset-bottom));
+}
+@media(max-width:640px){
+  .focus-bar{
+    max-width:calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right));
+  }
+  .focus-toggle,
+  .reader-size-button{
+    min-height:44px;
+  }
+  .reader-size-button{
+    width:44px;
+  }
+}
