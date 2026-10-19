@@ -53,6 +53,20 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html') && !
     assert(ids.includes(decodeURIComponent(href.slice(1))), file + ': missing anchor ' + href);
   }
   for (const node of $('script[type="application/ld+json"]').toArray()) JSON.parse($(node).text());
+
+  const relativeFile = path.relative(root, file).split(path.sep).join('/');
+  if (relativeFile.startsWith('artykuly/')) {
+    assert.equal($('main.article-shell#article-content').length, 1, file + ': article main target');
+    assert.equal($('.skip-link[href="#article-content"]').length, 1, file + ': article skip link');
+    assert.equal($('.article-reading-layout').length, 1, file + ': article reading layout');
+    assert($('.article-body').parent().hasClass('article-reading-main'), file + ': article body wrapper');
+    assert($('.related-articles').length <= 1, file + ': duplicate related section');
+    assert($('#related-heading').length <= 1, file + ': duplicate related heading');
+    assert($('.related-link').length <= 3, file + ': too many related links');
+    if ($('.article-hero-media img').length) {
+      assert($('.article-hero-media img').attr('alt')?.trim(), file + ': hero image alt');
+    }
+  }
 }
 const schedule = JSON.parse(await fs.readFile('content/schedule.json', 'utf8'));
 assert(Array.isArray(schedule.items), 'schedule.items must be an array');
