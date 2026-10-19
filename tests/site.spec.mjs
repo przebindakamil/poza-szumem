@@ -135,6 +135,12 @@ test('generated collections, article metadata and feed work', async ({ page, req
   }
   await expect(page.locator('.article-byline')).toHaveText(/Poza Szumem/);
   await expect(page.locator('.article-sources a').first()).toBeVisible();
+  await expect(page.locator('.related-articles')).toBeVisible();
+  const relatedLinks = page.locator('.related-articles .related-link');
+  await expect(relatedLinks).toHaveCount(3);
+  const currentPath = new URL(page.url()).pathname;
+  const relatedPaths = await relatedLinks.evaluateAll(nodes => nodes.map(node => new URL(node.href).pathname));
+  expect(relatedPaths).not.toContain(currentPath);
   const schema = await page.locator('script[type="application/ld+json"]').textContent();
   expect(JSON.parse(schema)['@type']).toBe('Article');
   expect((await request.get('feed.xml')).status()).toBe(200);
