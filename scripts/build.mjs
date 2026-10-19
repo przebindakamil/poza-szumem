@@ -213,14 +213,24 @@ for (const record of publishedRecords) {
     ? '<p class="series-link"><a href="serie/' + slugify(record.series) + '.html">' + escape(record.series) + '</a></p>'
     : '<p class="series-link" hidden></p>';
 
+  const heroMediaMarkup = record.image
+    ? '<figure class="article-hero-media">' +
+        '<img src="' + escape(record.image) + '" alt="' + escape(record.imageAlt) + '" loading="eager" decoding="async" fetchpriority="high">' +
+        (record.imageCredit ? '<figcaption>' + escape(record.imageCredit) + '</figcaption>' : '') +
+      '</figure>'
+    : '';
+
   heading.html(
     '<div class="article-kicker-row">' +
       '<span class="article-category">' + escape(categoryLabels[record.category]) + '</span>' +
       '<div class="article-meta">' + escape(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania') + '</div>' +
     '</div>' +
-    '<div class="article-hero-grid">' +
-      '<h1 class="article-title">' + escape(record.title) + '</h1>' +
-      '<p class="article-deck">' + escape(record.excerpt) + '</p>' +
+    '<div class="article-hero-grid' + (record.image ? ' has-image' : '') + '">' +
+      '<div class="article-hero-copy">' +
+        '<h1 class="article-title">' + escape(record.title) + '</h1>' +
+        '<p class="article-deck">' + escape(record.excerpt) + '</p>' +
+      '</div>' +
+      heroMediaMarkup +
     '</div>' +
     '<div class="article-heading-footer">' +
       '<div class="article-author">' +
