@@ -206,6 +206,7 @@ for (const record of publishedRecords) {
     '</div>'
   );
 
+  $('.article-end').html('<a href="index.html#artykuly">Wróć do biblioteki →</a>');
   const body = $('.article-body');
   if (record.slug === 'czlowiek-ktory-zawsze-czekal-na-lepszy-moment') body.html(body.html().replace('W 2009 roku Karl Pillemer', 'W 2004 roku Karl Pillemer'));
   const paragraphs = body.find('p').toArray();
