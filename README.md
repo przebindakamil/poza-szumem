@@ -100,3 +100,18 @@ Artykuły z przyszłą datą mogą być zapisane wcześniej w `content/*.md`. Bu
 Dashboard `/admin/` widzi również przyszłe artykuły i pokazuje je jako „Gotowy”. Workflow `Site checks` uruchamia się także codziennie rano, dzięki czemu kolejny przygotowany tekst zostaje opublikowany automatycznie bez nowego commita.
 
 Raz w tygodniu zadanie „Poza Szumem — plan tygodnia” przygotowuje plan na poniedziałek–niedzielę, wykonuje research, tworzy 7 gotowych plików Markdown i aktualizuje `content/schedule.json`.
+
+
+### Obraz hero artykułu
+
+Artykuł może opcjonalnie mieć obraz hero. Dla plików lokalnych używaj katalogu `assets/articles/`.
+
+```yaml
+image: "assets/articles/nazwa-pliku.jpg"
+imageAlt: "Krótki opis tego, co znajduje się na obrazie"
+imageCredit: "Opcjonalny podpis lub autor"
+```
+
+`imageAlt` jest wymagane, jeśli ustawiono `image`. Build sprawdza istnienie lokalnego pliku. Można również użyć bezpośredniego adresu HTTPS. Artykuły bez obrazu pozostają w czystym wariancie tekstowym.
+
+Na końcu artykułu generator automatycznie pokazuje do trzech powiązanych tekstów. Priorytet mają wspólna seria, kategoria i słowa kluczowe; rekomendacje nie wymagają ręcznego utrzymywania list.
