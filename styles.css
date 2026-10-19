@@ -1384,3 +1384,100 @@ html[data-theme="dark"] .article-author-avatar{
     width:min(100%,340px);
   }
 }
+
+
+/* Article hero refinement: match the intended compact editorial composition. */
+.article-heading{
+  margin-bottom:30px;
+}
+.article-kicker-row{
+  margin-bottom:20px;
+}
+.article-hero-grid.has-image{
+  align-items:center;
+}
+.article-hero-copy{
+  min-width:0;
+}
+.article-hero-grid.has-image .article-title{
+  max-width:11.5ch;
+  font-size:clamp(3rem,5vw,4.9rem);
+  line-height:.98;
+  letter-spacing:-.048em;
+}
+.article-hero-grid.has-image .article-deck{
+  margin-top:22px;
+  max-width:39ch;
+  font-size:clamp(1.02rem,1.35vw,1.18rem);
+  line-height:1.58;
+}
+.article-heading-footer{
+  width:100%;
+  margin-top:26px;
+  padding-top:18px;
+}
+.article-hero-copy .article-heading-footer{
+  max-width:620px;
+}
+.article-hero-grid.has-image .article-heading-footer{
+  border-top:1px solid var(--line);
+}
+.article-hero-grid.has-generated-art .article-heading-footer{
+  max-width:560px;
+}
+.article-divider{
+  margin-bottom:34px;
+}
+.article-reading-layout{
+  margin-top:0;
+}
+.article-hero-grid.has-generated-art{
+  grid-template-columns:minmax(0,1fr) minmax(250px,340px);
+  gap:clamp(36px,4.5vw,58px);
+}
+.article-hero-grid.has-generated-art .article-title{
+  max-width:12.5ch;
+  font-size:clamp(2.8rem,4.6vw,4.35rem);
+}
+.article-hero-grid.has-generated-art .article-deck{
+  margin-top:18px;
+  max-width:42ch;
+  font-size:clamp(1rem,1.2vw,1.12rem);
+}
+.article-hero-grid.has-generated-art .article-hero-media{
+  width:min(100%,340px);
+}
+@media(max-width:900px){
+  .article-hero-grid.has-image .article-title,
+  .article-hero-grid.has-generated-art .article-title{
+    max-width:15ch;
+  }
+  .article-heading-footer{
+    max-width:none;
+  }
+}
+@media(max-width:640px){
+  .article-heading{
+    margin-bottom:24px;
+  }
+  .article-kicker-row{
+    margin-bottom:16px;
+  }
+  .article-hero-grid.has-image .article-title,
+  .article-hero-grid.has-generated-art .article-title{
+    max-width:none;
+    font-size:clamp(2.15rem,9.8vw,3rem);
+  }
+  .article-hero-grid.has-image .article-deck,
+  .article-hero-grid.has-generated-art .article-deck{
+    margin-top:16px;
+    font-size:1rem;
+  }
+  .article-heading-footer{
+    margin-top:22px;
+    padding-top:16px;
+  }
+  .article-divider{
+    margin-bottom:28px;
+  }
+}
