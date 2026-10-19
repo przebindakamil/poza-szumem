@@ -1296,3 +1296,41 @@ html[data-theme="dark"] .article-author-avatar{
     width:44px;
   }
 }
+
+
+/* Reader layout guardrails: generated artwork must never widen the viewport. */
+.article-shell,
+.article-heading,
+.article-hero-grid,
+.article-hero-copy,
+.article-reading-layout,
+.article-reading-main,
+.related-articles,
+.related-list{
+  min-width:0;
+  max-width:100%;
+}
+.article-hero-grid > *,
+.article-reading-layout > *,
+.related-list > *{
+  min-width:0;
+}
+.article-hero-media{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+.article-hero-media img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.article-title,
+.article-deck,
+.article-toc,
+.article-toc-sticky{
+  min-width:0;
+  max-width:100%;
+}
