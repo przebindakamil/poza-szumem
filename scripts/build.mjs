@@ -639,7 +639,9 @@ const adminData = {
     title: record.title,
     date: record.date,
     category: record.category,
-    minutes: record.minutes
+    minutes: record.minutes,
+    image: record.image,
+    imageAlt: record.imageAlt
   })),
   categories: categoryLabels
 };
