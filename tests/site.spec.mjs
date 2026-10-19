@@ -116,6 +116,12 @@ test('generated collections, article metadata and feed work', async ({ page, req
   await expect(page.locator('.article-card').first()).toBeVisible();
   await page.locator('.article-card .card-link').first().click();
   await expect(page.locator('.article-hero-grid')).toBeVisible();
+  const heroImage = page.locator('.article-hero-media img');
+  await expect(heroImage).toBeVisible();
+  await expect(heroImage).toHaveAttribute('alt', /.+/);
+  const heroSrc = await heroImage.getAttribute('src');
+  expect(heroSrc).toMatch(/assets\/articles\/.*\.webp$/);
+  expect((await request.get(heroSrc)).headers()['content-type']).toContain('image/webp');
   await expect(page.locator('.article-save-button')).toBeVisible();
   await expect(page.locator('.article-save-button .bookmark-label')).toHaveText(/Zapisz|Zapisano/);
   const headingCount = await page.locator('.article-body h2, .article-body h3').count();
@@ -144,7 +150,10 @@ test('generated collections, article metadata and feed work', async ({ page, req
   const relatedPaths = await relatedLinks.evaluateAll(nodes => nodes.map(node => new URL(node.href).pathname));
   expect(relatedPaths).not.toContain(currentPath);
   const schema = await page.locator('script[type="application/ld+json"]').textContent();
-  expect(JSON.parse(schema)['@type']).toBe('Article');
+  const schemaData = JSON.parse(schema);
+  expect(schemaData['@type']).toBe('Article');
+  expect(schemaData.image).toMatch(/assets\/articles\/.*-social\.jpg$/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /assets\/articles\/.*-social\.jpg$/);
   expect((await request.get('feed.xml')).status()).toBe(200);
   expect((await request.get('sitemap.xml')).status()).toBe(200);
   expect((await request.get('assets/share.png')).headers()['content-type']).toBe('image/png');
