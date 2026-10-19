@@ -52,7 +52,30 @@ const addRecord = (slug, $, metadata, sourcePath) => {
   for (const source of sources) {
     if (!source.title || new URL(source.url).protocol !== 'https:') throw new Error('Invalid source for ' + slug);
   }
-  records.push({ slug, $, title, excerpt, date, category, minutes, author: metadata.author || settings.publisher, updated: metadata.updated || date, series: metadata.series || '', sources, headings: metadata.headings || [], keywords: metadata.keywords || old.keywords || '', sourcePath });
+
+  const image = typeof metadata.image === 'string' ? metadata.image.trim() : '';
+  const imageAlt = typeof metadata.imageAlt === 'string' ? metadata.imageAlt.trim() : '';
+  const imageCredit = typeof metadata.imageCredit === 'string' ? metadata.imageCredit.trim() : '';
+  if (image) {
+    const isRemoteImage = /^https:\/\//.test(image);
+    const isLocalArticleImage = /^assets\/articles\/[a-zA-Z0-9._/-]+$/.test(image);
+    if (!isRemoteImage && !isLocalArticleImage) throw new Error('Invalid article image path for ' + slug);
+    if (!imageAlt) throw new Error('Missing imageAlt for article image: ' + slug);
+  }
+
+  records.push({
+    slug, $, title, excerpt, date, category, minutes,
+    author: metadata.author || settings.publisher,
+    updated: metadata.updated || date,
+    series: metadata.series || '',
+    sources,
+    headings: metadata.headings || [],
+    keywords: metadata.keywords || old.keywords || '',
+    image,
+    imageAlt,
+    imageCredit,
+    sourcePath
+  });
 };
 for (const name of names) {
   const slug = path.basename(name, '.html');
@@ -88,6 +111,11 @@ for (const name of assetNames) await fs.copyFile(name, path.join(output, name));
 try { await fs.copyFile('CNAME', path.join(output, 'CNAME')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const name of ['icon.svg', 'icon-192.svg', 'icon-512.svg']) await fs.copyFile('assets/brand.svg', path.join(output, name));
 await fs.mkdir(path.join(output, 'assets'), { recursive: true });
+try {
+  await fs.cp('assets/articles', path.join(output, 'assets/articles'), { recursive: true });
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 await fs.copyFile('assets/LUCIDE-LICENSE.txt', path.join(output, 'assets/LUCIDE-LICENSE.txt'));
 await bundle({ entryPoints: ['scripts/icons.mjs'], outfile: path.join(output, 'assets/lucide.min.js'), bundle: true, minify: true, format: 'iife', target: 'es2020' });
 const brand = await fs.readFile('assets/brand.svg');
