@@ -201,6 +201,29 @@ async function writePage($, file) {
   await fs.writeFile(target, $.html());
 }
 
+const keywordSet = record => {
+  const raw = Array.isArray(record.keywords) ? record.keywords : String(record.keywords || '').split(',');
+  return new Set(raw.map(value => String(value).trim().toLocaleLowerCase('pl-PL')).filter(Boolean));
+};
+
+const relatedFor = record => {
+  const ownKeywords = keywordSet(record);
+  return publishedRecords
+    .filter(candidate => candidate.slug !== record.slug)
+    .map(candidate => {
+      let score = 0;
+      if (record.series && candidate.series === record.series) score += 7;
+      if (candidate.category === record.category) score += 4;
+      const overlap = [...keywordSet(candidate)].filter(keyword => ownKeywords.has(keyword)).length;
+      score += Math.min(6, overlap * 2);
+      if (candidate.date > record.date) score += 0.5;
+      return { candidate, score };
+    })
+    .sort((a, b) => b.score - a.score || b.candidate.date.localeCompare(a.candidate.date) || a.candidate.title.localeCompare(b.candidate.title, 'pl'))
+    .slice(0, 3)
+    .map(item => item.candidate);
+};
+
 for (const record of publishedRecords) {
   const $ = record.$;
   const heading = $('.article-heading');
@@ -276,6 +299,30 @@ for (const record of publishedRecords) {
   }
 
   if (record.sources.length) $('.article-end').before('<section class="article-sources" aria-labelledby="sources-heading"><h2 id="sources-heading">Dalsza lektura</h2><ul>' + record.sources.map(source => '<li><a href="' + escape(source.url) + '" rel="noopener noreferrer">' + escape(source.title) + '</a></li>').join('') + '</ul></section>');
+
+  $('.related-articles').remove();
+  const related = relatedFor(record);
+  if (related.length) {
+    const relatedCards = related.map(item =>
+      '<a class="related-link" href="artykuly/' + item.slug + '.html">' +
+        '<span class="related-meta">' + escape(categoryLabels[item.category]) + ' · ' + item.minutes + ' min</span>' +
+        '<span class="related-title">' + escape(item.title) + '</span>' +
+        '<span class="related-excerpt">' + escape(item.excerpt) + '</span>' +
+        '<span class="related-arrow" aria-hidden="true">↗</span>' +
+      '</a>'
+    ).join('');
+
+    $('.article-end').after(
+      '<section class="related-articles" aria-labelledby="related-heading">' +
+        '<div class="related-heading">' +
+          '<p class="related-kicker">Czytaj dalej</p>' +
+          '<h2 id="related-heading">Jeszcze kilka rzeczy, które mogą Cię zainteresować</h2>' +
+        '</div>' +
+        '<div class="related-list">' + relatedCards + '</div>' +
+      '</section>'
+    );
+  }
+
   metadata($, record.title + ' — Poza Szumem', record.excerpt, 'artykuly/' + record.slug + '.html', {
     '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL(record.image || 'assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
   }, record.image);
