@@ -1334,3 +1334,53 @@ html[data-theme="dark"] .article-author-avatar{
   min-width:0;
   max-width:100%;
 }
+
+
+/* Generated editorial artwork is intentionally quieter than a real editorial photo. */
+.article-hero-grid.has-generated-art{
+  grid-template-columns:minmax(0,1fr) minmax(280px,380px);
+  gap:clamp(42px,5vw,68px);
+  align-items:center;
+}
+.article-hero-grid.has-generated-art .article-hero-copy{
+  justify-content:center;
+}
+.article-hero-grid.has-generated-art .article-title{
+  max-width:12ch;
+  font-size:clamp(3rem,5.2vw,5rem);
+}
+.article-hero-grid.has-generated-art .article-deck{
+  max-width:40ch;
+}
+.article-hero-grid.has-generated-art .article-hero-media{
+  width:min(100%,380px);
+  min-height:0;
+  aspect-ratio:4/3;
+  justify-self:end;
+  align-self:center;
+  border-radius:14px;
+}
+.article-hero-grid.has-generated-art .article-hero-media img{
+  min-height:0;
+  width:100%;
+  height:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+}
+@media(max-width:900px){
+  .article-hero-grid.has-generated-art{
+    grid-template-columns:1fr;
+  }
+  .article-hero-grid.has-generated-art .article-hero-media{
+    width:min(100%,460px);
+    justify-self:start;
+  }
+}
+@media(max-width:640px){
+  .article-hero-grid.has-generated-art .article-title{
+    font-size:clamp(2.25rem,10vw,3.15rem);
+  }
+  .article-hero-grid.has-generated-art .article-hero-media{
+    width:min(100%,340px);
+  }
+}
