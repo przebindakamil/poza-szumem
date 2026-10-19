@@ -715,6 +715,10 @@ body.focus-mode .article-title{
   padding:0;
   list-style:none;
 }
+.article-toc-desktop li,
+.article-toc-mobile li{
+  margin:0;
+}
 .article-toc-desktop li + li{
   margin-top:3px;
 }
