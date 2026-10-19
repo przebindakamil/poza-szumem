@@ -109,6 +109,12 @@ test('generated collections, article metadata and feed work', async ({ page, req
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('./');
   await expect(page.locator('svg.lucide-search')).toHaveCount(1);
+  const featured = page.locator('.featured-reading');
+  await expect(featured).toHaveAttribute('data-rotation-days', '3');
+  const featuredSlug = await featured.getAttribute('data-recommended-slug');
+  expect(featuredSlug).toBeTruthy();
+  await expect(featured.locator('.featured-cta')).toHaveAttribute('href', 'artykuly/' + featuredSlug + '.html');
+  expect((await request.get('artykuly/' + featuredSlug + '.html')).status()).toBe(200);
   await page.screenshot({ path: 'test-results/home-' + test.info().project.name + '.png' });
   await page.getByRole('link', { name: 'Kategorie', exact: true }).click();
   await expect(page.locator('h1')).toHaveText('Kategorie');
