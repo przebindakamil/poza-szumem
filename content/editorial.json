@@ -1,7 +1,8 @@
 {
   "siteUrl": "https://pozaszumem.pl/",
   "publisher": "Poza Szumem",
-  "recommendedSlug": "dlaczego-dobra-rozmowa-nie-polega-na-mowieniu-ciekawych-rzeczy",
+  "recommendedRotationDays": 3,
+  "recommendedRotationStart": "2026-10-19",
   "articles": {
     "co-naprawde-dzieje-sie-w-glowie-modelu-ai": {
       "headings": [
