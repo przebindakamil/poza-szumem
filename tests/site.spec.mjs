@@ -62,7 +62,7 @@ test('library sorting, filters and list view survive a return from an article', 
   await expect(page.locator('.article-card:not([hidden])')).toHaveCount(financeCount);
   await page.locator('.article-card:not([hidden]) .card-link').first().click();
   await page.locator('.article-back').click();
-  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(2);
+  await expect(page.locator('.article-card:not([hidden])')).toHaveCount(financeCount);
   await expect(page.locator('.article-grid')).toHaveClass(/list-view/);
   await expect(page.locator('#article-sort')).toHaveValue('shortest');
   expect(errors).toEqual([]);
