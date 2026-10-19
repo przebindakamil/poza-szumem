@@ -129,12 +129,12 @@ manifest.icons = [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/p
 await fs.writeFile(path.join(output, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2));
 const version = createHash('sha256').update(await fs.readFile('script.js')).update(await fs.readFile('styles.css')).update(await fs.readFile('scripts/icons.mjs')).update(brand).update(await fs.readFile('content/editorial.json')).update(JSON.stringify(records.map(record => [record.slug, record.date, record.title, record.excerpt]))).digest('hex').slice(0, 12);
 
-function metadata($, title, description, file, schema) {
+function metadata($, title, description, file, schema, socialImage = '') {
   $('title').text(title);
   $('meta[name="description"]').attr('content', description);
   $('head').find('link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"], script[type="application/ld+json"]').remove();
   const url = new URL(file, site).href;
-  const image = new URL('assets/share.png', site).href;
+  const image = socialImage ? new URL(socialImage, site).href : new URL('assets/share.png', site).href;
   $('head').append('<link rel="canonical" href="' + url + '"><meta property="og:type" content="' + (schema?.['@type'] === 'Article' ? 'article' : 'website') + '"><meta property="og:locale" content="pl_PL"><meta property="og:site_name" content="Poza Szumem"><meta property="og:title" content="' + escape(title) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + url + '"><meta property="og:image" content="' + image + '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">');
   if (schema) $('head').append('<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', ...schema }).replace(/</g, '\\u003c') + '</script>');
   if (!$('link[rel="alternate"][type="application/rss+xml"]').length) $('head').append('<link rel="alternate" type="application/rss+xml" title="Poza Szumem" href="feed.xml">');
@@ -277,8 +277,8 @@ for (const record of publishedRecords) {
 
   if (record.sources.length) $('.article-end').before('<section class="article-sources" aria-labelledby="sources-heading"><h2 id="sources-heading">Dalsza lektura</h2><ul>' + record.sources.map(source => '<li><a href="' + escape(source.url) + '" rel="noopener noreferrer">' + escape(source.title) + '</a></li>').join('') + '</ul></section>');
   metadata($, record.title + ' — Poza Szumem', record.excerpt, 'artykuly/' + record.slug + '.html', {
-    '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL('assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
-  });
+    '@type': 'Article', headline: record.title, description: record.excerpt, datePublished: record.date, dateModified: record.updated, author: { '@type': 'Organization', name: record.author }, publisher: { '@type': 'Organization', name: settings.publisher }, mainEntityOfPage: new URL('artykuly/' + record.slug + '.html', site).href, image: new URL(record.image || 'assets/share.png', site).href, inLanguage: 'pl', wordCount: $('.article-body').text().trim().split(/\s+/).length
+  }, record.image);
   await writePage($, 'artykuly/' + record.slug + '.html');
 }
 home('.article-grid').html(publishedRecords.map(card).join(''));
