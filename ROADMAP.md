@@ -20,6 +20,7 @@
 - [x] Nowy widok artykułu — etap 1: hero, metadane, autor/seria, zapis i typografia.
 - [x] Nowy widok artykułu — etap 2: sticky spis treści, aktywna sekcja i mobilny akordeon.
 - [x] Nowy widok artykułu — etap 3: opcjonalny obraz hero, social image i kontekstowe powiązane artykuły.
+- [x] Nowy widok artykułu — etap 4: mobile polish, dark mode, accessibility, safe areas i zgodność starych artykułów.
 - [x] Zaplanowana publikacja przyszłych artykułów i codzienny rebuild GitHub Pages.
 - [x] Tygodniowe przygotowanie 7 tematów i gotowych tekstów przez zadanie automatyczne.
 
