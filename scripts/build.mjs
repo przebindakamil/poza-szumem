@@ -92,6 +92,15 @@ for (const name of markdownNames) {
   $('.article-body').html(markdown.render(parsed.content));
   addRecord(slug, $, parsed.data, 'content/' + name);
 }
+for (const record of records) {
+  if (record.image && record.image.startsWith('assets/articles/')) {
+    try {
+      await fs.access(record.image);
+    } catch {
+      throw new Error('Missing local article image: ' + record.image + ' (' + record.slug + ')');
+    }
+  }
+}
 records.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 const warsawToday = (() => {
   const parts = new Intl.DateTimeFormat('en-CA', {
