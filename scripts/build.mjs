@@ -277,7 +277,22 @@ for (const record of publishedRecords) {
   );
 
   $('.article-end').html('<a href="index.html#artykuly">Wróć do biblioteki →</a>');
+
+  // Normalize legacy HTML articles to the current reading structure.
+  $('.article-shell').attr('id', 'article-content');
+  if ($('.skip-link').length) {
+    $('.skip-link').attr('href', '#article-content').text('Przejdź do treści artykułu');
+  } else {
+    $('body').prepend('<a class="skip-link" href="#article-content">Przejdź do treści artykułu</a>');
+  }
+
   const body = $('.article-body');
+  if (!$('.article-reading-layout').length) {
+    body.wrap('<div class="article-reading-main"></div>');
+    body.parent().wrap('<div class="article-reading-layout"></div>');
+  } else if (!body.parent().hasClass('article-reading-main')) {
+    body.wrap('<div class="article-reading-main"></div>');
+  }
   if (record.slug === 'czlowiek-ktory-zawsze-czekal-na-lepszy-moment') body.html(body.html().replace('W 2009 roku Karl Pillemer', 'W 2004 roku Karl Pillemer'));
   const paragraphs = body.find('p').toArray();
   paragraphs.forEach((node, index) => { $(node).attr('id', 'reading-p-' + index); });
