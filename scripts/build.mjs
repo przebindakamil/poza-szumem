@@ -303,6 +303,7 @@ for (const record of records) {
   record.socialImage = socialFile;
   record.imageAlt = visualAltFor(record, motif);
   record.imageCredit = record.imageCredit || 'Ilustracja: Poza Szumem';
+  record.generatedArt = true;
 }
 try {
   await fs.cp('assets/articles', path.join(output, 'assets/articles'), { recursive: true });
@@ -444,7 +445,7 @@ for (const record of publishedRecords) {
       '<span class="article-category">' + escape(categoryLabels[record.category]) + '</span>' +
       '<div class="article-meta">' + escape(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania') + '</div>' +
     '</div>' +
-    '<div class="article-hero-grid' + (record.image ? ' has-image' : '') + '">' +
+    '<div class="article-hero-grid' + (record.image ? ' has-image' : '') + (record.generatedArt ? ' has-generated-art' : '') + '">' +
       '<div class="article-hero-copy">' +
         '<h1 class="article-title">' + escape(record.title) + '</h1>' +
         '<p class="article-deck">' + escape(record.excerpt) + '</p>' +
