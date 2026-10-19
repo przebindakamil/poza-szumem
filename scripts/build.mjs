@@ -355,9 +355,12 @@ async function writePage($, file) {
   if (!$('script[src*="lucide"]').length) $('script[src*="script.js"]').before('<script src="assets/lucide.min.js"></script>');
   $('script[src*="lucide"]').attr('src', 'assets/lucide.min.js?v=' + version);
   $('link[rel="alternate"][type="application/rss+xml"]').attr('href', 'feed.xml');
-  if (!$('.skip-link').length) $('body').prepend('<a class="skip-link" href="#main-content">Przejdź do treści</a>');
-  $('.skip-link').attr('href', '#main-content').text('Przejdź do treści');
-  $('main').attr('id', 'main-content');
+  const isArticlePage = $('.article-shell').length > 0;
+  const mainTarget = isArticlePage ? 'article-content' : 'main-content';
+  const skipLabel = isArticlePage ? 'Przejdź do treści artykułu' : 'Przejdź do treści';
+  if (!$('.skip-link').length) $('body').prepend('<a class="skip-link" href="#' + mainTarget + '">' + skipLabel + '</a>');
+  $('.skip-link').attr('href', '#' + mainTarget).text(skipLabel);
+  $('main').attr('id', mainTarget);
   $('.brand').attr('href', 'index.html');
   $('.brand-mark').html('<img class="brand-symbol" src="icon.svg?v=' + version + '" alt="" width="36" height="36">');
   $('.search-toggle, .theme-toggle, .library-actions').attr('data-requires-js', '');
