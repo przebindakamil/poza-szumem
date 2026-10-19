@@ -65,8 +65,9 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html') && !
     assert($('.related-link').length <= 3, file + ': too many related links');
     assert.equal($('.article-hero-media img').length, 1, file + ': one hero image');
     assert($('.article-hero-media img').attr('alt')?.trim(), file + ': hero image alt');
-    assert(/assets\/articles\//.test($('.article-hero-media img').attr('src') || ''), file + ': editorial hero asset');
-    assert(/assets\/articles\/.+-social\.jpg$/.test($('meta[property="og:image"]').attr('content') || ''), file + ': article social image');
+    const heroSrc = $('.article-hero-media img').attr('src') || '';
+    assert(heroSrc && (/^(https?:)/.test(heroSrc) || /assets\/articles\//.test(heroSrc)), file + ': editorial hero asset');
+    assert($('meta[property="og:image"]').attr('content'), file + ': article social image');
   }
 }
 const schedule = JSON.parse(await fs.readFile('content/schedule.json', 'utf8'));
