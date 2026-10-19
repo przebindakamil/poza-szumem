@@ -449,18 +449,18 @@ for (const record of publishedRecords) {
       '<div class="article-hero-copy">' +
         '<h1 class="article-title">' + escape(record.title) + '</h1>' +
         '<p class="article-deck">' + escape(record.excerpt) + '</p>' +
-      '</div>' +
-      heroMediaMarkup +
-    '</div>' +
-    '<div class="article-heading-footer">' +
-      '<div class="article-author">' +
-        '<span class="article-author-avatar" aria-hidden="true">PS</span>' +
-        '<div class="article-author-copy">' +
-          '<p class="article-byline">' + escape(record.author) + escape(updatedLabel) + '</p>' +
-          seriesMarkup +
+        '<div class="article-heading-footer">' +
+          '<div class="article-author">' +
+            '<span class="article-author-avatar" aria-hidden="true">PS</span>' +
+            '<div class="article-author-copy">' +
+              '<p class="article-byline">' + escape(record.author) + escape(updatedLabel) + '</p>' +
+              seriesMarkup +
+            '</div>' +
+          '</div>' +
+          '<div class="article-actions" aria-label="Akcje artykułu"></div>' +
         '</div>' +
       '</div>' +
-      '<div class="article-actions" aria-label="Akcje artykułu"></div>' +
+      heroMediaMarkup +
     '</div>'
   );
 
