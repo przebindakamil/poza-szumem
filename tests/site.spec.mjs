@@ -121,6 +121,15 @@ test('generated collections, article metadata and feed work', async ({ page, req
   const headingCount = await page.locator('.article-body h2, .article-body h3').count();
   if (headingCount > 1) {
     await expect(page.locator('.article-toc')).toBeVisible();
+    if (test.info().project.name === 'mobile') {
+      await expect(page.locator('.article-toc-mobile')).toBeVisible();
+      await page.locator('.article-toc-mobile summary').click();
+      await expect(page.locator('.article-toc-mobile .toc-link').first()).toBeVisible();
+    } else {
+      await expect(page.locator('.article-toc-desktop')).toBeVisible();
+    }
+    await page.locator('.article-body h2, .article-body h3').nth(1).scrollIntoViewIfNeeded();
+    await expect.poll(() => page.locator('.toc-link.active').count()).toBeGreaterThan(0);
   } else {
     await expect(page.locator('.article-toc')).toHaveCount(0);
   }
