@@ -6,6 +6,12 @@ category: "zwierzeta"
 author: "Poza Szumem"
 series: "Zmysły, których nie mamy"
 keywords: ["trzmiele", "pszczoły", "elektrorecepcja", "kwiaty", "zapylanie", "pole elektryczne", "zmysły zwierząt"]
+visualType: "photo"
+image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bumblebee_on_a_flower.jpg"
+imageAlt: "Trzmiel siedzący na kwiecie podczas żerowania."
+imageCredit: "Fot. Jakub Fryš / Wikimedia Commons"
+imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Bumblebee_on_a_flower.jpg"
+imageLicense: "CC BY-SA 4.0"
 visualMotif: "signal"
 visualAlt: "Abstrakcyjna ilustracja przedstawiająca delikatne linie pola elektrycznego pomiędzy owadem a kwiatem."
 sources:
