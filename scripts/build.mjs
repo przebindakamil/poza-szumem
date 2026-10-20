@@ -17,7 +17,7 @@ const tagline = 'Teksty do których warto wracać.';
 const site = new URL(settings.siteUrl);
 if (site.protocol !== 'https:' || !site.pathname.endsWith('/')) throw new Error('siteUrl must be an HTTPS directory URL');
 const textCount = count => count + ' ' + (count === 1 ? 'tekst' : count % 10 >= 2 && count % 10 <= 4 && !(count % 100 >= 12 && count % 100 <= 14) ? 'teksty' : 'tekstów');
-const categoryLabels = { rozwoj: 'Rozwój i psychologia', ai: 'AI i technologia', sport: 'Sport i zdrowie', finanse: 'Finanse i biznes', swiat: 'Świat i nauka', dom: 'Dom i codzienność', kultura: 'Kultura i reportaż' };
+const categoryLabels = { rozwoj: 'Rozwój i psychologia', ai: 'AI i technologia', sport: 'Sport i zdrowie', finanse: 'Finanse i biznes', swiat: 'Świat i nauka', dom: 'Dom i codzienność', kultura: 'Kultura i reportaż', zwierzeta: 'Zwierzęta' };
 const slugify = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
 const markdown = new MarkdownIt({ html: false, linkify: true, typographer: true });
@@ -139,6 +139,11 @@ function chooseVisualMotif(record) {
   if (/(deszcz|woda|ocean|morze|fala|rzeka)/.test(haystack)) return 'waves';
   if (/(czas|czek|zeg|cykl|nawyk|powtarz)/.test(haystack)) return 'rings';
   if (/(malar|kolor|sztuk|kultur|warstw|histori)/.test(haystack)) return 'layers';
+  if (/(gołęb|goleb|ptak|migrac|nawigac|magnetorecepc|zwierz|ssak|owad|ryb|ośmior|osmior|nietoperz|wilk|kruk|delfin|pszczoł|pszczol)/.test(haystack)) {
+    if (/(migrac|nawigac|magnetorecepc|gołęb|goleb|ptak)/.test(haystack)) return 'orbit';
+    if (/(ryb|ośmior|osmior|delfin|ocean|morze)/.test(haystack)) return 'waves';
+    return 'network';
+  }
 
   return {
     rozwoj: 'rings',
@@ -147,7 +152,8 @@ function chooseVisualMotif(record) {
     finanse: 'flow',
     swiat: 'orbit',
     dom: 'grid',
-    kultura: 'layers'
+    kultura: 'layers',
+    zwierzeta: 'network'
   }[record.category] || 'signal';
 }
 
@@ -158,7 +164,8 @@ const artPalettes = {
   finanse: { accent: '#8b6a42', accent2: '#c2a578', ink: '#382f25' },
   swiat: { accent: '#4d7280', accent2: '#90aeb6', ink: '#25363b' },
   dom: { accent: '#9a7858', accent2: '#ccb095', ink: '#3a3028' },
-  kultura: { accent: '#806982', accent2: '#b4a0b5', ink: '#352b36' }
+  kultura: { accent: '#806982', accent2: '#b4a0b5', ink: '#352b36' },
+  zwierzeta: { accent: '#607a55', accent2: '#a7b99b', ink: '#283529' }
 };
 
 function visualAltFor(record, motif) {
