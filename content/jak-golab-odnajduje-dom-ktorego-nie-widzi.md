@@ -1,7 +1,7 @@
 ---
 title: "Jak gołąb odnajduje dom, którego nie widzi"
 excerpt: "Gołębie nie wracają do domu dzięki jednemu „szóstemu zmysłowi”. Łączą zapachy, położenie Słońca, krajobraz i prawdopodobnie informacje z pola magnetycznego w system nawigacji, który wciąż nie jest do końca wyjaśniony."
-date: "2026-10-20"
+date: "2099-01-01"
 category: "zwierzeta"
 author: "Poza Szumem"
 series: "Zmysły, których nie mamy"
