@@ -24,6 +24,7 @@
 - [x] Automatyczny system ilustracji redakcyjnych: hero WebP, social JPG, motywy, palety i podgląd w dashboardzie.
 - [x] Zaplanowana publikacja przyszłych artykułów i codzienny rebuild GitHub Pages.
 - [x] Tygodniowe przygotowanie 7 tematów i gotowych tekstów przez zadanie automatyczne.
+- [x] Kategoria Zwierzęta z regularnym miejscem w planie redakcyjnym i elastyczną długością tekstów.
 
 ## Odlozone decyzja wlasciciela
 
