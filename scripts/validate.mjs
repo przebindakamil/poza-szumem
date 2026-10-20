@@ -73,7 +73,7 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html') && !
 const schedule = JSON.parse(await fs.readFile('content/schedule.json', 'utf8'));
 assert(Array.isArray(schedule.items), 'schedule.items must be an array');
 const allowedStatuses = new Set(['idea', 'research', 'draft', 'ready']);
-const allowedCategories = new Set(['rozwoj', 'ai', 'sport', 'finanse', 'swiat', 'dom', 'kultura']);
+const allowedCategories = new Set(['rozwoj', 'ai', 'sport', 'finanse', 'swiat', 'dom', 'kultura', 'zwierzeta']);
 const scheduleDates = new Set();
 for (const item of schedule.items) {
   assert(/^\d{4}-\d{2}-\d{2}$/.test(item.date || ''), 'Invalid schedule date');
