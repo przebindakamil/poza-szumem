@@ -449,8 +449,11 @@ for (const record of publishedRecords) {
 
   heading.html(
     '<div class="article-kicker-row">' +
-      '<span class="article-category">' + escape(categoryLabels[record.category]) + '</span>' +
-      '<div class="article-meta">' + escape(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania') + '</div>' +
+      '<div class="article-kicker-info">' +
+        '<span class="article-category">' + escape(categoryLabels[record.category]) + '</span>' +
+        '<div class="article-meta">' + escape(record.date.split('-').reverse().join('.') + ' · ' + record.minutes + ' min czytania') + '</div>' +
+      '</div>' +
+      '<div class="article-actions" aria-label="Akcje artykułu"></div>' +
     '</div>' +
     '<div class="article-hero-grid' + (record.image ? ' has-image' : '') + (record.generatedArt ? ' has-generated-art' : '') + '">' +
       '<div class="article-hero-copy">' +
@@ -464,7 +467,6 @@ for (const record of publishedRecords) {
               seriesMarkup +
             '</div>' +
           '</div>' +
-          '<div class="article-actions" aria-label="Akcje artykułu"></div>' +
         '</div>' +
       '</div>' +
       heroMediaMarkup +
