@@ -235,10 +235,15 @@ test('article reader polish stays accessible and responsive', async ({ page }) =
   await expect(page.locator('.skip-link')).toBeVisible();
 
   await expect(page.locator('.article-hero-copy > .article-heading-footer')).toHaveCount(1);
+  await expect(page.locator('.article-kicker-row > .article-actions .article-save-button')).toHaveCount(1);
   const saveButton = page.locator('.article-save-button');
   await expect(saveButton).toBeVisible();
   const saveBox = await saveButton.boundingBox();
-  expect(saveBox?.height || 0).toBeGreaterThanOrEqual(44);
+  expect(saveBox?.height || 0).toBeGreaterThanOrEqual(34);
+  expect(saveBox?.height || 999).toBeLessThanOrEqual(40);
+  if (test.info().project.name === 'mobile') {
+    expect(saveBox?.width || 999).toBeLessThanOrEqual(42);
+  }
 
   await expect(page.locator('#related-heading')).toHaveCount(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
