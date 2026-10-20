@@ -1,74 +1,69 @@
-# Poza Szumem — system ilustracji redakcyjnych
+# Poza Szumem — system zdjęć redakcyjnych
 
-## Cel
+## Zasada główna
 
-Każdy artykuł powinien mieć własną, spójną ilustrację redakcyjną. Obraz ma porządkować stronę, budować rozpoznawalność magazynu i sugerować temat bez dosłownego streszczania artykułu.
+Domyślnym obrazem artykułu jest **prawdziwa fotografia odnosząca się bezpośrednio do tematu**. Nie generujemy automatycznie abstrakcyjnej grafiki tylko po to, żeby wypełnić hero.
 
-Nie używamy przypadkowych stockowych zdjęć jako domyślnego rozwiązania.
+Jeśli nie ma dobrego, legalnego i sensownie pasującego zdjęcia, artykuł może zostać opublikowany **bez hero image**. Brak zdjęcia jest lepszy niż przypadkowy stock albo dekoracyjna grafika, która niczego nie wnosi.
 
-## Domyślny system
+## Preferowane źródło
 
-Jeśli artykuł nie ma ręcznie wskazanego pola `image`, build automatycznie generuje ilustrację Poza Szumem.
+Pierwszym źródłem jest Wikimedia Commons, ponieważ pozwala zweryfikować autora, licencję i stronę źródłową.
 
-Generator tworzy:
+Akceptowane licencje:
+- Public Domain / CC0,
+- CC BY,
+- CC BY-SA.
 
-- hero: `assets/articles/<slug>.webp`, 1600×1200, proporcja 4:3,
-- social image: `assets/articles/<slug>-social.jpg`, 1200×630,
-- podpis: `Ilustracja: Poza Szumem`,
-- tekst alternatywny na podstawie wybranego motywu.
+Nie używaj materiałów z niejasnym statusem praw autorskich.
 
-Pliki powstają podczas buildu i nie muszą być commitowane do repozytorium.
+## Dobór zdjęcia
 
-## Art direction
+Zdjęcie powinno pokazywać realny obiekt, zachowanie, środowisko albo zjawisko istotne dla tekstu.
 
-Stałe cechy ilustracji:
+Przykłady:
+- tekst o trzmielach → prawdziwy trzmiel na kwiecie,
+- tekst o nawigacji gołębi → lecące gołębie pocztowe,
+- tekst o zapachu deszczu → mokre liście, ziemia albo krople deszczu,
+- tekst o konteneryzacji → prawdziwy terminal kontenerowy,
+- tekst o śnie → osoba śpiąca lub odpoczywająca w naturalnej scenie.
 
-- spokojny, minimalistyczny styl redakcyjny,
-- geometria i abstrakcja zamiast dosłownych stockowych scen,
-- dużo wolnej przestrzeni,
-- brak napisów, logo i watermarków na obrazie,
-- zgaszona paleta oparta o krem, grafit i kolor akcentu kategorii,
-- jeden dominujący motyw,
-- bez fotorealistycznych ludzi,
-- bez agresywnych gradientów i efektów 3D,
-- obraz ma wspierać tekst, a nie konkurować z nagłówkiem.
-
-## Motywy
-
-Dostępne wartości `visualMotif`:
-
-- `orbit` — kosmos, nauka, systemy, zależności,
-- `network` — AI, mózg, informacja, komunikacja,
-- `flow` — pieniądze, procesy, handel, wymiana,
-- `grid` — infrastruktura, miasta, logistyka, konstrukcje,
-- `waves` — woda, pogoda, natura, fale,
-- `rings` — czas, pamięć, cykle, oczekiwanie,
-- `layers` — kultura, sztuka, historia, interpretacja,
-- `signal` — sport, ciało, rytm, energia, pomiar.
-
-Jeśli pole nie istnieje, build wybiera motyw automatycznie na podstawie tytułu, słów kluczowych i kategorii.
+Unikaj:
+- generycznych zdjęć biznesowych,
+- dosłownych stocków z pozowanymi ludźmi,
+- obrazów, które tylko powtarzają tytuł,
+- AI udającego dokumentalną fotografię.
 
 ## Front matter
 
-Minimalnie nie trzeba dodawać niczego — ilustracja powstanie automatycznie.
-
-Jeśli chcemy kontrolować kierunek:
-
 ```yaml
-visualMotif: "orbit"
-visualAlt: "Abstrakcyjna ilustracja z orbitami satelitów i motywem odmierzania czasu."
+visualType: "photo"
+image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nazwa_pliku.jpg"
+imageAlt: "Krótki, konkretny opis zdjęcia."
+imageCredit: "Fot. Autor / Wikimedia Commons"
+imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Nazwa_pliku.jpg"
+imageLicense: "CC BY-SA 4.0"
 ```
 
-Można też całkowicie zastąpić grafikę własnym obrazem:
+Podpis pod zdjęciem linkuje do strony źródłowej i pokazuje licencję.
+
+## Fallback
+
+Abstrakcyjny system ilustracji nadal istnieje wyłącznie jako świadoma opcja. Użyj go tylko wtedy, gdy tekst naprawdę wymaga ilustracji konceptualnej:
 
 ```yaml
-image: "assets/articles/wlasny-obraz.webp"
-imageAlt: "Opis zawartości obrazu"
-imageCredit: "Fot. lub ilustracja: autor"
+visualType: "abstract"
+visualMotif: "network"
+visualAlt: "Opis ilustracji."
 ```
 
-Wtedy generator automatyczny nie nadpisuje pliku.
+Jeśli `visualType` nie jest ustawione na `abstract` i nie ma pola `image`, build nie tworzy automatycznej grafiki.
 
-## Zasada redakcyjna
+## Priorytet redakcyjny
 
-Dla nowych tekstów automatyzacja powinna świadomie wybierać `visualMotif` i pisać jednozdaniowy `visualAlt`. Generator pozostaje fallbackiem, dzięki czemu brak danych wizualnych nigdy nie blokuje publikacji.
+Kolejność wyboru:
+1. dobre prawdziwe zdjęcie bezpośrednio związane z tekstem,
+2. publikacja bez obrazu,
+3. ilustracja abstrakcyjna tylko jako świadoma decyzja redakcyjna.
+
+Obraz ma wnosić kontekst albo atmosferę. Nie jest obowiązkowym wypełniaczem layoutu.
