@@ -6,6 +6,12 @@ category: "sport"
 author: "Poza Szumem"
 series: "Ciało i regeneracja"
 keywords: ["sen", "pamięć", "uczenie się", "mózg", "regeneracja", "hipokamp"]
+visualType: "photo"
+image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_resting_on_a_bed_near_a_window_as_rain_falls_outside_in_the_afternoon.jpg"
+imageAlt: "Kobieta odpoczywająca na łóżku przy oknie."
+imageCredit: "Fot. Shixart1985 / Wikimedia Commons"
+imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Woman_resting_on_a_bed_near_a_window_as_rain_falls_outside_in_the_afternoon.jpg"
+imageLicense: "CC BY 2.0"
 sources:
   - title: "Lutz, Harkotte i Born — Sleep's contribution to memory formation"
     url: "https://pubmed.ncbi.nlm.nih.gov/40875205/"
