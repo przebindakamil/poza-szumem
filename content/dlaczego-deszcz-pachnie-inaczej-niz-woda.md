@@ -6,6 +6,12 @@ category: "dom"
 author: "Poza Szumem"
 series: "Jak działa świat"
 keywords: ["petrichor", "deszcz", "zapach", "geosmina", "gleba", "mikroorganizmy"]
+visualType: "photo"
+image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rain_Leaves.jpg"
+imageAlt: "Krople deszczu na zielonych liściach."
+imageCredit: "Fot. Prayash / Wikimedia Commons"
+imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Rain_Leaves.jpg"
+imageLicense: "CC BY-SA 4.0"
 sources:
   - title: "CSIRO — The smell of rain: how our scientists invented a new word"
     url: "https://www.csiro.au/en/news/All/Articles/2015/March/the-smell-of-rain-how-our-scientists-invented-a-new-word"
