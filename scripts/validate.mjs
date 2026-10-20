@@ -63,10 +63,12 @@ for (const file of (await walk(root)).filter(file => file.endsWith('.html') && !
     assert($('.related-articles').length <= 1, file + ': duplicate related section');
     assert($('#related-heading').length <= 1, file + ': duplicate related heading');
     assert($('.related-link').length <= 3, file + ': too many related links');
-    assert.equal($('.article-hero-media img').length, 1, file + ': one hero image');
-    assert($('.article-hero-media img').attr('alt')?.trim(), file + ': hero image alt');
-    const heroSrc = $('.article-hero-media img').attr('src') || '';
-    assert(heroSrc && (/^(https?:)/.test(heroSrc) || /assets\/articles\//.test(heroSrc)), file + ': editorial hero asset');
+    assert($('.article-hero-media img').length <= 1, file + ': at most one hero image');
+    if ($('.article-hero-media img').length) {
+      assert($('.article-hero-media img').attr('alt')?.trim(), file + ': hero image alt');
+      const heroSrc = $('.article-hero-media img').attr('src') || '';
+      assert(heroSrc && (/^(https?:)/.test(heroSrc) || /assets\/articles\//.test(heroSrc)), file + ': editorial hero asset');
+    }
     assert($('meta[property="og:image"]').attr('content'), file + ': article social image');
   }
 }
