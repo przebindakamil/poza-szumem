@@ -941,7 +941,7 @@ function refreshBookmarks() {
     button.title = label;
     button.classList.toggle('active', selected);
     const visibleLabel = button.querySelector('.bookmark-label');
-    if (visibleLabel) visibleLabel.textContent = selected ? 'Zapisano' : 'Zapisz artykuł';
+    if (visibleLabel) visibleLabel.textContent = selected ? 'Zapisano' : 'Zapisz';
   });
   if (cards.length) updateArticles();
 }
@@ -951,7 +951,7 @@ function makeBookmarkButton(id, articleVariant = false) {
   button.className = articleVariant ? 'bookmark-toggle article-save-button' : 'bookmark-toggle';
   button.dataset.bookmark = id;
   button.innerHTML = articleVariant
-    ? '<i data-lucide="bookmark" aria-hidden="true"></i><span class="bookmark-label">Zapisz artykuł</span>'
+    ? '<i data-lucide="bookmark" aria-hidden="true"></i><span class="bookmark-label">Zapisz</span>'
     : bookmarkIcon;
   button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); toggleBookmark(id); });
   return button;
@@ -1065,7 +1065,7 @@ if (window.lucide) {
   document.querySelectorAll('.highlights-close, .install-dialog-close').forEach(button => { button.innerHTML = '<i data-lucide="x"></i>'; });
   document.querySelectorAll('.bookmark-toggle:not(.article-save-button)').forEach(button => { button.innerHTML = '<i data-lucide="bookmark"></i>'; });
   document.querySelectorAll('.article-save-button').forEach(button => {
-    const label = button.querySelector('.bookmark-label')?.textContent || 'Zapisz artykuł';
+    const label = button.querySelector('.bookmark-label')?.textContent || 'Zapisz';
     button.innerHTML = '<i data-lucide="bookmark" aria-hidden="true"></i><span class="bookmark-label">' + label + '</span>';
   });
   document.querySelectorAll('.highlights-button .saved-icon').forEach(node => { node.innerHTML = '<i data-lucide="quote"></i>'; });
