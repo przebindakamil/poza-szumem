@@ -56,6 +56,9 @@ const addRecord = (slug, $, metadata, sourcePath) => {
   const image = typeof metadata.image === 'string' ? metadata.image.trim() : '';
   const imageAlt = typeof metadata.imageAlt === 'string' ? metadata.imageAlt.trim() : '';
   const imageCredit = typeof metadata.imageCredit === 'string' ? metadata.imageCredit.trim() : '';
+  const imageSourceUrl = typeof metadata.imageSourceUrl === 'string' ? metadata.imageSourceUrl.trim() : '';
+  const imageLicense = typeof metadata.imageLicense === 'string' ? metadata.imageLicense.trim() : '';
+  const visualType = typeof metadata.visualType === 'string' ? metadata.visualType.trim() : 'photo';
   if (image) {
     const isRemoteImage = /^https:\/\//.test(image);
     const isLocalArticleImage = /^assets\/articles\/[a-zA-Z0-9._/-]+$/.test(image);
@@ -74,6 +77,9 @@ const addRecord = (slug, $, metadata, sourcePath) => {
     image,
     imageAlt,
     imageCredit,
+    imageSourceUrl,
+    imageLicense,
+    visualType,
     visualMotif: typeof metadata.visualMotif === 'string' ? metadata.visualMotif.trim() : '',
     visualAlt: typeof metadata.visualAlt === 'string' ? metadata.visualAlt.trim() : '',
     socialImage: '',
@@ -291,6 +297,11 @@ for (const record of records) {
     continue;
   }
 
+  if (record.visualType !== 'abstract') {
+    record.socialImage = '';
+    continue;
+  }
+
   const motif = chooseVisualMotif(record);
   const svg = articleArtSvg(record, motif);
   const heroFile = 'assets/articles/' + record.slug + '.webp';
@@ -440,10 +451,15 @@ for (const record of publishedRecords) {
     ? '<p class="series-link"><a href="serie/' + slugify(record.series) + '.html">' + escape(record.series) + '</a></p>'
     : '<p class="series-link" hidden></p>';
 
+  const imageCaption = record.imageCredit
+    ? (record.imageSourceUrl
+        ? '<a href="' + escape(record.imageSourceUrl) + '" rel="noopener noreferrer">' + escape(record.imageCredit) + (record.imageLicense ? ' · ' + escape(record.imageLicense) : '') + '</a>'
+        : escape(record.imageCredit) + (record.imageLicense ? ' · ' + escape(record.imageLicense) : ''))
+    : '';
   const heroMediaMarkup = record.image
     ? '<figure class="article-hero-media">' +
         '<img src="' + escape(record.image) + '" alt="' + escape(record.imageAlt) + '" loading="eager" decoding="async" fetchpriority="high">' +
-        (record.imageCredit ? '<figcaption>' + escape(record.imageCredit) + '</figcaption>' : '') +
+        (imageCaption ? '<figcaption>' + imageCaption + '</figcaption>' : '') +
       '</figure>'
     : '';
 
