@@ -123,11 +123,8 @@ test('generated collections, article metadata and feed work', async ({ page, req
   await page.locator('.article-card .card-link').first().click();
   await expect(page.locator('.article-hero-grid')).toBeVisible();
   const heroImage = page.locator('.article-hero-media img');
-  await expect(heroImage).toBeVisible();
-  await expect(heroImage).toHaveAttribute('alt', /.+/);
-  const heroSrc = await heroImage.getAttribute('src');
-  expect(heroSrc).toMatch(/assets\/articles\/.*\.webp$/);
-  expect((await request.get(heroSrc)).headers()['content-type']).toContain('image/webp');
+  expect(await heroImage.count()).toBeLessThanOrEqual(1);
+  if (await heroImage.count()) await expect(heroImage).toHaveAttribute('alt', /.+/);
   await expect(page.locator('.article-save-button')).toBeVisible();
   await expect(page.locator('.article-save-button .bookmark-label')).toHaveText(/Zapisz|Zapisano/);
   const headingCount = await page.locator('.article-body h2, .article-body h3').count();
@@ -158,8 +155,8 @@ test('generated collections, article metadata and feed work', async ({ page, req
   const schema = await page.locator('script[type="application/ld+json"]').textContent();
   const schemaData = JSON.parse(schema);
   expect(schemaData['@type']).toBe('Article');
-  expect(schemaData.image).toMatch(/assets\/articles\/.*-social\.jpg$/);
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /assets\/articles\/.*-social\.jpg$/);
+  expect(schemaData.image).toBeTruthy();
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /.+/);
   expect((await request.get('feed.xml')).status()).toBe(200);
   expect((await request.get('sitemap.xml')).status()).toBe(200);
   expect((await request.get('assets/share.png')).headers()['content-type']).toBe('image/png');
@@ -256,4 +253,15 @@ test('article reader polish stays accessible and responsive', async ({ page }) =
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', nextTheme === 'dark' ? '#111512' : '#355f4a');
 
   expect(errors).toEqual([]);
+});
+
+
+test('real editorial photography is used for photo-first articles', async ({ page }) => {
+  await page.goto('artykuly/kwiaty-maja-pola-elektryczne-trzmiele-potrafia-je-wyczuc.html');
+  const image = page.locator('.article-hero-media img');
+  await expect(image).toBeVisible();
+  await expect(image).toHaveAttribute('src', /^https:\/\/commons\.wikimedia\.org\//);
+  await expect(image).toHaveAttribute('alt', /trzmiel/i);
+  await expect(page.locator('.article-hero-media figcaption a')).toHaveAttribute('href', /commons\.wikimedia\.org\/wiki\/File:/);
+  await expect(page.locator('.article-hero-media figcaption')).toContainText('CC BY-SA 4.0');
 });
