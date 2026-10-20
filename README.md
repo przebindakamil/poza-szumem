@@ -30,7 +30,7 @@ nie trzeba migrowac calego archiwum naraz.
 
 Dodaj `content/slug-tekstu.md`. Plik `content/_example.md` jest wzorem i nie jest publikowany.
 Wymagane pola: title, excerpt, date (YYYY-MM-DD), category.
-Kategorie: rozwoj, ai, sport, finanse, swiat, dom, kultura.
+Kategorie: rozwoj, ai, sport, finanse, swiat, dom, kultura, zwierzeta.
 Opcjonalnie: author, updated, series, sources, keywords.
 Markdown jest renderowany przez markdown-it; surowy HTML w Markdown jest wylaczony.
 Alternatywnie mozna nadal dodac podstrone HTML do `artykuly/` z dotychczasowymi klasami.
@@ -133,3 +133,12 @@ imageCredit: "Opcjonalny podpis lub autor"
 
 Własny obraz ma pierwszeństwo przed generatorem automatycznym.
 Na końcu artykułu generator automatycznie pokazuje do trzech powiązanych tekstów. Priorytet mają wspólna seria, kategoria i słowa kluczowe; rekomendacje nie wymagają ręcznego utrzymywania list.
+
+
+## Kategoria Zwierzęta
+
+Kategoria `zwierzeta` służy tekstom o niezwykłych zdolnościach, zachowaniach i biologii zwierząt — szczególnie takim, o których rzadko mówi się w codziennych mediach. Priorytetem są rzeczy zaskakujące, dobrze udokumentowane i dające czytelnikowi poczucie, że dowiedział się czegoś naprawdę nowego.
+
+Dobre kierunki to m.in. nawigacja i magnetorecepcja, komunikacja, pamięć i uczenie, inteligencja, percepcja, migracje, strategie przetrwania, zachowania społeczne, ewolucyjne osobliwości oraz relacje zwierząt z człowiekiem i środowiskiem.
+
+Teksty nie muszą być sztucznie wydłużane. Jeśli temat daje materiał na 4–6 minut konkretnego czytania, taki format jest poprawny. Gdy temat ma więcej warstw, badań i ciekawych przykładów, zachowaj standardowe 7–10 minut. Najważniejsza jest gęstość ciekawej wiedzy, a nie długość sama w sobie.
