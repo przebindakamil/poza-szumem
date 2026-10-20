@@ -6,6 +6,12 @@ category: "zwierzeta"
 author: "Poza Szumem"
 series: "Zmysły, których nie mamy"
 keywords: ["gołębie", "nawigacja", "magnetorecepcja", "kryptochrom", "węch", "Słońce", "landmarki", "zmysły zwierząt"]
+visualType: "photo"
+image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Homing_pigeons_in_flight.jpg"
+imageAlt: "Stado gołębi pocztowych lecących na tle nieba."
+imageCredit: "Fot. Spanishguitar101 / Wikimedia Commons"
+imageSourceUrl: "https://commons.wikimedia.org/wiki/File:Homing_pigeons_in_flight.jpg"
+imageLicense: "CC BY-SA 4.0"
 visualMotif: "orbit"
 visualAlt: "Abstrakcyjna ilustracja z orbitami i punktami symbolizującymi wielowarstwową nawigację gołębia."
 sources:
