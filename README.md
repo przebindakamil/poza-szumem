@@ -142,3 +142,8 @@ Kategoria `zwierzeta` służy tekstom o niezwykłych zdolnościach, zachowaniach
 Dobre kierunki to m.in. nawigacja i magnetorecepcja, komunikacja, pamięć i uczenie, inteligencja, percepcja, migracje, strategie przetrwania, zachowania społeczne, ewolucyjne osobliwości oraz relacje zwierząt z człowiekiem i środowiskiem.
 
 Teksty nie muszą być sztucznie wydłużane. Jeśli temat daje materiał na 4–6 minut konkretnego czytania, taki format jest poprawny. Gdy temat ma więcej warstw, badań i ciekawych przykładów, zachowaj standardowe 7–10 minut. Najważniejsza jest gęstość ciekawej wiedzy, a nie długość sama w sobie.
+
+
+## Zdjęcia artykułów
+
+Domyślnie używamy prawdziwych fotografii związanych z treścią, preferencyjnie z Wikimedia Commons. Jeśli nie ma dobrego legalnego zdjęcia, artykuł publikuje się bez hero. Automatyczne abstrakcyjne grafiki nie są już domyślnym fallbackiem; szczegóły w `content/_visual-style.md`.
