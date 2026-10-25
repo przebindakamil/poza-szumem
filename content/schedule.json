@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18",
+  "updated": "2026-10-25",
   "items": [
     {
       "date": "2026-10-14",
@@ -84,6 +84,55 @@
       "category": "kultura",
       "status": "ready",
       "notes": "Zmiany pigmentów i werniksów w malarstwie; konserwacja jako badanie i wybór, nie mechaniczne odmładzanie dzieł."
+    },
+    {
+      "date": "2026-10-26",
+      "title": "Pamięć nie jest nagraniem",
+      "category": "rozwoj",
+      "status": "ready",
+      "notes": "Pamięć autobiograficzna jako rekonstrukcja: sugestia językowa, świadkowie i ostrożne rozumienie rekonsolidacji."
+    },
+    {
+      "date": "2026-10-27",
+      "title": "Słonie, które słyszą przez ziemię",
+      "category": "zwierzeta",
+      "status": "ready",
+      "notes": "Sejsmiczna komunikacja słoni: drgania gruntu, reakcje stad i granice dowodów na odbiór sygnałów."
+    },
+    {
+      "date": "2026-10-28",
+      "title": "Dlaczego AI brzmi pewnie, nawet gdy się myli",
+      "category": "ai",
+      "status": "ready",
+      "notes": "Płynność języka nie gwarantuje prawdziwości; TruthfulQA, kalibracja i sprawdzanie źródeł."
+    },
+    {
+      "date": "2026-10-29",
+      "title": "Dlaczego wilgoć wraca do domu",
+      "category": "dom",
+      "status": "ready",
+      "notes": "Cztery drogi transportu wilgoci, punkt rosy, wentylacja i odróżnienie objawu od źródła."
+    },
+    {
+      "date": "2026-10-30",
+      "title": "Dlaczego ubezpieczenie potrzebuje cudzego szczęścia",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Wspólna pula ryzyka działa inaczej przy niezależnych szkodach i skorelowanych katastrofach."
+    },
+    {
+      "date": "2026-10-31",
+      "title": "Drzewa, które zapisują dawną pogodę",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Dendrochronologia i datowanie krzyżowe jako archiwum klimatu sprzed pomiarów instrumentalnych."
+    },
+    {
+      "date": "2026-11-01",
+      "title": "Kamień, który pomógł odczytać Egipt",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Kamień z Rosetty, koptyjski i fonetyczna natura hieroglifów: odkrycie dzięki porównywaniu zapisów."
     }
   ]
 }
