@@ -55,4 +55,9 @@ Nie oznacza to, że wszystkie wspomnienia są dowolną fikcją. Zwykle pamiętam
 
 Można to zauważyć, kiedy po latach wracamy do starego listu. Wspominamy rozmowę jako serdeczną, a w zapisie znajdujemy chłodne zdania. Albo odwrotnie: byliśmy przekonani, że ktoś potraktował nas ostro, tymczasem wiadomość brzmi łagodniej, niż zapamiętaliśmy. Dokument nie wyjaśnia całej sytuacji — ton głosu i kontekst mogły pozostać poza nim — ale potrafi pokazać, jak nasza pamięć wybrała jeden aspekt i uczyniła go dominującym.
 
+W psychologii ważne jest także rozróżnienie między rozpoznawaniem a przypominaniem. Gdy oglądamy zdjęcie znajomego miejsca, możemy natychmiast wiedzieć, gdzie zostało zrobione, choć chwilę wcześniej nie potrafiliśmy samodzielnie przywołać jego nazwy. Wskazówka z zewnątrz zmienia dostęp do pamięci. Nie dowodzi to, że wspomnienie było wcześniej w całości ukryte jak plik w szufladzie. Pokazuje, że wydobywanie informacji zależy od kontekstu i tego, co akurat podsuwa nam otoczenie.
+
+W praktyce oznacza to, że pytanie „co pamiętasz?” może prowadzić do innej opowieści niż pytanie „czy pamiętasz, jak wtedy padało?”. Drugie od razu wprowadza sugestię deszczu. Nie każda sugestia zostanie przyjęta, a ludzie różnią się podatnością na wpływ cudzych informacji. Mimo to ostrożne pytania otwarte są cenniejsze, kiedy zależy nam na możliwie niezależnej relacji. To dotyczy nie tylko sądu czy policyjnego przesłuchania, ale także rodzinnych rozmów o zdarzeniach, które każdy uczestnik zapamiętał trochę inaczej.
+
+
 Właśnie dlatego fotografia, notatnik czy stara korespondencja bywają tak poruszające. Nie tyle otwierają nienaruszone drzwi do przeszłości, ile pozwalają skonfrontować żywe wspomnienie z niezależnym śladem. Czasem oba obrazy pasują do siebie. Czasem nie. A między nimi znajduje się historia tego, jak przez lata próbowaliśmy zrozumieć własne życie.
