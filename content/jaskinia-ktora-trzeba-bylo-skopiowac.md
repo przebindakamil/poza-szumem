@@ -19,6 +19,10 @@ sources:
     url: "https://archeologie.culture.gouv.fr/lascaux/en/practical-information"
   - title: "UNESCO — Prehistoric Sites and Decorated Caves of the Vézère Valley"
     url: "https://whc.unesco.org/en/list/85"
+  - title: "Ministère de la Culture — Lascaux II and III"
+    url: "https://archeologie.culture.gouv.fr/lascaux/en/lascaux-ii-and-iii"
+  - title: "Ministère de la Culture — Turning Lascaux hill into a sanctuary"
+    url: "https://archeologie.culture.gouv.fr/lascaux/en/turning-lascaux-hill-sanctuary"
   - title: "Smithsonian Museum Conservation Institute — La Maladie Verte de Lascaux"
     url: "https://mci.si.edu/node/1204102"
 ---
@@ -56,5 +60,9 @@ Co więcej, replika może w pewnych aspektach lepiej służyć edukacji. Można 
 W ten sposób Lascaux stała się miejscem, w którym trzeba na nowo zdefiniować autentyczność. Czy doświadczenie sztuki polega wyłącznie na fizycznej bliskości pierwszego materiału? Czy można uczciwie zachwycić się kopią, wiedząc, że służy ochronie dzieła, którego inaczej nie dałoby się zobaczyć? W muzeach podobne pytania pojawiają się przy odlewach rzeźb, rekonstrukcjach archeologicznych i cyfrowych modelach zabytków. Lascaux nadaje im wyjątkową ostrość, ponieważ cena kontaktu z oryginałem okazała się zbyt wysoka.
 
 Są w tym również granice naszej wiedzy o samych malowidłach. Możemy rozpoznać gatunki zwierząt, techniki nakładania pigmentu i niektóre etapy pracy. Nie możemy jednak z pewnością powiedzieć, jakie opowieści, wierzenia czy społeczne praktyki towarzyszyły wszystkim obrazom. Rekonstrukcja miejsca nie oznacza rekonstrukcji myśli jego twórców. Dobrze wykonana wystawa powinna pokazywać zarówno to, co ustalono, jak i to, czego nie wiemy.
+
+Historia replik ma zresztą kilka rozdziałów. Lascaux II, otwarta w 1983 roku, odtwarzała przede wszystkim Salę Byków i Galerię Osiową. Powstała na tym samym wzgórzu co oryginał, dzięki czemu zwiedzający mogli doświadczyć fragmentu przestrzeni w bardzo podobnym otoczeniu. Lascaux III, uruchomiona w 2012 roku, była przedsięwzięciem wędrownym: przenosiła wybrane rekonstrukcje i wiedzę o jaskini do innych miejsc na świecie. Dopiero Lascaux IV połączyła niemal pełną rekonstrukcję wnętrza z rozbudowanym centrum interpretacji. Każdy etap odpowiadał na nieco inne pytanie: jak pokazać to, czego nie można udostępnić, jak dotrzeć do odbiorców daleko od Francji i jak opowiedzieć o dziele bez udawania, że rozumiemy wszystkie jego znaczenia.
+
+Nawet otoczenie oryginalnej jaskini wymaga ochrony. Francuskie Ministerstwo Kultury opisywało działania ograniczające ruch samochodów i turystów na wzgórzu Lascaux, aby zmniejszyć ryzyko zaburzenia delikatnego środowiska. Konserwacja nie kończy się zatem na zamknięciu drzwi do wnętrza. Dotyczy całego miejsca, w którym znajduje się zabytek.
 
 Ktoś wychodzi dziś z Lascaux IV na światło dzienne i wie, że nie oglądał oryginalnej jaskini. Mógł jednak zobaczyć układ malowideł, poczuć skalę podziemnych przestrzeni i dowiedzieć się, dlaczego ich ochrona wymaga tak wielkiej ostrożności. Paradoks polega na tym, że właśnie dzięki kopii oryginał ma większą szansę pozostać sobą. Nie każdą rzecz, którą chcemy ocalić, możemy jednocześnie udostępnić do bezpośredniego dotyku i oglądania.
