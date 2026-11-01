@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25",
+  "updated": "2026-11-01",
   "items": [
     {
       "date": "2026-10-14",
@@ -133,6 +133,55 @@
       "category": "kultura",
       "status": "ready",
       "notes": "Kamień z Rosetty, koptyjski i fonetyczna natura hieroglifów: odkrycie dzięki porównywaniu zapisów."
+    },
+    {
+      "date": "2026-11-02",
+      "title": "Ryba, która rozpoznaje ludzkie twarze",
+      "category": "zwierzeta",
+      "status": "ready",
+      "notes": "Strzelczyki odróżniają twarze na ekranie, choć nie mają ludzkich struktur korowych; granice eksperymentu są równie ważne jak jego wynik."
+    },
+    {
+      "date": "2026-11-03",
+      "title": "Ścięgno, które uczy się obciążenia",
+      "category": "sport",
+      "status": "ready",
+      "notes": "Adaptacja ścięgien jest odrębnym procesem od wzrostu siły mięśni; sztywność, struktura i czas reakcji tkanki."
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Obraz, który oszukuje sztuczną inteligencję",
+      "category": "ai",
+      "status": "ready",
+      "notes": "Przykłady adwersarialne ujawniają różnicę między cechami obrazu używanymi przez człowieka i przez klasyfikator."
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Dlaczego słychać sąsiada przez ścianę",
+      "category": "dom",
+      "status": "ready",
+      "notes": "Dźwięki powietrzne, uderzeniowe i boczne drogi przenoszenia hałasu wyjaśniają ograniczenia prostego wygłuszania."
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Pieniądze, które powstają przy udzielaniu kredytu",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Kredyt tworzy depozyt, ale nie tworzy automatycznie majątku; płynność, rozliczenia i kapitał ograniczają banki."
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Jaskinia, którą trzeba było skopiować",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Lascaux pokazuje, że ochrona autentycznego dzieła może wymagać zamknięcia oryginału i udostępnienia repliki."
+    },
+    {
+      "date": "2026-11-08",
+      "title": "Dlaczego nie ma jednej uczciwej mapy świata",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Odwzorowania kartograficzne zachowują wybrane własności kosztem innych; żadna płaska mapa nie oddaje całej kuli bez zniekształceń."
     }
   ]
 }
