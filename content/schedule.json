@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01",
+  "updated": "2026-11-08",
   "items": [
     {
       "date": "2026-10-14",
@@ -182,6 +182,55 @@
       "category": "swiat",
       "status": "ready",
       "notes": "Odwzorowania kartograficzne zachowują wybrane własności kosztem innych; żadna płaska mapa nie oddaje całej kuli bez zniekształceń."
+    },
+    {
+      "date": "2026-11-09",
+      "title": "Skóra ośmiornicy, która reaguje na światło",
+      "category": "zwierzeta",
+      "status": "ready",
+      "notes": "Światłoczuła skóra ośmiornicy: eksperyment LACE, opsyny i granice wniosków o widzeniu."
+    },
+    {
+      "date": "2026-11-10",
+      "title": "Dlaczego AI potrzebuje biblioteki, a nie tylko pamięci",
+      "category": "ai",
+      "status": "ready",
+      "notes": "RAG jako połączenie generowania z wyszukiwaniem; korzyści, błędy pobierania i pozorna wiarygodność cytatów."
+    },
+    {
+      "date": "2026-11-11",
+      "title": "Powietrze uwięzione w lodzie opowiada historię klimatu",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Rdzenie lodowe jako archiwum atmosfery; rozróżnienie wieku lodu i powietrza oraz metod odtwarzania klimatu."
+    },
+    {
+      "date": "2026-11-12",
+      "title": "Co mówi czujnik CO₂ o powietrzu w pokoju",
+      "category": "dom",
+      "status": "ready",
+      "notes": "CO₂ jako wskaźnik wentylacji przy obecności ludzi, a nie pełny pomiar zanieczyszczeń czy ryzyka zakażeń."
+    },
+    {
+      "date": "2026-11-13",
+      "title": "Dlaczego inflacja zmienia wartość starych obietnic",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Nominalna kwota kontra realna wartość: skutki inflacji dla oszczędności, długu i długoterminowych umów."
+    },
+    {
+      "date": "2026-11-14",
+      "title": "Dlaczego wysokość zmienia każdy oddech",
+      "category": "sport",
+      "status": "ready",
+      "notes": "Niższe ciśnienie parcjalne tlenu, szybka odpowiedź oddechowa i powolniejsze przystosowanie."
+    },
+    {
+      "date": "2026-11-15",
+      "title": "Jak zapisano głos, zanim powstała płyta",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Od wizualnego zapisu drgań do fonografu i archiwów dźwiękowych; różnica między rejestracją a odtwarzaniem."
     }
   ]
 }
