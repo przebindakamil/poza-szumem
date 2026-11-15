@@ -34,4 +34,14 @@ Jest również koszt obliczeniowy. W klasycznej postaci samo-uwaga porównuje wi
 
 Dziś łatwo patrzeć na duży model językowy jak na czarną skrzynkę, która po prostu odpowiada na pytania. Tymczasem pod płynną wypowiedzią znajduje się ogromna liczba drobnych operacji. Każdy fragment tekstu jest zamieniany na reprezentację liczbową, porównywany z innymi i przekształcany. Nie jest to czytanie w ludzkim sensie, ale wynik bywa wystarczająco użyteczny, by umożliwić tłumaczenie, streszczanie i pracę z kodem.
 
+## Słowa zamienione na liczby
+
+Warto zobaczyć, jak daleko ta metoda znajduje się od ludzkiego czytania. Model nie otrzymuje strony jako zbioru znaczeń gotowych do rozpoznania. Tekst dzieli się na jednostki, nazywane tokenami, które mogą odpowiadać słowom, częściom słów lub znakom. Każda jednostka dostaje reprezentację liczbową. Dopiero na takich wektorach wykonywane są operacje, z których powstają kolejne warstwy przetwarzania. To, że wynik przyjmuje postać naturalnego zdania, nie oznacza, że wewnętrzna praca przypomina ciche czytanie książki.
+
+W mechanizmie attention używa się zwykle trzech rodzajów reprezentacji, określanych jako zapytania, klucze i wartości. Nazwy brzmią niemal jak elementy wyszukiwarki, ale są to wyuczone przekształcenia liczb. Porównanie zapytania z kluczami pozwala wyznaczyć względne wagi, a te służą do łączenia wartości. W kolejnych warstwach taka operacja jest powtarzana i zestawiana z innymi przekształceniami. Model nie wybiera jednego słowa i nie ignoruje wszystkich pozostałych; może budować rozproszone zależności obejmujące wiele fragmentów.
+
+W przypadku generowania tekstu dochodzi jeszcze ważne ograniczenie. System nie powinien korzystać z przyszłych słów odpowiedzi, których jeszcze nie wytworzył. Dlatego stosuje się maskowanie, które ogranicza dostęp do kolejnych pozycji podczas odpowiedniego etapu obliczeń. W efekcie model może uczyć się zależności w długich sekwencjach, ale podczas tworzenia odpowiedzi generuje kolejne elementy w określonym porządku. Równoległość obliczeń w uczeniu nie oznacza, że cała nowa wypowiedź pojawia się od razu.
+
+
+
 Warto więc oddzielać dwa pytania. Pierwsze brzmi: jak system może uwzględnić słowa odległe od siebie w zdaniu? Drugie: czy naprawdę rozumie to, o czym pisze? Mechanizm attention wniósł przełomową odpowiedź na pierwsze z nich. Drugiego nie rozstrzyga samą swoją nazwą. Gdy model trafnie łączy kontekst, widzimy siłę matematycznej konstrukcji. Gdy się myli, przypomina nam, że ważenie informacji nie jest tym samym, co znajomość świata.
