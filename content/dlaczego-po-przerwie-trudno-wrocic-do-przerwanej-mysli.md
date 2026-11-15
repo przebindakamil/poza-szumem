@@ -36,4 +36,14 @@ Współczesne środowisko pracy ułatwia nieustanne zmiany. Wiadomości pojawiaj
 
 Warto też pamiętać, że trudność powrotu do myśli nie jest porażką charakteru. To przewidywalna konsekwencja ograniczeń poznawczych, które w innych okolicznościach pozwalają nam elastycznie reagować na zmiany. Umysł nie jest magazynem, w którym każdy rozpoczęty proces pozostaje nieruchomy na osobnej półce. To raczej warsztat, w którym na stole leżą narzędzia potrzebne do aktualnej pracy. Gdy nagle trzeba zająć się czymś innym, część z nich odkładamy.
 
+## Przerwa zaplanowana i przerwa narzucona
+
+Istnieje ważna różnica między momentem, w którym sami odkładamy pracę, a sytuacją, w której ktoś przerywa nam w środku rozumowania. Przy zaplanowanej przerwie możemy dokończyć fragment, zapisać stan zadania i przygotować sobie punkt powrotu. Nagłe przerwanie nie daje tej możliwości. Dlatego dwie przerwy o tej samej długości mogą mieć bardzo różny wpływ na dalszą pracę. Nie chodzi wyłącznie o to, ile czasu upłynęło, lecz o to, w jakim stanie pozostawiliśmy problem.
+
+To rozróżnienie pomaga zrozumieć, dlaczego ludzie czasem wolą odpowiedzieć na kilka wiadomości naraz. Grupowanie podobnych drobnych zadań ogranicza liczbę zmian kontekstu, choć nie zawsze jest możliwe. W pracy zespołowej część spraw wymaga szybkiej reakcji, zwłaszcza gdy inni czekają na decyzję. Rozsądna organizacja nie polega więc na zakazie komunikacji, lecz na uzgodnieniu, które pytania są pilne, a które mogą poczekać na dogodny moment.
+
+Przełączanie ma również wymiar emocjonalny. Po trudnej rozmowie może być trudno wrócić do spokojnego analizowania danych, nawet jeśli formalnie wiemy, co mamy zrobić. Myśl wraca do tonu głosu, niewyjaśnionego konfliktu albo możliwych konsekwencji. Badania nad pozostałością uwagi pomagają opisać taki stan, ale nie oznaczają, że każdy przypadek da się wyjaśnić jednym mechanizmem. W życiu nakładają się na siebie pamięć robocza, emocje, motywacja i środowisko pracy.
+
+
+
 Po przerwaniu wracamy do dokumentu. Przez chwilę szukamy miejsca, w którym byliśmy. Czasem wystarczy jedno zdanie zapisane wcześniej na marginesie. Czasem trzeba przejść całą drogę rozumowania jeszcze raz. Te dodatkowe minuty nie zawsze są widoczne w kalendarzu, ale należą do rzeczywistego kosztu dnia.
