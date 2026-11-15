@@ -34,4 +34,14 @@ Właśnie dlatego materialność kultury jest tak istotna. Zwykle mówimy, że k
 
 Dawne książki nie rozpadają się dlatego, że ich treść stała się mniej ważna. Niekiedy dzieje się odwrotnie: im rzadszy egzemplarz, tym bardziej zależy nam na jego ochronie. Tymczasem jego papier nie wie, czy zawiera wielką powieść, katalog handlowy czy instrukcję obsługi. Reaguje na temperaturę, wilgoć i skład chemiczny. Praca konserwatora polega więc na pogodzeniu dwóch porządków: ludzkiego przekonania o wartości tekstu i bezosobowego starzenia się materiału.
 
+## Dlaczego nie każda renowacja jest dobra
+
+Kiedy oglądamy uszkodzoną książkę, naturalną reakcją jest chęć naprawy. Można przecież podkleić rozdarty papier, wymienić oprawę i wyprostować kartki. Konserwator musi jednak zadać trudniejsze pytanie: które ślady są uszkodzeniem, a które częścią historii egzemplarza? Dawna oprawa, notatka na marginesie czy pieczęć właściciela mogą mieć wartość badawczą. Ich usunięcie w imię estetycznego wyglądu oznaczałoby utratę informacji, której nie da się odtworzyć.
+
+Współczesna konserwacja coraz częściej kieruje się zasadą możliwie ograniczonej ingerencji. Zamiast dążyć do wrażenia nowości, próbuje zapewnić stabilność i bezpieczny dostęp. Czasem najlepszym rozwiązaniem jest odpowiednie pudełko, właściwe podparcie podczas czytania i kontrolowane warunki przechowywania. Brzmi to mniej efektownie niż całkowita renowacja, ale dla zabytkowego obiektu bywa znacznie rozsądniejsze.
+
+Takie decyzje mają również wymiar społeczny. Jeśli oryginał jest zbyt kruchy, aby można go było często udostępniać, biblioteka musi pogodzić ochronę z prawem czytelników do wiedzy. Skan, mikrofilm lub wydanie cyfrowe pozwalają czytać treść bez dotykania osłabionego papieru. Nie zastępują wszystkich właściwości przedmiotu, ale umożliwiają dostęp do tego, co w książce najważniejsze dla większości odbiorców: do słów. W tym sensie ochrona zbiorów nie polega na zamykaniu kultury w magazynie. Polega na szukaniu sposobu, by przetrwała i nadal mogła być czytana.
+
+
+
 Gdy otwieramy książkę, która przetrwała sto lat, spotykamy nie tylko autora. Dotykamy także dawnej technologii, dawnych kompromisów produkcyjnych i decyzji ludzi, którzy przechowywali ją przed nami. Jeśli kartka kruszy się przy brzegu, to nie zawsze znak zaniedbania. Czasem jest to ostatni, bardzo konkretny ślad epoki, która nauczyła się drukować szybko, ale jeszcze nie zawsze potrafiła przewidzieć, jak długo przetrwa papier.
