@@ -32,4 +32,14 @@ Jest też inna pułapka interpretacyjna. Skoro ruch przekazuje informację, łat
 
 Ruch na plastrze jest zarazem niezwykle materialny. To nie abstrakcyjny kod zawieszony w powietrzu, lecz drgania, dotyk, zapach i powtarzalny wzór poruszania się w tłumie owadów. Każda robotnica ma ograniczone możliwości odbioru, a ul nie jest salą wykładową, w której wszyscy słuchają jednego mówcy. Informacja krąży lokalnie, wśród tych, które znalazły się wystarczająco blisko i mogą za nią podążyć. Dopiero suma takich małych zdarzeń wpływa na to, jak cała rodzina wykorzystuje rozproszone zasoby.
 
+## Ile informacji potrzeba, by znaleźć łąkę
+
+Warto wyobrazić sobie krajobraz, który dla człowieka jest jedną wielką zieloną plamą. Pszczoła poruszająca się kilkanaście centymetrów nad roślinami widzi jednak świat inaczej: barwy kwiatów, krawędzie pól, linie drzew, zmiany jasności. To, co dla nas jest drogą do jednego punktu, dla niej może być połączeniem zapamiętanej trasy i kolejnych sygnałów. Taniec jest szczególnie cenny, gdy robotnica ma wyruszyć w obcy obszar, ale po znalezieniu źródła może zacząć korzystać z własnego doświadczenia. Informacja społeczna stopniowo ustępuje osobistej znajomości miejsca.
+
+Sposób przekazu ma też znaczenie dla całej kolonii. Wiele robotnic odwiedza różne źródła, a ich wartość zmienia się wraz z pogodą, porą dnia i dostępnością nektaru. Rodzina nie potrzebuje centralnego planisty, który każdego ranka rozdziela zadania. Korzysta z lokalnych interakcji i zmiennej aktywności zbieraczek. Bardziej atrakcyjne źródła mogą przyciągać więcej uwagi, a słabsze z czasem przestają być intensywnie reklamowane. Nie jest to demokratyczne głosowanie w ludzkim znaczeniu. To zbiorowy wynik zachowań wielu owadów, z których każdy reaguje na ograniczony zestaw bodźców.
+
+W badaniach trzeba również oddzielić samo wykonanie tańca od jego skuteczności. Można dokładnie zmierzyć kierunek ruchu na plastrze, a mimo to nie wiedzieć, czy obserwująca robotnica poleci zgodnie z przekazem. Dlatego badacze łączą obserwacje w ulu ze śledzeniem lotów, kontrolowaniem położenia źródeł pokarmu i analizą tego, jakie informacje rzeczywiście wpływają na poszukiwania. To żmudna praca, ale bez niej niezwykły ruch owada pozostawałby jedynie efektownym obrazkiem.
+
+
+
 Wyobrażenie sobie tej sceny zmienia sposób patrzenia na kwitnący ogród. Dla człowieka kwiaty są nieruchomymi punktami na rabacie. Dla pszczół stanowią zmienną sieć miejsc, do których trzeba dotrzeć, ocenić ich wartość i przekazać informację innym. Jedna zbieraczka wraca do ciemnego ula z doświadczeniem lotu. Kilka minut później inne wyruszają w świat, którego jeszcze nie widziały. Nie potrzebują mapy narysowanej na papierze. Wystarcza im krótki, niedoskonały taniec.
