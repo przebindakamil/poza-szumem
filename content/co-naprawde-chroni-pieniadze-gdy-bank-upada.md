@@ -36,4 +36,14 @@ Nie należy też mylić bezpieczeństwa nominalnej kwoty z zachowaniem jej siły
 
 System gwarantowania depozytów ma również ograniczenia z perspektywy gospodarki. Jeśli klienci są przekonani, że państwo zawsze przejmie wszystkie konsekwencje złych decyzji, osłabia się presja na ostrożność. Dlatego ochrona depozytów współistnieje z nadzorem, wymogami kapitałowymi i procedurami restrukturyzacji banków. Nie zastępuje ich. Zaufanie do systemu nie powinno oznaczać braku pytań o jego konstrukcję.
 
+## Bezpieczeństwo nie jest jedną cechą
+
+Słowo „bezpieczny” bywa używane tak, jakby oznaczało tylko jedną rzecz. Tymczasem środki na rachunku mogą być dobrze chronione przed upadłością banku, ale narażone na utratę siły nabywczej. Inwestycja może mieć niewielkie ryzyko kredytowe, a jednocześnie podlegać wahaniom ceny. Gotówka trzymana w domu nie zależy od działania aplikacji bankowej, lecz może zostać skradziona lub zniszczona. Każdy sposób przechowywania majątku rozwiązuje inny zestaw problemów.
+
+Właśnie dlatego gwarancje depozytowe mają znaczenie systemowe. Pozwalają wielu ludziom korzystać z usług bankowych bez konieczności samodzielnego badania bilansu każdej instytucji. Przeciętny deponent nie jest analitykiem ryzyka bankowego i nie powinien nim być, żeby otrzymać wynagrodzenie czy zapłacić rachunki. Mechanizm ochrony upraszcza codzienne życie, ale nie zwalnia całego systemu z obowiązku nadzoru i odpowiedzialnego zarządzania.
+
+Warto także odróżniać bank od innych podmiotów, które oferują podobne interfejsy. Konto w aplikacji finansowej, portfel elektroniczny i rachunek bankowy mogą wyglądać niemal identycznie, choć podlegają różnym zasadom prawnym. Nawet jeśli pieniądze ostatecznie są przechowywane w banku, klient powinien wiedzieć, jaka instytucja jest stroną umowy i jaki dokładnie mechanizm ochrony ma zastosowanie. Zewnętrzna wygoda produktu nie rozstrzyga jego statusu.
+
+
+
 Kiedy następnym razem zobaczymy saldo oszczędności, warto pamiętać, że liczba na ekranie jest nie tylko prywatną własnością w sensie ekonomicznym, ale również zapisem zobowiązania instytucji. Jej bezpieczeństwo zależy od prawa, nadzoru i mechanizmów, których na co dzień nie widzimy. Dobrze działają właśnie wtedy, gdy nie trzeba o nich myśleć. Ale zrozumienie ich granic pozwala odróżnić rzeczywistą ochronę od wygodnego poczucia, że każda kwota i każdy produkt finansowy są tak samo bezpieczne.
