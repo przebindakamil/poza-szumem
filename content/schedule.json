@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-15",
   "items": [
     {
       "date": "2026-10-14",
@@ -231,6 +231,55 @@
       "category": "kultura",
       "status": "ready",
       "notes": "Od wizualnego zapisu drgań do fonografu i archiwów dźwiękowych; różnica między rejestracją a odtwarzaniem."
+    },
+    {
+      "date": "2026-11-16",
+      "title": "Pszczoły, które tańcem wskazują drogę",
+      "category": "zwierzeta",
+      "status": "ready",
+      "notes": "Taniec wywijany jako przekaz kierunku i dystansu; ograniczenia kodu i rola dodatkowych wskazówek."
+    },
+    {
+      "date": "2026-11-17",
+      "title": "Dlaczego ocean potrafi przenosić głos na ogromne odległości",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Kanał SOFAR i załamywanie fal dźwiękowych w wodzie; konsekwencje dla badań i zwierząt."
+    },
+    {
+      "date": "2026-11-18",
+      "title": "Dlaczego komputer musi wiedzieć, które słowa są ważne",
+      "category": "ai",
+      "status": "ready",
+      "notes": "Mechanizm attention jako matematyczne ważenie kontekstu, nie ludzka uwaga."
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Gaz, którego nie czuć, a który może gromadzić się w domu",
+      "category": "dom",
+      "status": "ready",
+      "notes": "Radon z gruntu, pomiary i ograniczanie ekspozycji; nie mylić z CO₂ i wilgotnością."
+    },
+    {
+      "date": "2026-11-20",
+      "title": "Co naprawdę chroni pieniądze, gdy bank upada",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Gwarancja depozytów jako ochrona deponenta z konkretnymi granicami."
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Dlaczego stare książki rozpadają się od środka",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Kwaśny papier i chemiczne starzenie; konserwacja i dostęp do oryginału."
+    },
+    {
+      "date": "2026-11-22",
+      "title": "Dlaczego po przerwie trudno wrócić do przerwanej myśli",
+      "category": "rozwoj",
+      "status": "ready",
+      "notes": "Koszty przełączania zadań i pozostałość uwagi, bez uniwersalnych recept."
     }
   ]
 }
