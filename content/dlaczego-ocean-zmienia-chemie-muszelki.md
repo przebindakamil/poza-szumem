@@ -2,7 +2,7 @@
 title: "Dlaczego ocean zmienia chemię muszelki"
 excerpt: "Dwutlenek węgla nie tylko ogrzewa klimat. Rozpuszczony w wodzie zmienia równowagę chemiczną, od której zależą muszle i szkielety morskich organizmów."
 date: "2026-11-25"
-category: "dom"
+category: "swiat"
 author: "Poza Szumem"
 keywords: ["dlaczego","ocean","zmienia","chemię","muszelki"]
 sources:
