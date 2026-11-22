@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-22",
   "items": [
     {
       "date": "2026-10-14",
@@ -280,6 +280,55 @@
       "category": "rozwoj",
       "status": "ready",
       "notes": "Koszty przełączania zadań i pozostałość uwagi, bez uniwersalnych recept."
+    },
+    {
+      "date": "2026-11-23",
+      "title": "Mrówki, które mierzą pustynię własnymi krokami",
+      "category": "zwierzeta",
+      "status": "ready",
+      "notes": "Eksperyment ze szczudłami i skróconymi odnóżami u Cataglyphis; licznik drogi to tylko część nawigacji."
+    },
+    {
+      "date": "2026-11-24",
+      "title": "Sekunda, która czasem trwa dłużej",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Czas atomowy, obrót Ziemi i sekundy przestępne; precyzja pomiaru kontra nieregularność planety."
+    },
+    {
+      "date": "2026-11-25",
+      "title": "Dlaczego ocean zmienia chemię muszelki",
+      "category": "swiat",
+      "status": "ready",
+      "notes": "Zakwaszanie oceanu jako zmiana równowagi węglanowej, nie zamiana morza w kwas."
+    },
+    {
+      "date": "2026-11-26",
+      "title": "Dlaczego model AI gubi rzadkie przypadki",
+      "category": "ai",
+      "status": "ready",
+      "notes": "Rozkład danych, niezbalansowane klasy i ograniczenia średniej trafności; różnica między testem a rzeczywistością."
+    },
+    {
+      "date": "2026-11-27",
+      "title": "Dlaczego stopy procentowe działają z opóźnieniem",
+      "category": "finanse",
+      "status": "ready",
+      "notes": "Transmisja polityki pieniężnej przez kredyt, depozyty, oczekiwania i decyzje inwestycyjne."
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Jak film ocalał przed własnym rozpadem",
+      "category": "kultura",
+      "status": "ready",
+      "notes": "Azotanowa i octanowa taśma filmowa, konserwacja i ograniczenia cyfrowej restauracji."
+    },
+    {
+      "date": "2026-11-29",
+      "title": "Dlaczego odpoczynek nie zawsze przynosi ulgę",
+      "category": "rozwoj",
+      "status": "ready",
+      "notes": "Psychologiczne odłączenie od pracy, regeneracja i różnice między bezczynnością a odpoczynkiem."
     }
   ]
 }
